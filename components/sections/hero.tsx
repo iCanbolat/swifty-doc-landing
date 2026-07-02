@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 import {
   ArrowRight,
   Braces,
@@ -8,18 +8,19 @@ import {
   GripVertical,
   Rocket,
   Sparkles,
-} from "lucide-react"
+} from "lucide-react";
 
-import { Badge } from "@/components/ui/badge"
-import { ButtonLink } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge";
+import { ButtonLink } from "@/components/ui/button";
+import { buildBootstrapOwnerUrl } from "@/lib/app-links";
 
-const EASE = [0.22, 1, 0.36, 1] as const
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const TRUST = [
   "No login for recipients",
   "Autosave built in",
   "Version-controlled templates",
-]
+];
 
 export function Hero() {
   return (
@@ -89,8 +90,12 @@ export function Hero() {
             transition={{ duration: 0.7, ease: EASE, delay: 0.24 }}
             className="mt-8 flex flex-wrap items-center gap-3"
           >
-            <ButtonLink href="#cta" size="hero" className="rounded-full">
-              Get started free
+            <ButtonLink
+              href={buildBootstrapOwnerUrl("foundation")}
+              size="hero"
+              className="rounded-full"
+            >
+              Start 14-day trial
               <ArrowRight className="size-4" />
             </ButtonLink>
             <ButtonLink
@@ -109,7 +114,7 @@ export function Hero() {
             transition={{ duration: 0.7, ease: EASE, delay: 0.32 }}
             className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-muted-foreground"
           >
-            {TRUST.map((item) => (
+            {["14-day no-card trial", ...TRUST].map((item) => (
               <li key={item} className="inline-flex items-center gap-1.5">
                 <CheckCircle2 className="size-3.5 text-emerald-600" />
                 {item}
@@ -122,7 +127,7 @@ export function Hero() {
         <HeroPreview />
       </div>
     </section>
-  )
+  );
 }
 
 function HeroPreview() {
@@ -176,14 +181,16 @@ function HeroPreview() {
                 <div className="flex-1">
                   <p className="text-xs font-medium text-foreground">{title}</p>
                   <p className="text-[0.65rem] text-muted-foreground">
-                    {index === 2 ? "Repeatable · 3 fields" : `${index + 2} fields`}
+                    {index === 2
+                      ? "Repeatable · 3 fields"
+                      : `${index + 2} fields`}
                   </p>
                 </div>
                 <span className="text-[0.6rem] text-muted-foreground">
                   {index === 2 ? "File" : index === 1 ? "Multi-select" : "Text"}
                 </span>
               </motion.div>
-            )
+            ),
           )}
 
           <div className="flex items-center justify-end gap-2 pt-1">
@@ -206,5 +213,5 @@ function HeroPreview() {
         Progress saved
       </motion.div>
     </motion.div>
-  )
+  );
 }

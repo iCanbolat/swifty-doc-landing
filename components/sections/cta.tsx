@@ -1,7 +1,10 @@
-import { ArrowRight, Sparkles } from "lucide-react"
+import { ArrowRight, Sparkles } from "lucide-react";
 
-import { Reveal } from "@/components/motion/reveal"
-import { ButtonLink } from "@/components/ui/button"
+import { Reveal } from "@/components/motion/reveal";
+import { ButtonLink } from "@/components/ui/button";
+import { buildBootstrapOwnerUrl, resolveBookDemoUrl } from "@/lib/app-links";
+
+const BOOK_DEMO_URL = resolveBookDemoUrl();
 
 export function CTA() {
   return (
@@ -18,16 +21,24 @@ export function CTA() {
               Turn document chaos into a clean, tracked workflow
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-muted-foreground">
-              Spin up your first template in minutes. No credit card required to
-              try SwiftyDoc.
+              Spin up your first template in minutes. Every organization owner
+              starts with a 14-day no-card trial with strict anti-abuse limits.
+            </p>
+            <p className="mx-auto mt-3 max-w-lg text-[0.68rem] tracking-[0.16em] text-muted-foreground uppercase">
+              Trial includes up to 3 users, 10 active requests, 1 GB storage,
+              and 50 emails / month.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <ButtonLink href="#" size="hero" className="rounded-full">
+              <ButtonLink
+                href={buildBootstrapOwnerUrl("foundation")}
+                size="hero"
+                className="rounded-full"
+              >
                 Get started free
                 <ArrowRight className="size-4" />
               </ButtonLink>
               <ButtonLink
-                href="#"
+                href={BOOK_DEMO_URL}
                 size="hero"
                 variant="outline"
                 className="rounded-full bg-background/70"
@@ -39,5 +50,5 @@ export function CTA() {
         </div>
       </Reveal>
     </section>
-  )
+  );
 }

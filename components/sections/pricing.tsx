@@ -4,6 +4,7 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { InfoTooltip } from "@/components/ui/tooltip";
+import { buildBootstrapOwnerUrl, resolveBookDemoUrl } from "@/lib/app-links";
 import { cn } from "@/lib/utils";
 
 type PlanFeature = {
@@ -17,20 +18,24 @@ type Plan = {
   price: number;
   tagline: string;
   cta: string;
+  ctaHref: string;
   featured?: boolean;
   features: PlanFeature[];
 };
 
+const BOOK_DEMO_URL = resolveBookDemoUrl();
+
 const PLANS: Plan[] = [
   {
     name: "Solo",
-    price: 30,
-    tagline: "For solo operators sending a handful of requests",
-    cta: "Get started",
+    price: 29,
+    tagline: "For solo operators after the trial period",
+    cta: "Start 14-day trial",
+    ctaHref: buildBootstrapOwnerUrl("foundation"),
     features: [
       { label: "1 user" },
       {
-        label: "75 active requests",
+        label: "50 active requests",
         info: "Quota is consumed the moment a request is created. If a request gets no submission or update for 14 days, it's automatically closed and the quota is returned.",
       },
       { label: "5 GB cloud storage" },
@@ -40,13 +45,14 @@ const PLANS: Plan[] = [
   },
   {
     name: "Growth",
-    price: 50,
+    price: 59,
     tagline: "For growing teams running requests at volume",
-    cta: "Get started",
+    cta: "Start 14-day trial",
+    ctaHref: buildBootstrapOwnerUrl("growth"),
     featured: true,
     features: [
       { label: "3 users" },
-      { label: "Unlimited active requests" },
+      { label: "250 active requests" },
       { label: "25 GB cloud storage" },
       { label: "1,000 emails / month" },
       { label: "Google Drive, OneDrive & HubSpot CRM integrations" },
@@ -55,9 +61,10 @@ const PLANS: Plan[] = [
   },
   {
     name: "Enterprise",
-    price: 100,
+    price: 129,
     tagline: "For scaled operations that need control and integrations",
     cta: "Contact sales",
+    ctaHref: BOOK_DEMO_URL,
     features: [
       { label: "10 users", note: "+$10/mo per additional seat" },
       { label: "Unlimited active requests" },
@@ -80,11 +87,15 @@ export function Pricing() {
             Pricing
           </p>
           <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            Plans that scale with your request volume
+            Start with a 14-day trial, then scale by request volume
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
             Every plan includes the template builder, customer portal, and
             review queue. Upgrade as your team and request volume grow.
+          </p>
+          <p className="mx-auto mt-5 inline-flex max-w-2xl items-center rounded-full border border-border/70 bg-background/80 px-4 py-2 text-[0.65rem] tracking-[0.16em] text-muted-foreground uppercase">
+            14-day no-card trial: up to 3 users, 10 active requests, 1 GB
+            storage, 50 emails / month
           </p>
         </Reveal>
 
@@ -125,7 +136,7 @@ export function Pricing() {
 
                 <CardContent className="mt-2">
                   <ButtonLink
-                    href="#cta"
+                    href={plan.ctaHref}
                     size="lg"
                     variant={plan.featured ? "default" : "outline"}
                     className="w-full justify-center rounded-full"
