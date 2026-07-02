@@ -27,13 +27,13 @@ const BOOK_DEMO_URL = resolveBookDemoUrl();
 
 const PLANS: Plan[] = [
   {
-    name: "Solo",
+    name: "Foundation",
     price: 29,
-    tagline: "For solo operators after the trial period",
+    tagline: "For lean teams after the trial period",
     cta: "Start 14-day trial",
     ctaHref: buildBootstrapOwnerUrl("foundation"),
     features: [
-      { label: "1 user" },
+      { label: "3 users", note: "+$10/mo per additional seat" },
       {
         label: "50 active requests",
         info: "Quota is consumed the moment a request is created. If a request gets no submission or update for 14 days, it's automatically closed and the quota is returned.",
@@ -51,7 +51,7 @@ const PLANS: Plan[] = [
     ctaHref: buildBootstrapOwnerUrl("growth"),
     featured: true,
     features: [
-      { label: "3 users" },
+      { label: "5 users", note: "+$10/mo per additional seat" },
       { label: "250 active requests" },
       { label: "25 GB cloud storage" },
       { label: "1,000 emails / month" },
@@ -67,7 +67,7 @@ const PLANS: Plan[] = [
     ctaHref: BOOK_DEMO_URL,
     features: [
       { label: "10 users", note: "+$10/mo per additional seat" },
-      { label: "Unlimited active requests" },
+      { label: "500 active requests" },
       { label: "100 GB cloud storage" },
       { label: "2,500 emails / month" },
       { label: "Google Drive, OneDrive & HubSpot CRM integrations" },
