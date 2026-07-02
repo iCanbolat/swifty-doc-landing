@@ -41,6 +41,7 @@ const PLANS: Plan[] = [
       { label: "5 GB cloud storage" },
       { label: "200 emails / month" },
       { label: "Google Drive, OneDrive & HubSpot CRM integrations" },
+      { label: "Audit logs" },
     ],
   },
   {
@@ -57,6 +58,7 @@ const PLANS: Plan[] = [
       { label: "1,000 emails / month" },
       { label: "Google Drive, OneDrive & HubSpot CRM integrations" },
       { label: "Team management" },
+      { label: "Audit logs" },
     ],
   },
   {
@@ -73,7 +75,7 @@ const PLANS: Plan[] = [
       { label: "Google Drive, OneDrive & HubSpot CRM integrations" },
       { label: "Team management" },
       { label: "API & webhook access" },
-      { label: "Detailed audit logs" },
+      { label: "Audit logs" },
     ],
   },
 ];
