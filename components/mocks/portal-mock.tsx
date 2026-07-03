@@ -13,9 +13,47 @@ import { Badge } from "@/components/ui/badge"
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
+const PRESENCE = {
+  maya: { name: "Maya", initials: "MK", color: "#8b5cf6" },
+  deniz: { name: "Deniz", initials: "DR", color: "#f59e0b" },
+} as const
+
 export function PortalMock() {
   return (
-    <div className="overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10 backdrop-blur-xl">
+    <div className="relative overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10 backdrop-blur-xl">
+      {/* Floating collaborator cursor (live presence) */}
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute z-20"
+        initial={{ left: "62%", top: "58%", opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        animate={{
+          left: ["62%", "38%", "52%", "62%"],
+          top: ["58%", "52%", "62%", "58%"],
+        }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
+          <path
+            d="M2 1.5L13.5 8.5L8 9.5L5.5 14.5L2 1.5Z"
+            fill={PRESENCE.maya.color}
+            stroke="white"
+            strokeWidth="1"
+          />
+        </svg>
+        <span
+          className="absolute top-3.5 left-3 rounded-full px-2 py-0.5 text-[0.6rem] font-medium whitespace-nowrap text-white shadow-sm"
+          style={{ backgroundColor: PRESENCE.maya.color }}
+        >
+          {PRESENCE.maya.name}
+        </span>
+      </motion.div>
+
       {/* Portal header — recipient view */}
       <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-background/70 px-5 py-4">
         <div className="inline-flex items-center gap-2 text-xs font-medium text-foreground">
@@ -50,6 +88,38 @@ export function PortalMock() {
           Progress saved automatically
         </motion.div>
 
+        {/* Live presence strip — collaborative mode */}
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: EASE, delay: 0.15 }}
+          className="flex items-center justify-between gap-2 border border-violet-500/20 bg-violet-500/10 px-3 py-2"
+        >
+          <div className="flex items-center gap-2">
+            <div className="flex -space-x-1.5">
+              <PresenceAvatar
+                initials={PRESENCE.maya.initials}
+                color={PRESENCE.maya.color}
+              />
+              <PresenceAvatar
+                initials={PRESENCE.deniz.initials}
+                color={PRESENCE.deniz.color}
+              />
+            </div>
+            <span className="text-[0.7rem] font-medium text-violet-700">
+              2 collaborators online
+            </span>
+          </div>
+          <span className="inline-flex items-center gap-1 text-[0.62rem] font-medium tracking-wide text-violet-700/80 uppercase">
+            <span className="relative flex size-1.5">
+              <span className="absolute inline-flex size-full animate-ping rounded-full bg-violet-500 opacity-60" />
+              <span className="relative inline-flex size-1.5 rounded-full bg-violet-500" />
+            </span>
+            Live
+          </span>
+        </motion.div>
+
         {/* Progress */}
         <div>
           <div className="mb-1.5 flex items-center justify-between text-[0.7rem] text-muted-foreground">
@@ -70,7 +140,11 @@ export function PortalMock() {
         {/* Fields */}
         <div className="space-y-2.5">
           <Field label="Legal entity name" value="Acme Holdings Ltd." filled />
-          <Field label="Incorporation date" value="12 Mar 2019" filled />
+          <Field
+            label="Incorporation date"
+            value="12 Mar 2019"
+            editingBy={PRESENCE.maya}
+          />
           <FileField label="Certificate of incorporation" />
         </div>
 
@@ -97,19 +171,70 @@ export function PortalMock() {
   )
 }
 
+function PresenceAvatar({
+  initials,
+  color,
+}: {
+  initials: string
+  color: string
+}) {
+  return (
+    <span
+      className="relative flex size-5 items-center justify-center rounded-full border border-white/80 text-[0.55rem] font-bold text-white"
+      style={{ backgroundColor: color }}
+    >
+      {initials}
+      <span className="absolute -right-px -bottom-px size-1.5 rounded-full border border-white bg-emerald-500" />
+    </span>
+  )
+}
+
 function Field({
   label,
   value,
   filled,
+  editingBy,
 }: {
   label: string
   value: string
   filled?: boolean
+  editingBy?: { name: string; color: string }
 }) {
   return (
     <div>
-      <p className="mb-1 text-[0.7rem] text-muted-foreground">{label}</p>
-      <div className="flex items-center justify-between border border-border/60 bg-background/70 px-3 py-2 text-xs text-foreground">
+      <p className="mb-1 flex items-center gap-1.5 text-[0.7rem] text-muted-foreground">
+        {label}
+        {editingBy ? (
+          <span
+            className="inline-flex items-center gap-1 rounded-full border px-1.5 py-px text-[0.6rem] font-medium"
+            style={{
+              borderColor: `${editingBy.color}55`,
+              backgroundColor: `${editingBy.color}1a`,
+              color: editingBy.color,
+            }}
+          >
+            <span className="relative flex size-1">
+              <span
+                className="absolute inline-flex size-full animate-ping rounded-full opacity-60"
+                style={{ backgroundColor: editingBy.color }}
+              />
+              <span
+                className="relative inline-flex size-1 rounded-full"
+                style={{ backgroundColor: editingBy.color }}
+              />
+            </span>
+            {editingBy.name} is editing
+          </span>
+        ) : null}
+      </p>
+      <div
+        className="flex items-center justify-between border border-border/60 bg-background/70 px-3 py-2 text-xs text-foreground"
+        style={
+          editingBy
+            ? { boxShadow: `0 0 0 1.5px ${editingBy.color}` }
+            : undefined
+        }
+      >
         <span>{value}</span>
         {filled ? (
           <CheckCircle2 className="size-3.5 text-emerald-600" />

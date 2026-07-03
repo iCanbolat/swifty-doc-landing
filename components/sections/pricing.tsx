@@ -56,6 +56,10 @@ const PLANS: Plan[] = [
       { label: "250 active requests" },
       { label: "25 GB cloud storage" },
       { label: "1,000 emails / month" },
+      {
+        label: "Live collaboration: presence & cursors",
+        info: "In collaborative requests, participants see who's online, which field each person is editing, and each other's live cursors in real time.",
+      },
       { label: "Google Drive, OneDrive & HubSpot CRM integrations" },
       { label: "Team management" },
       { label: "Audit logs" },
@@ -63,7 +67,7 @@ const PLANS: Plan[] = [
   },
   {
     name: "Enterprise",
-    price: 129,
+    price: 99,
     tagline: "For scaled operations that need control and integrations",
     cta: "Contact sales",
     ctaHref: BOOK_DEMO_URL,
@@ -72,6 +76,10 @@ const PLANS: Plan[] = [
       { label: "500 active requests" },
       { label: "100 GB cloud storage" },
       { label: "2,500 emails / month" },
+      {
+        label: "Live collaboration: presence & cursors",
+        info: "In collaborative requests, participants see who's online, which field each person is editing, and each other's live cursors in real time.",
+      },
       { label: "Google Drive, OneDrive & HubSpot CRM integrations" },
       { label: "Team management" },
       { label: "API & webhook access" },

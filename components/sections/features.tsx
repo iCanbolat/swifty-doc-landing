@@ -49,6 +49,7 @@ export function Features() {
           "Token-verified access, expiring links",
           "Autosave with live progress tracking",
           "Individual or collaborative submission modes",
+          "Live presence & cursors in collaborative forms (Growth+)",
         ]}
         mock={<PortalMock />}
       />
