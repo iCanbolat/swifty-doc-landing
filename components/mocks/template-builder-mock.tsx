@@ -1,11 +1,6 @@
-"use client"
-
-import { motion } from "framer-motion"
 import { Braces, GripVertical, Plus, RotateCcw, Rocket } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
-
-const EASE = [0.22, 1, 0.36, 1] as const
 
 type Field = { label: string; type: string }
 type Section = { title: string; meta: string; fields: Field[] }
@@ -39,7 +34,7 @@ const TYPE_STYLES: Record<string, string> = {
 
 export function TemplateBuilderMock() {
   return (
-    <div className="overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10 backdrop-blur-xl">
+    <div className="overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10">
       <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-background/70 px-5 py-4">
         <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/70 px-3 py-1 text-[0.6rem] tracking-[0.28em] text-muted-foreground uppercase">
           <Braces className="size-3" />
@@ -50,18 +45,10 @@ export function TemplateBuilderMock() {
             <RotateCcw className="size-3" />
             Cancel draft
           </span>
-          <motion.span
-            animate={{ boxShadow: [
-              "0 0 0 0 rgba(70,50,229,0.0)",
-              "0 0 0 6px rgba(70,50,229,0.12)",
-              "0 0 0 0 rgba(70,50,229,0.0)",
-            ] }}
-            transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-            className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[0.65rem] font-medium text-primary-foreground"
-          >
+          <span className="inline-flex animate-pulse-ring items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[0.65rem] font-medium text-primary-foreground [--pulse-color:rgba(70,50,229,0.12)] motion-reduce:animate-none">
             <Rocket className="size-3" />
             Publish version
-          </motion.span>
+          </span>
         </div>
       </div>
 
@@ -74,23 +61,25 @@ export function TemplateBuilderMock() {
         </div>
 
         {SECTIONS.map((section, sectionIndex) => (
-          <motion.div
+          <div
             key={section.title}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5, ease: EASE, delay: sectionIndex * 0.12 }}
-            className="border border-border/60 bg-background/60 p-3"
+            className="reveal-item border border-border/60 bg-background/60 p-3 [--reveal-from:translateY(16px)]"
+            style={
+              {
+                "--reveal-delay": `${sectionIndex * 0.12}s`,
+              } as React.CSSProperties
+            }
           >
             <div className="flex items-center gap-2.5">
-              <motion.span
-                // subtle "grab" wiggle to signal drag affordance
-                animate={sectionIndex === 0 ? { y: [0, -2, 0] } : {}}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="flex size-6 items-center justify-center border border-border/60 bg-card text-muted-foreground"
+              <span
+                className={`flex size-6 items-center justify-center border border-border/60 bg-card text-muted-foreground ${
+                  sectionIndex === 0
+                    ? "animate-grab-wiggle motion-reduce:animate-none"
+                    : ""
+                }`}
               >
                 <GripVertical className="size-3.5" />
-              </motion.span>
+              </span>
               <div className="flex-1">
                 <p className="text-xs font-medium text-foreground">
                   {section.title}
@@ -103,16 +92,16 @@ export function TemplateBuilderMock() {
 
             <div className="mt-2.5 space-y-1.5 pl-8">
               {section.fields.map((field, fieldIndex) => (
-                <motion.div
+                <div
                   key={field.label}
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.4,
-                    delay: sectionIndex * 0.12 + fieldIndex * 0.06,
-                  }}
-                  className="flex items-center justify-between gap-2 border border-border/50 bg-card/80 px-2.5 py-1.5"
+                  className="reveal-item flex items-center justify-between gap-2 border border-border/50 bg-card/80 px-2.5 py-1.5 [--reveal-from:translateX(10px)]"
+                  style={
+                    {
+                      "--reveal-delay": `${
+                        sectionIndex * 0.12 + fieldIndex * 0.06
+                      }s`,
+                    } as React.CSSProperties
+                  }
                 >
                   <span className="text-[0.7rem] text-foreground">
                     {field.label}
@@ -122,10 +111,10 @@ export function TemplateBuilderMock() {
                   >
                     {field.type}
                   </span>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         ))}
 
         <div className="flex items-center justify-center gap-1.5 border border-dashed border-border/60 bg-background/40 py-2.5 text-[0.7rem] text-muted-foreground">

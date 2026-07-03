@@ -73,3 +73,196 @@
     @apply font-mono;
   }
 }
+
+/* ---------------------------------------------------------------------------
+ * Motion system — pure CSS, GPU-composited (transform/opacity only).
+ * Entrance animations run once on load; scroll reveals are driven by an
+ * IntersectionObserver toggling `.is-visible` (see components/motion/reveal).
+ * ------------------------------------------------------------------------- */
+
+@theme {
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-rise: rise 0.7s var(--ease-out-soft) both;
+  --animate-rise-x: rise-x 0.5s var(--ease-out-soft) both;
+  --animate-fade-down: fade-down 0.5s var(--ease-out-soft) both;
+  --animate-menu-in: menu-in 0.25s var(--ease-out-soft) both;
+  --animate-hero-card: hero-card 0.9s var(--ease-out-soft) 0.2s both;
+  --animate-pop: pop 0.35s var(--ease-out-soft) both;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-blob-a: blob-a 14s ease-in-out infinite;
+  --animate-blob-b: blob-b 16s ease-in-out infinite;
+  --animate-cursor-drift: cursor-drift 7s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 2.2s ease-in-out infinite;
+  --animate-grab-wiggle: grab-wiggle 2s ease-in-out infinite;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes rise-x {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade-down {
+    from {
+      opacity: 0;
+      transform: translateY(-24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes hero-card {
+    from {
+      opacity: 0;
+      transform: perspective(1200px) rotateX(8deg) translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes blob-a {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(16px, 24px);
+    }
+  }
+  @keyframes blob-b {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    50% {
+      transform: translate(-12px, -28px);
+    }
+  }
+  @keyframes cursor-drift {
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+    33% {
+      transform: translate(-120px, -28px);
+    }
+    66% {
+      transform: translate(-50px, 18px);
+    }
+  }
+  @keyframes pulse-ring {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 var(--pulse-color, rgba(70, 50, 229, 0));
+    }
+    50% {
+      box-shadow: 0 0 0 6px var(--pulse-color, rgba(70, 50, 229, 0.12));
+    }
+  }
+  @keyframes grab-wiggle {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+@layer utilities {
+  /* Scroll-triggered fade + rise; `.is-visible` is added once in view. */
+  .reveal {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 24px));
+    transition-property: opacity, transform;
+    transition-duration: 0.6s;
+    transition-timing-function: var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Child elements revealed when an ancestor gains `.is-visible`. */
+  .reveal-item {
+    opacity: 0;
+    transform: var(--reveal-from, translateY(14px));
+    transition-property: opacity, transform;
+    transition-duration: 0.5s;
+    transition-timing-function: var(--reveal-ease, var(--ease-out-soft));
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .is-visible .reveal-item {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Progress bars: composited scaleX instead of animating `width`. */
+  .reveal-bar {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.1s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0s);
+  }
+  .is-visible .reveal-bar {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-item,
+  .reveal-bar {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

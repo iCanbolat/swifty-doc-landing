@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-import { AnimatePresence, motion, useInView } from "framer-motion"
 import {
   Check,
   CheckCircle2,
@@ -9,9 +8,9 @@ import {
   X,
 } from "lucide-react"
 
+import { useInViewOnce } from "@/components/motion/reveal"
 import { Badge } from "@/components/ui/badge"
-
-const EASE = [0.22, 1, 0.36, 1] as const
+import { cn } from "@/lib/utils"
 
 type Item = {
   field: string
@@ -26,8 +25,7 @@ const ITEMS: Item[] = [
 ]
 
 export function ReviewMock() {
-  const ref = React.useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: "-80px" })
+  const { ref, inView } = useInViewOnce<HTMLDivElement>()
   const [lastApproved, setLastApproved] = React.useState(false)
 
   React.useEffect(() => {
@@ -39,7 +37,7 @@ export function ReviewMock() {
   return (
     <div
       ref={ref}
-      className="overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10 backdrop-blur-xl"
+      className="overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10"
     >
       {/* Header with counts */}
       <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-background/70 px-5 py-4">
@@ -58,13 +56,12 @@ export function ReviewMock() {
 
       <div className="space-y-2.5 p-5">
         {ITEMS.map((item, index) => (
-          <motion.div
+          <div
             key={item.field}
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, ease: EASE, delay: index * 0.1 }}
-            className="border border-border/60 bg-background/60 p-3"
+            className="reveal-item border border-border/60 bg-background/60 p-3"
+            style={
+              { "--reveal-delay": `${index * 0.1}s` } as React.CSSProperties
+            }
           >
             <div className="flex items-start justify-between gap-3">
               <div>
@@ -86,17 +83,11 @@ export function ReviewMock() {
                 </p>
               </div>
             ) : null}
-          </motion.div>
+          </div>
         ))}
 
         {/* Pending item with live decision */}
-        <motion.div
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45, ease: EASE, delay: 0.32 }}
-          className="border border-border/60 bg-background/60 p-3"
-        >
+        <div className="reveal-item border border-border/60 bg-background/60 p-3 [--reveal-delay:0.32s]">
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-[0.7rem] text-muted-foreground">
@@ -106,31 +97,25 @@ export function ReviewMock() {
                 utility-bill.pdf
               </p>
             </div>
-            <AnimatePresence mode="wait">
-              {lastApproved ? (
-                <StateBadge key="approved" state="approved" />
-              ) : (
-                <StateBadge key="pending" state="pending" />
-              )}
-            </AnimatePresence>
+            {lastApproved ? (
+              <StateBadge key="approved" state="approved" />
+            ) : (
+              <StateBadge key="pending" state="pending" />
+            )}
           </div>
 
           <div className="mt-3 flex items-center gap-2">
-            <motion.button
+            <button
               type="button"
-              animate={
-                lastApproved ? {} : { boxShadow: [
-                  "0 0 0 0 rgba(16,185,129,0)",
-                  "0 0 0 5px rgba(16,185,129,0.12)",
-                  "0 0 0 0 rgba(16,185,129,0)",
-                ] }
-              }
-              transition={{ duration: 2, repeat: Infinity }}
-              className="inline-flex flex-1 items-center justify-center gap-1.5 border border-emerald-500/20 bg-emerald-500/10 py-1.5 text-[0.7rem] font-medium text-emerald-700"
+              className={cn(
+                "inline-flex flex-1 items-center justify-center gap-1.5 border border-emerald-500/20 bg-emerald-500/10 py-1.5 text-[0.7rem] font-medium text-emerald-700",
+                !lastApproved &&
+                  "animate-pulse-ring [--pulse-color:rgba(16,185,129,0.12)] motion-reduce:animate-none"
+              )}
             >
               <Check className="size-3" />
               Approve
-            </motion.button>
+            </button>
             <button
               type="button"
               className="inline-flex flex-1 items-center justify-center gap-1.5 border border-rose-500/20 bg-rose-500/10 py-1.5 text-[0.7rem] font-medium text-rose-700"
@@ -139,7 +124,7 @@ export function ReviewMock() {
               Reject
             </button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </div>
   )
@@ -148,16 +133,12 @@ export function ReviewMock() {
 function StateBadge({ state }: { state: Item["state"] }) {
   if (state === "approved") {
     return (
-      <motion.span
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.8 }}
-      >
+      <span className="inline-flex animate-pop">
         <Badge variant="success">
           <CheckCircle2 className="size-3" />
           Approved
         </Badge>
-      </motion.span>
+      </span>
     )
   }
   if (state === "rejected") {
@@ -169,12 +150,8 @@ function StateBadge({ state }: { state: Item["state"] }) {
     )
   }
   return (
-    <motion.span
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-    >
+    <span className="inline-flex animate-pop">
       <Badge variant="warning">Pending</Badge>
-    </motion.span>
+    </span>
   )
 }

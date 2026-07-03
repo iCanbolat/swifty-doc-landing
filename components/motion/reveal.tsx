@@ -1,9 +1,57 @@
 "use client"
 
 import * as React from "react"
-import { motion, type Variants } from "framer-motion"
 
-const EASE = [0.22, 1, 0.36, 1] as const
+import { cn } from "@/lib/utils"
+
+/**
+ * Lightweight scroll-reveal primitives. One shared IntersectionObserver adds
+ * `.is-visible` directly on the element (no React re-render); the actual
+ * animation is pure CSS — see the motion system block in app/globals.css.
+ */
+
+let sharedObserver: IntersectionObserver | null = null
+const intersectCallbacks = new WeakMap<Element, () => void>()
+
+function observeOnce(el: Element, onIntersect: () => void) {
+  if (typeof IntersectionObserver === "undefined") {
+    onIntersect()
+    return () => {}
+  }
+  if (!sharedObserver) {
+    sharedObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          intersectCallbacks.get(entry.target)?.()
+          intersectCallbacks.delete(entry.target)
+          sharedObserver?.unobserve(entry.target)
+        }
+      },
+      { rootMargin: "-80px 0px" }
+    )
+  }
+  intersectCallbacks.set(el, onIntersect)
+  sharedObserver.observe(el)
+  return () => {
+    intersectCallbacks.delete(el)
+    sharedObserver?.unobserve(el)
+  }
+}
+
+/** Observe an element and flip to `true` once it enters the viewport. */
+export function useInViewOnce<T extends HTMLElement>() {
+  const ref = React.useRef<T>(null)
+  const [inView, setInView] = React.useState(false)
+
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    return observeOnce(el, () => setInView(true))
+  }, [])
+
+  return { ref, inView }
+}
 
 /** Scroll-triggered fade + rise. Fires once when it enters the viewport. */
 export function Reveal({
@@ -11,7 +59,7 @@ export function Reveal({
   className,
   delay = 0,
   y = 24,
-  as = "div",
+  as: Tag = "div",
 }: {
   children: React.ReactNode
   className?: string
@@ -19,69 +67,74 @@ export function Reveal({
   y?: number
   as?: "div" | "section" | "li" | "span"
 }) {
-  const MotionTag = motion[as]
+  const ref = React.useRef<HTMLElement>(null)
+
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    return observeOnce(el, () => el.classList.add("is-visible"))
+  }, [])
+
   return (
-    <MotionTag
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, ease: EASE, delay }}
+    <Tag
+      ref={ref as React.Ref<never>}
+      className={cn("reveal", className)}
+      style={
+        {
+          "--reveal-delay": delay ? `${delay}s` : undefined,
+          "--reveal-y": y !== 24 ? `${y}px` : undefined,
+        } as React.CSSProperties
+      }
     >
       {children}
-    </MotionTag>
+    </Tag>
   )
-}
-
-const staggerContainer: Variants = {
-  hidden: {},
-  show: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.05 },
-  },
-}
-
-const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 18 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: EASE },
-  },
 }
 
 /** Container that staggers the entrance of its <StaggerItem/> children. */
 export function Stagger({
   children,
   className,
-  once = true,
 }: {
   children: React.ReactNode
   className?: string
-  once?: boolean
 }) {
+  const ref = React.useRef<HTMLDivElement>(null)
+
+  React.useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    return observeOnce(el, () => el.classList.add("is-visible"))
+  }, [])
+
   return (
-    <motion.div
-      className={className}
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once, margin: "-80px" }}
-    >
-      {children}
-    </motion.div>
+    <div ref={ref} className={className}>
+      {React.Children.map(children, (child, index) => {
+        if (!React.isValidElement(child)) return child
+        const item = child as React.ReactElement<{ style?: React.CSSProperties }>
+        return React.cloneElement(item, {
+          style: {
+            "--reveal-delay": `${0.05 + index * 0.08}s`,
+            ...item.props.style,
+          } as React.CSSProperties,
+        })
+      })}
+    </div>
   )
 }
 
 export function StaggerItem({
   children,
   className,
+  style,
 }: {
   children: React.ReactNode
   className?: string
+  style?: React.CSSProperties
 }) {
   return (
-    <motion.div className={className} variants={staggerItem}>
+    <div className={cn("reveal-item", className)} style={style}>
       {children}
-    </motion.div>
+    </div>
   )
 }

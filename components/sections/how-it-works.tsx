@@ -11,7 +11,7 @@ const STEPS = [
   {
     icon: Link2,
     title: "Send a portal link",
-    body: "Pick a client and recipients, set a due date, and send by email, SMS, or WhatsApp.",
+    body: "Pick a client and recipients, set a due date, and send a secure portal link by email.",
   },
   {
     icon: Inbox,
@@ -44,7 +44,7 @@ export function HowItWorks() {
         <Stagger className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, index) => (
             <StaggerItem key={step.title}>
-              <div className="group relative h-full border border-border/70 bg-card/80 p-5 ring-1 ring-foreground/10 backdrop-blur-xl transition-transform duration-200 hover:-translate-y-1">
+              <div className="group relative h-full border border-border/70 bg-card/80 p-5 ring-1 ring-foreground/10 transition-transform duration-200 hover:-translate-y-1">
                 <div className="flex items-center justify-between">
                   <span className="flex size-9 items-center justify-center border border-border/70 bg-primary/10 text-primary">
                     <step.icon className="size-4" />

@@ -1,6 +1,3 @@
-"use client"
-
-import { motion } from "framer-motion"
 import {
   FileText,
   FolderOpen,
@@ -10,8 +7,6 @@ import {
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
-
-const EASE = [0.22, 1, 0.36, 1] as const
 
 type FileRow = {
   name: string
@@ -56,7 +51,7 @@ const KIND_STYLE = {
 
 export function StorageMock() {
   return (
-    <div className="overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10 backdrop-blur-xl">
+    <div className="overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10">
       {/* Folder header */}
       <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-background/70 px-5 py-4">
         <div className="flex items-center gap-2.5">
@@ -97,17 +92,16 @@ export function StorageMock() {
             {group.files.map((file, fileIndex) => {
               const Icon = KIND_ICON[file.kind]
               return (
-                <motion.div
+                <div
                   key={file.name}
-                  initial={{ opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.4,
-                    ease: EASE,
-                    delay: groupIndex * 0.15 + fileIndex * 0.08,
-                  }}
-                  className="flex items-center gap-3 border border-border/60 bg-background/60 px-3 py-2.5"
+                  className="reveal-item flex items-center gap-3 border border-border/60 bg-background/60 px-3 py-2.5 [--reveal-from:translateY(12px)]"
+                  style={
+                    {
+                      "--reveal-delay": `${
+                        groupIndex * 0.15 + fileIndex * 0.08
+                      }s`,
+                    } as React.CSSProperties
+                  }
                 >
                   <span
                     className={`flex size-7 items-center justify-center border ${KIND_STYLE[file.kind]}`}
@@ -120,13 +114,7 @@ export function StorageMock() {
                     </p>
                     {file.uploading ? (
                       <div className="mt-1 h-1 w-full overflow-hidden bg-muted">
-                        <motion.div
-                          initial={{ width: "10%" }}
-                          whileInView={{ width: "78%" }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 1.4, ease: EASE, delay: 0.4 }}
-                          className="h-full bg-gradient-to-r from-primary to-sky-500"
-                        />
+                        <div className="reveal-bar h-full w-[78%] bg-gradient-to-r from-primary to-sky-500 [--reveal-delay:0.4s]" />
                       </div>
                     ) : (
                       <p className="text-[0.65rem] text-muted-foreground">
@@ -137,7 +125,7 @@ export function StorageMock() {
                   <span className="shrink-0 text-[0.65rem] text-muted-foreground">
                     {file.uploading ? "Uploading…" : file.size}
                   </span>
-                </motion.div>
+                </div>
               )
             })}
           </div>

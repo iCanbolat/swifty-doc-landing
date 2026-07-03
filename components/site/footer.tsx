@@ -3,15 +3,30 @@ import { Logo } from "@/components/brand/logo"
 const COLUMNS = [
   {
     heading: "Product",
-    links: ["Template builder", "Customer portal", "Review queue", "Storage"],
+    links: [
+      { label: "Template builder", href: "#" },
+      { label: "Customer portal", href: "#" },
+      { label: "Review queue", href: "#" },
+      { label: "Storage", href: "#" },
+    ],
   },
   {
     heading: "Company",
-    links: ["About", "Careers", "Blog", "Contact"],
+    links: [
+      { label: "About", href: "#" },
+      { label: "Careers", href: "#" },
+      { label: "Blog", href: "#" },
+      { label: "Contact", href: "#" },
+    ],
   },
   {
     heading: "Resources",
-    links: ["Documentation", "API reference", "Status", "Security"],
+    links: [
+      { label: "Documentation", href: "/docs/webhooks" },
+      { label: "API reference", href: "/docs/webhooks#api-reference" },
+      { label: "Status", href: "#" },
+      { label: "Security", href: "#" },
+    ],
   },
 ]
 
@@ -35,12 +50,12 @@ export function Footer() {
               </p>
               <ul className="mt-4 space-y-2.5">
                 {column.links.map((link) => (
-                  <li key={link}>
+                  <li key={link.label}>
                     <a
-                      href="#"
+                      href={link.href}
                       className="text-xs text-muted-foreground transition-colors hover:text-foreground"
                     >
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}

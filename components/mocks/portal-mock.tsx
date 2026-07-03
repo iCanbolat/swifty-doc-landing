@@ -1,6 +1,3 @@
-"use client"
-
-import { motion } from "framer-motion"
 import {
   CheckCircle2,
   Lock,
@@ -11,8 +8,6 @@ import {
 
 import { Badge } from "@/components/ui/badge"
 
-const EASE = [0.22, 1, 0.36, 1] as const
-
 const PRESENCE = {
   maya: { name: "Maya", initials: "MK", color: "#8b5cf6" },
   deniz: { name: "Deniz", initials: "DR", color: "#f59e0b" },
@@ -20,23 +15,11 @@ const PRESENCE = {
 
 export function PortalMock() {
   return (
-    <div className="relative overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10 backdrop-blur-xl">
+    <div className="relative overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10">
       {/* Floating collaborator cursor (live presence) */}
-      <motion.div
+      <div
         aria-hidden
-        className="pointer-events-none absolute z-20"
-        initial={{ left: "62%", top: "58%", opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        animate={{
-          left: ["62%", "38%", "52%", "62%"],
-          top: ["58%", "52%", "62%", "58%"],
-        }}
-        transition={{
-          duration: 7,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+        className="pointer-events-none absolute top-[58%] left-[62%] z-20 animate-cursor-drift will-change-transform motion-reduce:animate-none"
       >
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
           <path
@@ -52,7 +35,7 @@ export function PortalMock() {
         >
           {PRESENCE.maya.name}
         </span>
-      </motion.div>
+      </div>
 
       {/* Portal header — recipient view */}
       <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-background/70 px-5 py-4">
@@ -70,32 +53,15 @@ export function PortalMock() {
 
       <div className="space-y-4 p-5">
         {/* Autosave banner */}
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: EASE }}
-          className="flex items-center gap-2 border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-[0.7rem] font-medium text-emerald-700"
-        >
-          <motion.span
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
-          >
+        <div className="reveal-item flex items-center gap-2 border border-emerald-500/20 bg-emerald-500/10 px-3 py-2 text-[0.7rem] font-medium text-emerald-700 [--reveal-from:translateY(-8px)]">
+          <span className="reveal-item [--reveal-delay:0.4s] [--reveal-ease:var(--ease-spring)] [--reveal-from:scale(0)]">
             <CheckCircle2 className="size-3.5" />
-          </motion.span>
+          </span>
           Progress saved automatically
-        </motion.div>
+        </div>
 
         {/* Live presence strip — collaborative mode */}
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: EASE, delay: 0.15 }}
-          className="flex items-center justify-between gap-2 border border-violet-500/20 bg-violet-500/10 px-3 py-2"
-        >
+        <div className="reveal-item flex items-center justify-between gap-2 border border-violet-500/20 bg-violet-500/10 px-3 py-2 [--reveal-delay:0.15s] [--reveal-from:translateY(-8px)]">
           <div className="flex items-center gap-2">
             <div className="flex -space-x-1.5">
               <PresenceAvatar
@@ -118,7 +84,7 @@ export function PortalMock() {
             </span>
             Live
           </span>
-        </motion.div>
+        </div>
 
         {/* Progress */}
         <div>
@@ -127,13 +93,7 @@ export function PortalMock() {
             <span className="font-medium text-foreground">40%</span>
           </div>
           <div className="h-2 w-full overflow-hidden bg-muted">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: "40%" }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.1, ease: EASE, delay: 0.2 }}
-              className="h-full bg-gradient-to-r from-primary to-sky-500"
-            />
+            <div className="reveal-bar h-full w-[40%] bg-gradient-to-r from-primary to-sky-500 [--reveal-delay:0.2s]" />
           </div>
         </div>
 
