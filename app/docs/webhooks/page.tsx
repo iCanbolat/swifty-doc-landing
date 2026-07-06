@@ -1,16 +1,16 @@
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
-import { DocsToc, MobileToc, type TocItem } from "@/components/docs/docs-toc"
-import { WebhooksBestPractices } from "@/components/docs/webhooks/best-practices"
-import { WebhooksDelivery } from "@/components/docs/webhooks/delivery"
-import { WebhooksEvents } from "@/components/docs/webhooks/events"
-import { WebhooksOverview } from "@/components/docs/webhooks/overview"
-import { WebhooksQuickStart } from "@/components/docs/webhooks/quick-start"
-import { WebhooksSecretRotation } from "@/components/docs/webhooks/secret-rotation"
-import { WebhooksSignatures } from "@/components/docs/webhooks/signatures"
-import { Footer } from "@/components/site/footer"
-import { Navbar } from "@/components/site/navbar"
-import { Badge } from "@/components/ui/badge"
+import { DocsToc, MobileToc, type TocItem } from "@/components/docs/docs-toc";
+import { WebhooksBestPractices } from "@/components/docs/webhooks/best-practices";
+import { WebhooksDelivery } from "@/components/docs/webhooks/delivery";
+import { WebhooksEvents } from "@/components/docs/webhooks/events";
+import { WebhooksOverview } from "@/components/docs/webhooks/overview";
+import { WebhooksQuickStart } from "@/components/docs/webhooks/quick-start";
+import { WebhooksSecretRotation } from "@/components/docs/webhooks/secret-rotation";
+import { WebhooksSignatures } from "@/components/docs/webhooks/signatures";
+import { Footer } from "@/components/site/footer";
+import { Navbar } from "@/components/site/navbar";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Webhooks — SwiftyDoc Documentation",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
       "Receive signed, real-time HTTP callbacks when requests complete, files upload, and reviews change.",
     type: "article",
   },
-}
+};
 
 const TOC: TocItem[] = [
   { id: "overview", label: "Overview" },
@@ -33,7 +33,7 @@ const TOC: TocItem[] = [
   { id: "delivery", label: "Delivery & retries" },
   { id: "secret-rotation", label: "Secret rotation" },
   { id: "best-practices", label: "Best practices & FAQ" },
-]
+];
 
 export default function WebhooksDocsPage() {
   return (
@@ -53,8 +53,8 @@ export default function WebhooksDocsPage() {
           <p className="mt-4 text-sm leading-7 text-muted-foreground">
             Get notified the moment something happens in SwiftyDoc. Webhooks
             deliver signed, real-time HTTP callbacks to your systems whenever
-            requests are sent, files are uploaded, reviews are decided, and
-            more — no polling required.
+            requests are sent, files are uploaded, reviews are decided, and more
+            — no polling required.
           </p>
         </div>
 
@@ -79,5 +79,5 @@ export default function WebhooksDocsPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

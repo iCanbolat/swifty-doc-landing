@@ -3,10 +3,10 @@
  * src/common/webhooks/webhook-events.ts (event names) and
  * src/infrastructure/webhooks/webhook.service.ts (envelope, headers).
  */
-import { Callout } from "@/components/docs/callout"
-import { CodeBlock } from "@/components/docs/code-block"
-import { DocParagraph, DocSection } from "@/components/docs/doc-section"
-import { DocsTable, InlineCode } from "@/components/docs/docs-table"
+import { Callout } from "@/components/docs/callout";
+import { CodeBlock } from "@/components/docs/code-block";
+import { DocParagraph, DocSection } from "@/components/docs/doc-section";
+import { DocsTable, InlineCode } from "@/components/docs/docs-table";
 
 const ENVELOPE_EXAMPLE = `{
   "id": "evt_9f6f2c9a1a7b4c1e",
@@ -21,7 +21,7 @@ const ENVELOPE_EXAMPLE = `{
     "totalSubmissions": 3,
     "completedSubmissions": 3
   }
-}`
+}`;
 
 export function WebhooksOverview() {
   return (
@@ -36,14 +36,11 @@ export function WebhooksOverview() {
         </DocParagraph>
         <Callout title="Availability">
           Webhooks are available on the <strong>Enterprise</strong> plan.
-          Managing endpoints requires the{" "}
-          <InlineCode>webhooks.read</InlineCode> /{" "}
-          <InlineCode>webhooks.write</InlineCode> permissions in your
+          Managing endpoints requires the <InlineCode>webhooks.read</InlineCode>{" "}
+          / <InlineCode>webhooks.write</InlineCode> permissions in your
           organization.
         </Callout>
-        <DocParagraph>
-          Manage endpoints directly in the app:
-        </DocParagraph>
+        <DocParagraph>Manage endpoints directly in the app:</DocParagraph>
         <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-muted-foreground">
           <li>
             <strong className="text-foreground">In the app</strong> — go to{" "}
@@ -58,7 +55,10 @@ export function WebhooksOverview() {
 
       <DocSection id="how-it-works" title="How delivery works">
         <ol className="list-decimal space-y-2 pl-5 text-sm leading-7 text-muted-foreground">
-          <li>An event occurs in your organization (for example, a recipient completes a request).</li>
+          <li>
+            An event occurs in your organization (for example, a recipient
+            completes a request).
+          </li>
           <li>
             SwiftyDoc queues one delivery per enabled endpoint whose
             subscriptions match the event type (or that subscribed to{" "}
@@ -69,9 +69,9 @@ export function WebhooksOverview() {
             envelope to your endpoint URL.
           </li>
           <li>
-            Any <InlineCode>2xx</InlineCode> response acknowledges the
-            delivery. Anything else — or a timeout — schedules a retry with
-            exponential backoff (see{" "}
+            Any <InlineCode>2xx</InlineCode> response acknowledges the delivery.
+            Anything else — or a timeout — schedules a retry with exponential
+            backoff (see{" "}
             <a
               href="#delivery"
               className="text-primary underline underline-offset-4"
@@ -93,9 +93,7 @@ export function WebhooksOverview() {
           for each shape.
         </DocParagraph>
         <CodeBlock label="Event envelope" code={ENVELOPE_EXAMPLE} />
-        <DocParagraph>
-          Each request carries the following headers:
-        </DocParagraph>
+        <DocParagraph>Each request carries the following headers:</DocParagraph>
         <DocsTable
           head={["Header", "Description"]}
           rows={[
@@ -108,15 +106,14 @@ export function WebhooksOverview() {
             [
               <InlineCode key="h">X-SwiftyDoc-Delivery-Id</InlineCode>,
               <>
-                Unique per delivery attempt — use it for idempotency. Test
-                pings are prefixed with <InlineCode>ping_</InlineCode>.
+                Unique per delivery attempt — use it for idempotency. Test pings
+                are prefixed with <InlineCode>ping_</InlineCode>.
               </>,
             ],
             [
               <InlineCode key="h">X-SwiftyDoc-Event</InlineCode>,
               <>
-                The event type, e.g.{" "}
-                <InlineCode>request.completed</InlineCode>.
+                The event type, e.g. <InlineCode>request.completed</InlineCode>.
               </>,
             ],
             [
@@ -135,5 +132,5 @@ export function WebhooksOverview() {
         />
       </DocSection>
     </>
-  )
+  );
 }

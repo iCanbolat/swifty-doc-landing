@@ -6,8 +6,8 @@ import {
   DocParagraph,
   DocSection,
   DocSubheading,
-} from "@/components/docs/doc-section"
-import { InlineCode } from "@/components/docs/docs-table"
+} from "@/components/docs/doc-section";
+import { InlineCode } from "@/components/docs/docs-table";
 
 export function WebhooksBestPractices() {
   return (
@@ -28,9 +28,7 @@ export function WebhooksBestPractices() {
           work inline.
         </li>
         <li>
-          <strong className="text-foreground">
-            Verify before you parse.
-          </strong>{" "}
+          <strong className="text-foreground">Verify before you parse.</strong>{" "}
           Check the signature against the raw body and reject stale timestamps
           before acting on any payload.
         </li>
@@ -38,9 +36,9 @@ export function WebhooksBestPractices() {
           <strong className="text-foreground">
             Don&apos;t assume ordering.
           </strong>{" "}
-          Deliveries are queued and retried independently, so events can
-          arrive out of order. Use <InlineCode>occurred_at</InlineCode> when
-          sequence matters.
+          Deliveries are queued and retried independently, so events can arrive
+          out of order. Use <InlineCode>occurred_at</InlineCode> when sequence
+          matters.
         </li>
         <li>
           <strong className="text-foreground">Protect your secret.</strong>{" "}
@@ -49,9 +47,8 @@ export function WebhooksBestPractices() {
         </li>
         <li>
           <strong className="text-foreground">Subscribe narrowly.</strong>{" "}
-          Prefer explicit event subscriptions over{" "}
-          <InlineCode>*</InlineCode> so your receiver only handles what it
-          actually uses.
+          Prefer explicit event subscriptions over <InlineCode>*</InlineCode> so
+          your receiver only handles what it actually uses.
         </li>
       </ul>
 
@@ -66,9 +63,9 @@ export function WebhooksBestPractices() {
         Can I test without writing code?
       </DocSubheading>
       <DocParagraph>
-        Yes — register an endpoint in the app and use the built-in ping
-        action, or point it at a request-inspection service while you develop.
-        For end-to-end checks, use the in-app "Send test event" action.
+        Yes — register an endpoint in the app and use the built-in ping action,
+        or point it at a request-inspection service while you develop. For
+        end-to-end checks, use the in-app "Send test event" action.
       </DocParagraph>
 
       <DocSubheading id="faq-downtime">
@@ -76,9 +73,8 @@ export function WebhooksBestPractices() {
       </DocSubheading>
       <DocParagraph>
         Deliveries are retried automatically (5 attempts by default). If the
-        outage outlasted the retry window, list the failed deliveries and
-        replay them — the original payloads are stored and re-sent as fresh
-        deliveries.
+        outage outlasted the retry window, list the failed deliveries and replay
+        them — the original payloads are stored and re-sent as fresh deliveries.
       </DocParagraph>
 
       <DocSubheading id="faq-authenticity">
@@ -92,5 +88,5 @@ export function WebhooksBestPractices() {
         <InlineCode>401</InlineCode>.
       </DocParagraph>
     </DocSection>
-  )
+  );
 }

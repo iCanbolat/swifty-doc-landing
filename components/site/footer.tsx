@@ -1,4 +1,4 @@
-import { Logo } from "@/components/brand/logo"
+import { Logo } from "@/components/brand/logo";
 
 const COLUMNS = [
   {
@@ -27,7 +27,7 @@ const COLUMNS = [
       { label: "Security", href: "#" },
     ],
   },
-]
+];
 
 export function Footer() {
   return (
@@ -81,5 +81,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

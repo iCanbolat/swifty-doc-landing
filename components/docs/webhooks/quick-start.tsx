@@ -3,14 +3,14 @@
  * client/src/features/webhooks/pages/webhooks-page.tsx and
  * api/src/infrastructure/webhooks/webhook.service.ts.
  */
-import { Callout } from "@/components/docs/callout"
-import { CodeBlock } from "@/components/docs/code-block"
+import { Callout } from "@/components/docs/callout";
+import { CodeBlock } from "@/components/docs/code-block";
 import {
   DocParagraph,
   DocSection,
   DocSubheading,
-} from "@/components/docs/doc-section"
-import { InlineCode } from "@/components/docs/docs-table"
+} from "@/components/docs/doc-section";
+import { InlineCode } from "@/components/docs/docs-table";
 
 const RECEIVER_EXAMPLE = `import express from "express"
 
@@ -28,7 +28,7 @@ app.post(
   }
 )
 
-app.listen(3000)`
+app.listen(3000)`;
 
 export function WebhooksQuickStart() {
   return (
@@ -43,7 +43,8 @@ export function WebhooksQuickStart() {
 
       <DocSubheading>2. Register the endpoint in SwiftyDoc</DocSubheading>
       <DocParagraph>
-        Open <strong className="text-foreground">Organization → Webhooks</strong>,
+        Open{" "}
+        <strong className="text-foreground">Organization → Webhooks</strong>,
         add your destination URL, and choose the event subscriptions your
         receiver needs.
       </DocParagraph>
@@ -67,5 +68,5 @@ export function WebhooksQuickStart() {
         deliveries use the same signing format and retry behavior.
       </DocParagraph>
     </DocSection>
-  )
+  );
 }
