@@ -59,8 +59,7 @@ export function WebhooksBestPractices() {
       <DocParagraph>
         Webhooks are an Enterprise-plan feature. On other plans, the{" "}
         <strong className="text-foreground">Organization → Webhooks</strong>{" "}
-        page shows an upgrade prompt and the API returns a plan-restriction
-        error.
+        page shows an upgrade prompt.
       </DocParagraph>
 
       <DocSubheading id="faq-test">
@@ -69,8 +68,7 @@ export function WebhooksBestPractices() {
       <DocParagraph>
         Yes — register an endpoint in the app and use the built-in ping
         action, or point it at a request-inspection service while you develop.
-        For end-to-end pipeline tests, use{" "}
-        <InlineCode>POST /v1/webhooks/events</InlineCode>.
+        For end-to-end checks, use the in-app "Send test event" action.
       </DocParagraph>
 
       <DocSubheading id="faq-downtime">

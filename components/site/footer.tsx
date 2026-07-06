@@ -23,7 +23,6 @@ const COLUMNS = [
     heading: "Resources",
     links: [
       { label: "Documentation", href: "/docs/webhooks" },
-      { label: "API reference", href: "/docs/webhooks#api-reference" },
       { label: "Status", href: "#" },
       { label: "Security", href: "#" },
     ],

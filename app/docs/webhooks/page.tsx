@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 
 import { DocsToc, MobileToc, type TocItem } from "@/components/docs/docs-toc"
-import { WebhooksApiReference } from "@/components/docs/webhooks/api-reference"
 import { WebhooksBestPractices } from "@/components/docs/webhooks/best-practices"
 import { WebhooksDelivery } from "@/components/docs/webhooks/delivery"
 import { WebhooksEvents } from "@/components/docs/webhooks/events"
@@ -14,11 +13,11 @@ import { Navbar } from "@/components/site/navbar"
 import { Badge } from "@/components/ui/badge"
 
 export const metadata: Metadata = {
-  title: "Webhooks API — SwiftyDoc Documentation",
+  title: "Webhooks — SwiftyDoc Documentation",
   description:
-    "Receive signed, real-time HTTP callbacks when requests complete, files upload, and reviews change. Event catalog, HMAC signature verification, retries, and the full REST reference.",
+    "Receive signed, real-time HTTP callbacks when requests complete, files upload, and reviews change. Learn setup, signature verification, retries, and secret rotation.",
   openGraph: {
-    title: "Webhooks API — SwiftyDoc Documentation",
+    title: "Webhooks — SwiftyDoc Documentation",
     description:
       "Receive signed, real-time HTTP callbacks when requests complete, files upload, and reviews change.",
     type: "article",
@@ -33,7 +32,6 @@ const TOC: TocItem[] = [
   { id: "events", label: "Event catalog" },
   { id: "delivery", label: "Delivery & retries" },
   { id: "secret-rotation", label: "Secret rotation" },
-  { id: "api-reference", label: "API reference" },
   { id: "best-practices", label: "Best practices & FAQ" },
 ]
 
@@ -48,7 +46,7 @@ export default function WebhooksDocsPage() {
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              Webhooks API
+              Webhooks
             </h1>
             <Badge variant="outline">Enterprise plan</Badge>
           </div>
@@ -75,7 +73,6 @@ export default function WebhooksDocsPage() {
             <WebhooksEvents />
             <WebhooksDelivery />
             <WebhooksSecretRotation />
-            <WebhooksApiReference />
             <WebhooksBestPractices />
           </article>
         </div>

@@ -1,7 +1,7 @@
 /**
- * Payload literals are hand-copied from swiftydoc-api. Source of truth:
- * src/infrastructure/webhooks/dto/register-webhook-endpoint.dto.ts and
- * src/infrastructure/webhooks/webhooks.controller.ts.
+ * Guidance mirrors first-party webhook setup. Source of truth:
+ * client/src/features/webhooks/pages/webhooks-page.tsx and
+ * api/src/infrastructure/webhooks/webhook.service.ts.
  */
 import { Callout } from "@/components/docs/callout"
 import { CodeBlock } from "@/components/docs/code-block"
@@ -30,36 +30,6 @@ app.post(
 
 app.listen(3000)`
 
-const REGISTER_REQUEST = `curl -X POST https://api.swiftydoc.io/v1/webhooks/endpoints \\
-  -H "Authorization: Bearer $SWIFTYDOC_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -d '{
-    "url": "https://partner.example.com/hooks/swiftydoc",
-    "secret": "your-high-entropy-secret",
-    "subscribedEvents": ["request.completed", "file.uploaded"]
-  }'`
-
-const REGISTER_RESPONSE = `{
-  "data": {
-    "id": "c0f59570-b40a-47ba-b0a0-3ebd0cd54b70",
-    "organizationId": "org_123",
-    "url": "https://partner.example.com/hooks/swiftydoc",
-    "secret": "[redacted]",
-    "subscribedEvents": ["request.completed", "file.uploaded"],
-    "enabled": true,
-    "hasPreviousSecret": false,
-    "previousSecretExpiresAt": null,
-    "createdAt": "2026-07-03T09:15:00.000Z",
-    "updatedAt": "2026-07-03T09:15:00.000Z"
-  }
-}`
-
-const PING_REQUEST = `curl -X POST \\
-  https://api.swiftydoc.io/v1/webhooks/endpoints/c0f59570-b40a-47ba-b0a0-3ebd0cd54b70/ping \\
-  -H "Authorization: Bearer $SWIFTYDOC_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -d '{}'`
-
 export function WebhooksQuickStart() {
   return (
     <DocSection id="quick-start" title="Quick start">
@@ -71,51 +41,31 @@ export function WebhooksQuickStart() {
       </DocParagraph>
       <CodeBlock label="server.mjs" code={RECEIVER_EXAMPLE} />
 
-      <DocSubheading>2. Register the endpoint</DocSubheading>
+      <DocSubheading>2. Register the endpoint in SwiftyDoc</DocSubheading>
       <DocParagraph>
-        In the app, open{" "}
-        <strong className="text-foreground">Organization → Webhooks</strong>{" "}
-        and add your URL, secret, and event subscriptions. Or register via the
-        API:
+        Open <strong className="text-foreground">Organization → Webhooks</strong>,
+        add your destination URL, and choose the event subscriptions your
+        receiver needs.
       </DocParagraph>
-      <CodeBlock label="POST /v1/webhooks/endpoints" code={REGISTER_REQUEST} />
       <DocParagraph>
-        You choose the signing <InlineCode>secret</InlineCode> at registration
-        (8–255 characters — use a high-entropy random string and store it in a
-        secret manager). If you omit{" "}
-        <InlineCode>subscribedEvents</InlineCode>, the endpoint defaults to{" "}
-        <InlineCode>[&quot;*&quot;]</InlineCode> and receives every event.
+        SwiftyDoc generates the signing <InlineCode>secret</InlineCode>, shows
+        it once, and stores only a redacted value for future reads.
       </DocParagraph>
-      <CodeBlock label="201 Created" code={REGISTER_RESPONSE} />
-      <Callout>
-        The secret is never returned by read endpoints — responses always show{" "}
-        <InlineCode>&quot;[redacted]&quot;</InlineCode>. If you lose it, rotate
-        it (see{" "}
-        <a
-          href="#secret-rotation"
-          className="text-primary underline underline-offset-4"
-        >
-          Secret rotation
-        </a>
-        ).
+      <Callout variant="warning" title="Copy the secret immediately">
+        Save the plaintext secret in a secure vault right away. If you lose it,
+        rotate the endpoint secret from the same Webhooks page.
       </Callout>
 
-      <DocSubheading>3. Send a test ping</DocSubheading>
+      <DocSubheading>3. Verify delivery with a test ping</DocSubheading>
       <DocParagraph>
-        Verify the wiring end to end — the ping is signed exactly like a real
-        delivery, so you can use it to test signature verification too:
+        Use the endpoint card&apos;s ping action to send a signed test delivery.
+        Confirm your receiver verifies the signature and responds with{" "}
+        <InlineCode>2xx</InlineCode>.
       </DocParagraph>
-      <CodeBlock
-        label="POST /v1/webhooks/endpoints/:id/ping"
-        code={PING_REQUEST}
-      />
-      <Callout>
-        OAuth partner applications use the identical API under{" "}
-        <InlineCode>/v1/oauth/webhooks/…</InlineCode> and{" "}
-        <InlineCode>/v1/oauth/webhook-deliveries</InlineCode> with the{" "}
-        <InlineCode>webhooks.read</InlineCode> /{" "}
-        <InlineCode>webhooks.write</InlineCode> OAuth scopes.
-      </Callout>
+      <DocParagraph>
+        Once ping succeeds, you are ready for production traffic. Live webhook
+        deliveries use the same signing format and retry behavior.
+      </DocParagraph>
     </DocSection>
   )
 }

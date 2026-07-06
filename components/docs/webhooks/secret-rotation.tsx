@@ -4,53 +4,21 @@
  * generateEndpointSecret) and runtime-env.ts (rotation grace default).
  */
 import { Callout } from "@/components/docs/callout"
-import { CodeBlock } from "@/components/docs/code-block"
 import { DocParagraph, DocSection } from "@/components/docs/doc-section"
 import { InlineCode } from "@/components/docs/docs-table"
-
-const ROTATE_REQUEST = `curl -X POST \\
-  https://api.swiftydoc.io/v1/webhooks/endpoints/c0f59570-b40a-47ba-b0a0-3ebd0cd54b70/rotate-secret \\
-  -H "Authorization: Bearer $SWIFTYDOC_TOKEN" \\
-  -H "Content-Type: application/json" \\
-  -d '{}'`
-
-const ROTATE_RESPONSE = `{
-  "data": {
-    "endpoint": {
-      "id": "c0f59570-b40a-47ba-b0a0-3ebd0cd54b70",
-      "organizationId": "org_123",
-      "url": "https://partner.example.com/hooks/swiftydoc",
-      "secret": "[redacted]",
-      "subscribedEvents": ["request.completed", "file.uploaded"],
-      "enabled": true,
-      "hasPreviousSecret": true,
-      "previousSecretExpiresAt": "2026-07-04T10:00:00.000Z",
-      "createdAt": "2026-07-03T09:15:00.000Z",
-      "updatedAt": "2026-07-03T10:00:00.000Z"
-    },
-    "secret": "whsec_k3If1uN2xY9qZ4vB7cD0eF5gH8jL6mP1"
-  }
-}`
 
 export function WebhooksSecretRotation() {
   return (
     <DocSection id="secret-rotation" title="Secret rotation">
       <DocParagraph>
         Rotate an endpoint&apos;s signing secret at any time — on a schedule,
-        or immediately if it may have leaked. Pass a new{" "}
-        <InlineCode>secret</InlineCode> in the body, or send an empty body to
-        have SwiftyDoc generate a high-entropy{" "}
-        <InlineCode>whsec_…</InlineCode> secret for you:
+        or immediately if it may have leaked. SwiftyDoc always generates a new
+        high-entropy <InlineCode>whsec_…</InlineCode> secret for each rotate
+        action.
       </DocParagraph>
-      <CodeBlock
-        label="POST /v1/webhooks/endpoints/:id/rotate-secret"
-        code={ROTATE_REQUEST}
-      />
-      <CodeBlock label="200 OK" code={ROTATE_RESPONSE} />
       <Callout variant="warning" title="The secret is shown exactly once">
-        The plaintext <InlineCode>secret</InlineCode> in the rotate response
-        is the only time SwiftyDoc returns it. Store it immediately — all
-        subsequent reads show{" "}
+        The plaintext <InlineCode>secret</InlineCode> is only shown right after
+        rotation. Store it immediately — all subsequent reads show{" "}
         <InlineCode>&quot;[redacted]&quot;</InlineCode>.
       </Callout>
       <DocParagraph>
@@ -76,8 +44,8 @@ export function WebhooksSecretRotation() {
           ).
         </li>
         <li>
-          Call <InlineCode>rotate-secret</InlineCode> and store the new secret
-          from the response.
+          Rotate the endpoint from the Webhooks page and copy the newly shown
+          secret.
         </li>
         <li>
           Deploy the new secret to your receiver — deliveries keep verifying

@@ -42,7 +42,7 @@ export function WebhooksOverview() {
           organization.
         </Callout>
         <DocParagraph>
-          There are two ways to manage webhook endpoints:
+          Manage endpoints directly in the app:
         </DocParagraph>
         <ul className="list-disc space-y-2 pl-5 text-sm leading-7 text-muted-foreground">
           <li>
@@ -52,22 +52,6 @@ export function WebhooksOverview() {
             </strong>{" "}
             to register endpoints, pick event subscriptions, send test pings,
             rotate secrets, and inspect deliveries without writing any code.
-          </li>
-          <li>
-            <strong className="text-foreground">Via the REST API</strong> —
-            authenticate with a bearer token and use the{" "}
-            <InlineCode>/v1/webhooks</InlineCode> endpoints described in the{" "}
-            <a
-              href="#api-reference"
-              className="text-primary underline underline-offset-4"
-            >
-              API reference
-            </a>
-            . OAuth partner applications (tokens prefixed{" "}
-            <InlineCode>swd_oat_</InlineCode>) use the identical mirror under{" "}
-            <InlineCode>/v1/oauth/webhooks</InlineCode>, scoped by{" "}
-            <InlineCode>webhooks.read</InlineCode> and{" "}
-            <InlineCode>webhooks.write</InlineCode>.
           </li>
         </ul>
       </DocSection>
