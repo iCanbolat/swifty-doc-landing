@@ -3,14 +3,14 @@
  * Source of truth: src/common/webhooks/webhook-events.ts (names) and the
  * emitEvent() call sites in src/modules (per-event payload fields).
  */
-import { CodeBlock } from "@/components/docs/code-block"
+import { CodeBlock } from "@/components/docs/code-block";
 import {
   DocParagraph,
   DocSection,
   DocSubheading,
-} from "@/components/docs/doc-section"
-import { DocsTable, InlineCode } from "@/components/docs/docs-table"
-import { Badge } from "@/components/ui/badge"
+} from "@/components/docs/doc-section";
+import { DocsTable, InlineCode } from "@/components/docs/docs-table";
+import { Badge } from "@/components/ui/badge";
 
 const REQUEST_COMPLETED_EXAMPLE = `{
   "id": "evt_9f6f2c9a1a7b4c1e",
@@ -25,7 +25,7 @@ const REQUEST_COMPLETED_EXAMPLE = `{
     "totalSubmissions": 3,
     "completedSubmissions": 3
   }
-}`
+}`;
 
 const FILE_UPLOADED_EXAMPLE = `{
   "id": "evt_5b2d8e4a6c7d9f1a",
@@ -41,12 +41,12 @@ const FILE_UPLOADED_EXAMPLE = `{
     "contentType": "application/pdf",
     "sizeBytes": 482133
   }
-}`
+}`;
 
 const EVENT_CATALOG: Array<{
-  event: string
-  group: string
-  description: string
+  event: string;
+  group: string;
+  description: string;
 }> = [
   {
     event: "request.created",
@@ -79,9 +79,29 @@ const EVENT_CATALOG: Array<{
     description: "A request passed its due date without completion.",
   },
   {
+    event: "request.closed",
+    group: "Requests",
+    description: "A request was manually closed as a terminal state.",
+  },
+  {
+    event: "request.cancelled",
+    group: "Requests",
+    description: "A request was cancelled and marked terminal.",
+  },
+  {
     event: "submission.updated",
     group: "Submissions",
     description: "A submission's progress or status changed (incl. reopen).",
+  },
+  {
+    event: "submission.submitted",
+    group: "Submissions",
+    description: "A submission was explicitly finalized/submitted.",
+  },
+  {
+    event: "submission.changes_requested",
+    group: "Submissions",
+    description: "A review batch rejected one or more items.",
   },
   {
     event: "file.uploaded",
@@ -113,12 +133,44 @@ const EVENT_CATALOG: Array<{
     group: "Integrations",
     description: "An integration sync job failed.",
   },
-]
+  {
+    event: "template.published",
+    group: "Templates",
+    description: "A template draft was published as a version.",
+  },
+  {
+    event: "workspace.created",
+    group: "Workspaces",
+    description: "A workspace was created for the organization.",
+  },
+  {
+    event: "user.invited",
+    group: "Users",
+    description: "An internal user invite was dispatched.",
+  },
+  {
+    event: "user.joined",
+    group: "Users",
+    description: "An invited internal user completed onboarding.",
+  },
+  {
+    event: "webhook.delivery_failed",
+    group: "Webhooks",
+    description: "A delivery reached terminal failure state.",
+  },
+];
 
 const EVENT_FIELDS: Array<{ event: string; fields: string[] }> = [
   {
     event: "request.created",
-    fields: ["requestId", "requestCode", "mode", "status", "workspaceId", "clientId"],
+    fields: [
+      "requestId",
+      "requestCode",
+      "mode",
+      "status",
+      "workspaceId",
+      "clientId",
+    ],
   },
   {
     event: "request.sent",
@@ -156,8 +208,43 @@ const EVENT_FIELDS: Array<{ event: string; fields: string[] }> = [
     fields: ["requestId", "requestCode", "status", "dueAt"],
   },
   {
+    event: "request.closed",
+    fields: ["requestId", "requestCode", "status", "workspaceId", "closedAt"],
+  },
+  {
+    event: "request.cancelled",
+    fields: [
+      "requestId",
+      "requestCode",
+      "status",
+      "workspaceId",
+      "cancelledAt",
+    ],
+  },
+  {
     event: "submission.updated",
     fields: ["submissionId", "requestId", "progressPercent", "status"],
+  },
+  {
+    event: "submission.submitted",
+    fields: [
+      "submissionId",
+      "requestId",
+      "status",
+      "progressPercent",
+      "submittedAt",
+    ],
+  },
+  {
+    event: "submission.changes_requested",
+    fields: [
+      "requestId",
+      "submissionId",
+      "rejectedItemCount",
+      "reviewedItemCount",
+      "submissionStatus",
+      "progressPercent",
+    ],
   },
   {
     event: "file.uploaded",
@@ -209,16 +296,64 @@ const EVENT_FIELDS: Array<{ event: string; fields: string[] }> = [
     event: "integration.sync.failed",
     fields: ["connectionId", "providerKey", "syncJobId", "status", "error"],
   },
-]
+  {
+    event: "template.published",
+    fields: [
+      "templateId",
+      "workspaceId",
+      "status",
+      "versionId",
+      "versionNumber",
+      "fieldCount",
+      "changeSummary",
+      "schemaChecksum",
+    ],
+  },
+  {
+    event: "workspace.created",
+    fields: ["workspaceId", "code", "name", "status"],
+  },
+  {
+    event: "user.invited",
+    fields: [
+      "userId",
+      "email",
+      "fullName",
+      "status",
+      "expiresAt",
+      "invitedByUserId",
+      "membershipCount",
+    ],
+  },
+  {
+    event: "user.joined",
+    fields: ["userId", "email", "fullName", "status", "joinedAt"],
+  },
+  {
+    event: "webhook.delivery_failed",
+    fields: [
+      "deliveryId",
+      "eventId",
+      "eventType",
+      "endpointId",
+      "endpointUrl",
+      "attemptCount",
+      "maxAttempts",
+      "responseCode",
+      "error",
+      "reason",
+    ],
+  },
+];
 
 export function WebhooksEvents() {
   return (
     <DocSection id="events" title="Event catalog">
       <DocParagraph>
         Endpoints receive only the events they subscribe to. Subscribe to the
-        wildcard <InlineCode>*</InlineCode> to receive everything — that is
-        also the default when <InlineCode>subscribedEvents</InlineCode> is
-        omitted at registration.
+        wildcard <InlineCode>*</InlineCode> to receive everything — that is also
+        the default when <InlineCode>subscribedEvents</InlineCode> is omitted at
+        registration.
       </DocParagraph>
       <DocsTable
         head={["Event", "Group", "Fired when"]}
@@ -246,7 +381,10 @@ export function WebhooksEvents() {
         head={["Event", "data fields"]}
         rows={EVENT_FIELDS.map((item) => [
           <InlineCode key="event">{item.event}</InlineCode>,
-          <span key="fields" className="inline-flex flex-wrap gap-x-1.5 gap-y-1">
+          <span
+            key="fields"
+            className="inline-flex flex-wrap gap-x-1.5 gap-y-1"
+          >
             {item.fields.map((field) => (
               <InlineCode key={field}>{field}</InlineCode>
             ))}
@@ -254,5 +392,5 @@ export function WebhooksEvents() {
         ])}
       />
     </DocSection>
-  )
+  );
 }
