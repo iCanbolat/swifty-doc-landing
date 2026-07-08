@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Check, Sparkles } from "lucide-react";
 
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
@@ -22,6 +25,12 @@ type Plan = {
   featured?: boolean;
   features: PlanFeature[];
 };
+
+type BillingPeriod = "annual" | "monthly";
+
+// Listed plan prices are the annual (billed-yearly) monthly-equivalent rate.
+// Paying monthly costs 20% more.
+const MONTHLY_MULTIPLIER = 1.2;
 
 const BOOK_DEMO_URL = resolveBookDemoUrl();
 
@@ -89,6 +98,8 @@ const PLANS: Plan[] = [
 ];
 
 export function Pricing() {
+  const [billing, setBilling] = useState<BillingPeriod>("annual");
+
   return (
     <section id="pricing" className="scroll-mt-24 px-6 py-20 lg:px-8 lg:py-28">
       <div className="mx-auto max-w-6xl">
@@ -103,13 +114,56 @@ export function Pricing() {
             Every plan includes the template builder, customer portal, and
             review queue. Upgrade as your team and request volume grow.
           </p>
-          <p className="mx-auto mt-5 inline-flex max-w-2xl items-center rounded-full border border-border/70 bg-background/80 px-4 py-2 text-[0.65rem] tracking-[0.16em] text-muted-foreground uppercase">
-            14-day no-card trial: up to 3 users, 10 active requests, 1 GB
-            storage, 50 emails / month
-          </p>
         </Reveal>
 
-        <Stagger className="mt-14 grid gap-6 lg:grid-cols-3">
+        <Reveal className="mt-10 flex justify-center">
+          <div
+            role="tablist"
+            aria-label="Billing period"
+            className="inline-flex items-center rounded-full border border-border/70 bg-background/80 p-1 text-xs"
+          >
+            <button
+              type="button"
+              role="tab"
+              aria-selected={billing === "monthly"}
+              onClick={() => setBilling("monthly")}
+              className={cn(
+                "rounded-full px-4 py-1.5 font-medium transition-colors",
+                billing === "monthly"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              Monthly
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={billing === "annual"}
+              onClick={() => setBilling("annual")}
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-medium transition-colors",
+                billing === "annual"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              Annual
+              <span
+                className={cn(
+                  "rounded-full px-1.5 py-0.5 text-[0.6rem] font-semibold tracking-wide",
+                  billing === "annual"
+                    ? "bg-primary-foreground/20 text-primary-foreground"
+                    : "bg-emerald-500/10 text-emerald-700",
+                )}
+              >
+                Save 20%
+              </span>
+            </button>
+          </div>
+        </Reveal>
+
+        <Stagger className="mt-12 grid gap-6 lg:grid-cols-3">
           {PLANS.map((plan) => (
             <StaggerItem key={plan.name} className="h-full">
               <Card
@@ -132,12 +186,17 @@ export function Pricing() {
                   </p>
                   <div className="mt-2 flex items-baseline gap-1">
                     <span className="text-4xl font-semibold tracking-tight text-foreground">
-                      ${plan.price}
+                      $
+                      {billing === "annual"
+                        ? plan.price
+                        : Math.round(plan.price * MONTHLY_MULTIPLIER)}
                     </span>
                     <span className="text-xs text-muted-foreground">/mo</span>
                   </div>
                   <p className="mt-1 text-[0.65rem] text-muted-foreground">
-                    per organization, billed monthly
+                    {billing === "annual"
+                      ? "per organization, billed annually"
+                      : "per organization, billed monthly"}
                   </p>
                   <p className="mt-3 text-xs leading-6 text-muted-foreground">
                     {plan.tagline}
