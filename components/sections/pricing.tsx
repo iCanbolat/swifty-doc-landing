@@ -7,7 +7,11 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { InfoTooltip } from "@/components/ui/tooltip";
-import { buildBootstrapOwnerUrl, resolveBookDemoUrl } from "@/lib/app-links";
+import {
+  buildBootstrapOwnerUrl,
+  resolveBookDemoUrl,
+  type PricingPlanIntent,
+} from "@/lib/app-links";
 import { cn } from "@/lib/utils";
 
 type PlanFeature = {
@@ -21,7 +25,8 @@ type Plan = {
   price: number;
   tagline: string;
   cta: string;
-  ctaHref: string;
+  planIntent?: PricingPlanIntent;
+  contactSales?: boolean;
   featured?: boolean;
   features: PlanFeature[];
 };
@@ -40,7 +45,7 @@ const PLANS: Plan[] = [
     price: 29,
     tagline: "For lean teams after the trial period",
     cta: "Start 14-day trial",
-    ctaHref: buildBootstrapOwnerUrl("foundation"),
+    planIntent: "foundation",
     features: [
       { label: "3 users", note: "+$10/mo per additional seat" },
       {
@@ -58,7 +63,7 @@ const PLANS: Plan[] = [
     price: 59,
     tagline: "For growing teams running requests at volume",
     cta: "Start 14-day trial",
-    ctaHref: buildBootstrapOwnerUrl("growth"),
+    planIntent: "growth",
     featured: true,
     features: [
       { label: "5 users", note: "+$10/mo per additional seat" },
@@ -80,7 +85,7 @@ const PLANS: Plan[] = [
     price: 99,
     tagline: "For scaled operations that need control and integrations",
     cta: "Contact sales",
-    ctaHref: BOOK_DEMO_URL,
+    contactSales: true,
     features: [
       { label: "10 users", note: "+$10/mo per additional seat" },
       { label: "500 active requests" },
@@ -165,7 +170,12 @@ export function Pricing() {
         </Reveal>
 
         <Stagger className="mt-12 grid gap-6 lg:grid-cols-3">
-          {PLANS.map((plan) => (
+          {PLANS.map((plan) => {
+            const ctaHref = plan.contactSales
+              ? BOOK_DEMO_URL
+              : buildBootstrapOwnerUrl(plan.planIntent ?? "foundation", billing);
+
+            return (
             <StaggerItem key={plan.name} className="h-full">
               <Card
                 className={cn(
@@ -206,7 +216,7 @@ export function Pricing() {
 
                 <CardContent className="mt-2">
                   <ButtonLink
-                    href={plan.ctaHref}
+                    href={ctaHref}
                     size="lg"
                     variant={plan.featured ? "default" : "outline"}
                     className="w-full justify-center rounded-full"
@@ -242,7 +252,8 @@ export function Pricing() {
                 </CardContent>
               </Card>
             </StaggerItem>
-          ))}
+            );
+          })}
         </Stagger>
       </div>
     </section>

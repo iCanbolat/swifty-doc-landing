@@ -1,4 +1,5 @@
 export type PricingPlanIntent = "foundation" | "growth" | "enterprise";
+export type PricingBillingPeriod = "monthly" | "annual";
 
 const DEFAULT_APP_BASE_URL = "http://localhost:5173";
 const DEFAULT_DEMO_URL = "mailto:sales@swiftydoc.io?subject=SwiftyDoc%20Demo";
@@ -19,10 +20,12 @@ function resolveAppBaseUrl(): string {
 
 export function buildBootstrapOwnerUrl(
   plan: PricingPlanIntent = "foundation",
+  period: PricingBillingPeriod = "annual",
 ): string {
   const base = resolveAppBaseUrl();
   const search = new URLSearchParams({
     plan,
+    period,
     source: "landing",
   });
 
