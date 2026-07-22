@@ -47,12 +47,9 @@ const PLANS: Plan[] = [
     cta: "Start 14-day trial",
     planIntent: "foundation",
     features: [
-      { label: "3 users", note: "+$10/mo per additional seat" },
-      {
-        label: "50 active requests",
-        info: "Quota is consumed the moment a request is created. If a request gets no submission or update for 14 days, it's automatically closed and the quota is returned.",
-      },
-      { label: "5 GB cloud storage" },
+      { label: "2 users", note: "+$10/mo per additional seat" },
+      { label: "Unlimited requests" },
+      { label: "10 GB cloud storage" },
       { label: "200 emails / month" },
       { label: "Google Drive integration" },
       { label: "Audit logs" },
@@ -61,14 +58,14 @@ const PLANS: Plan[] = [
   {
     name: "Growth",
     price: 59,
-    tagline: "For growing teams running requests at volume",
+    tagline: "For growing teams that need more seats and storage",
     cta: "Start 14-day trial",
     planIntent: "growth",
     featured: true,
     features: [
       { label: "5 users", note: "+$10/mo per additional seat" },
-      { label: "250 active requests" },
-      { label: "25 GB cloud storage" },
+      { label: "Unlimited requests" },
+      { label: "50 GB cloud storage" },
       { label: "1,000 emails / month" },
       {
         label: "Live collaboration: presence & cursors",
@@ -87,9 +84,9 @@ const PLANS: Plan[] = [
     cta: "Contact sales",
     contactSales: true,
     features: [
-      { label: "10 users", note: "+$10/mo per additional seat" },
-      { label: "500 active requests" },
-      { label: "100 GB cloud storage" },
+      { label: "15 users", note: "+$10/mo per additional seat" },
+      { label: "Unlimited requests" },
+      { label: "200 GB cloud storage" },
       { label: "2,500 emails / month" },
       {
         label: "Live collaboration: presence & cursors",
@@ -114,11 +111,12 @@ export function Pricing() {
             Pricing
           </p>
           <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-            Start with a 14-day trial, then scale by request volume
+            Start with a 14-day trial, then scale by team and storage
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
             Every plan includes the template builder, customer portal, and
-            review queue. Upgrade as your team and request volume grow.
+            review queue, with unlimited requests on every plan. Upgrade as your
+            team and storage needs grow.
           </p>
         </Reveal>
 

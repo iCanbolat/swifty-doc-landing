@@ -24,16 +24,16 @@ export function Hero() {
       className="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.16)_0,transparent_30%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.16)_0,transparent_32%),linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)]"
     >
       {/* Faint grid overlay */}
-      <div className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.03)_1px,transparent_1px)] [background-size:48px_48px]" />
+      <div className="pointer-events-none absolute inset-0 opacity-60 bg-[linear-gradient(rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-size-[48px_48px]" />
 
       {/* Animated soft blobs */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 -left-24 size-[26rem] animate-blob-a rounded-full bg-primary/15 blur-3xl will-change-transform motion-reduce:animate-none"
+        className="pointer-events-none absolute -top-24 -left-24 size-104 animate-blob-a rounded-full bg-primary/15 blur-3xl will-change-transform motion-reduce:animate-none"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-24 top-32 size-[22rem] animate-blob-b rounded-full bg-sky-400/15 blur-3xl will-change-transform motion-reduce:animate-none"
+        className="pointer-events-none absolute -right-24 top-32 size-88 animate-blob-b rounded-full bg-sky-400/15 blur-3xl will-change-transform motion-reduce:animate-none"
       />
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 pt-36 pb-20 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pt-40 lg:pb-28">
@@ -50,7 +50,7 @@ export function Hero() {
             Collect documents
             <br />
             without the{" "}
-            <span className="bg-gradient-to-r from-primary to-sky-500 bg-clip-text text-transparent">
+            <span className="bg-linear-to-r from-primary to-sky-500 bg-clip-text text-transparent">
               back-and-forth
             </span>
           </h1>

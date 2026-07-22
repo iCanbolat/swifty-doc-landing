@@ -93,7 +93,7 @@ export function PortalMock() {
             <span className="font-medium text-foreground">40%</span>
           </div>
           <div className="h-2 w-full overflow-hidden bg-muted">
-            <div className="reveal-bar h-full w-[40%] bg-gradient-to-r from-primary to-sky-500 [--reveal-delay:0.2s]" />
+            <div className="reveal-bar h-full w-[40%] bg-linear-to-r from-primary to-sky-500 [--reveal-delay:0.2s]" />
           </div>
         </div>
 
