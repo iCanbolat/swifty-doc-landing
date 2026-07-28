@@ -1,7 +1,15 @@
 import type { Metadata } from "next"
-import { JetBrains_Mono } from "next/font/google"
+import { JetBrains_Mono, Outfit } from "next/font/google"
 
 import "./globals.css"
+
+// Matches the app shell (client/src/index.css): Outfit for everything, JetBrains
+// Mono kept for the few code/identifier surfaces.
+const outfit = Outfit({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-outfit",
+})
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -34,7 +42,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={jetbrainsMono.variable}>
+    <html lang="en" className={`${outfit.variable} ${jetbrainsMono.variable}`}>
       <body className="min-h-svh antialiased">{children}</body>
     </html>
   )
