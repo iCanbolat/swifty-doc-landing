@@ -76,7 +76,7 @@ const PLANS: Plan[] = [
       "200 active requests",
       "10 users",
       "100 GB cloud storage",
-      "White-labelled client portal",
+      "White-label portal & sender address",
       "API, webhooks & Zapier",
     ],
   },
@@ -200,6 +200,11 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
       {
         label: "White-labelled client portal",
         info: "Your logo and favicon on the portal, with the SwiftyDoc footer removed — applied automatically, no toggle to find.",
+        values: { foundation: false, growth: true, enterprise: true },
+      },
+      {
+        label: "Send from your own address",
+        info: "Pick the address clients see — info@yourfirm.com — and verify its domain once. We generate the DNS records and check them for you, and your existing inbox keeps working.",
         values: { foundation: false, growth: true, enterprise: true },
       },
       {
