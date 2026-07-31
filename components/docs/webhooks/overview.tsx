@@ -104,28 +104,28 @@ export function WebhooksOverview() {
               </>,
             ],
             [
-              <InlineCode key="h">X-SwiftyDoc-Delivery-Id</InlineCode>,
+              <InlineCode key="h">X-ClientGather-Delivery-Id</InlineCode>,
               <>
                 Unique per delivery attempt — use it for idempotency. Test pings
                 are prefixed with <InlineCode>ping_</InlineCode>.
               </>,
             ],
             [
-              <InlineCode key="h">X-SwiftyDoc-Event</InlineCode>,
+              <InlineCode key="h">X-ClientGather-Event</InlineCode>,
               <>
                 The event type, e.g. <InlineCode>request.completed</InlineCode>.
               </>,
             ],
             [
-              <InlineCode key="h">X-SwiftyDoc-Timestamp</InlineCode>,
+              <InlineCode key="h">X-ClientGather-Timestamp</InlineCode>,
               "ISO-8601 timestamp of the delivery; part of the signed message.",
             ],
             [
-              <InlineCode key="h">X-SwiftyDoc-Signature</InlineCode>,
+              <InlineCode key="h">X-ClientGather-Signature</InlineCode>,
               "Hex-encoded HMAC-SHA256 signature computed with your endpoint's current secret.",
             ],
             [
-              <InlineCode key="h">X-SwiftyDoc-Signature-Previous</InlineCode>,
+              <InlineCode key="h">X-ClientGather-Signature-Previous</InlineCode>,
               "Only present during a secret-rotation grace window; signed with the previous secret.",
             ],
           ]}

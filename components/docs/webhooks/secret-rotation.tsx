@@ -24,8 +24,8 @@ export function WebhooksSecretRotation() {
       <DocParagraph>
         Rotation is zero-downtime. For a grace window (24 hours by default),
         every delivery is signed twice:{" "}
-        <InlineCode>X-SwiftyDoc-Signature</InlineCode> with the new secret and{" "}
-        <InlineCode>X-SwiftyDoc-Signature-Previous</InlineCode> with the old
+        <InlineCode>X-ClientGather-Signature</InlineCode> with the new secret and{" "}
+        <InlineCode>X-ClientGather-Signature-Previous</InlineCode> with the old
         one. The endpoint&apos;s <InlineCode>hasPreviousSecret</InlineCode> and{" "}
         <InlineCode>previousSecretExpiresAt</InlineCode> fields tell you whether
         a window is active.

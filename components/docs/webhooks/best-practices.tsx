@@ -16,7 +16,7 @@ export function WebhooksBestPractices() {
         <li>
           <strong className="text-foreground">Be idempotent.</strong> Retries
           and replays mean you can receive the same event more than once.
-          Deduplicate on <InlineCode>X-SwiftyDoc-Delivery-Id</InlineCode> (or
+          Deduplicate on <InlineCode>X-ClientGather-Delivery-Id</InlineCode> (or
           the envelope <InlineCode>id</InlineCode> for event-level dedupe).
         </li>
         <li>
@@ -81,9 +81,9 @@ export function WebhooksBestPractices() {
         How do I know a request really came from SwiftyDoc?
       </DocSubheading>
       <DocParagraph>
-        Verify the <InlineCode>X-SwiftyDoc-Signature</InlineCode> HMAC against
+        Verify the <InlineCode>X-ClientGather-Signature</InlineCode> HMAC against
         the raw body with your endpoint secret, and reject deliveries whose{" "}
-        <InlineCode>X-SwiftyDoc-Timestamp</InlineCode> is more than a few
+        <InlineCode>X-ClientGather-Timestamp</InlineCode> is more than a few
         minutes old. Unsigned or mis-signed requests should be dropped with a{" "}
         <InlineCode>401</InlineCode>.
       </DocParagraph>

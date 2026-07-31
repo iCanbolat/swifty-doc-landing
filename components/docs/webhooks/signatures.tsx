@@ -30,7 +30,7 @@ app.post(
   express.raw({ type: "application/json" }),
   (req, res) => {
     const rawBody = req.body.toString("utf8")
-    const timestamp = req.header("X-SwiftyDoc-Timestamp") ?? ""
+    const timestamp = req.header("X-ClientGather-Timestamp") ?? ""
 
     // Reject stale deliveries to guard against replay attacks.
     const ageMs = Date.now() - new Date(timestamp).getTime()
@@ -42,10 +42,10 @@ app.post(
     // grace window — the previous one.
     const valid =
       matchesSignature(
-        rawBody, timestamp, req.header("X-SwiftyDoc-Signature"), SECRET
+        rawBody, timestamp, req.header("X-ClientGather-Signature"), SECRET
       ) ||
       matchesSignature(
-        rawBody, timestamp, req.header("X-SwiftyDoc-Signature-Previous"), SECRET
+        rawBody, timestamp, req.header("X-ClientGather-Signature-Previous"), SECRET
       )
 
     if (!valid) return res.sendStatus(401)
@@ -77,13 +77,13 @@ export function WebhooksSignatures() {
       <CodeBlock
         label="Signature scheme"
         code={`signature = hex( HMAC-SHA256( key = endpoint secret,
-                          message = "<X-SwiftyDoc-Timestamp>.<raw request body>" ) )`}
+                          message = "<X-ClientGather-Timestamp>.<raw request body>" ) )`}
       />
       <DocParagraph>
-        Concatenate the <InlineCode>X-SwiftyDoc-Timestamp</InlineCode> header
+        Concatenate the <InlineCode>X-ClientGather-Timestamp</InlineCode> header
         value, a literal dot, and the raw request body; compute an HMAC-SHA256
         over it with your endpoint secret; and compare the hex digest against{" "}
-        <InlineCode>X-SwiftyDoc-Signature</InlineCode> using a constant-time
+        <InlineCode>X-ClientGather-Signature</InlineCode> using a constant-time
         comparison.
       </DocParagraph>
       <Callout variant="warning" title="Verify against the raw body">
@@ -97,7 +97,7 @@ export function WebhooksSignatures() {
       <CodeBlock label="verify.py — Python" code={PYTHON_EXAMPLE} />
       <DocParagraph>
         During a secret-rotation grace window, deliveries also carry{" "}
-        <InlineCode>X-SwiftyDoc-Signature-Previous</InlineCode>, signed with
+        <InlineCode>X-ClientGather-Signature-Previous</InlineCode>, signed with
         the previous secret. Accepting either header (as in the Node example
         above) lets you roll out a new secret with zero missed deliveries —
         see{" "}

@@ -21,7 +21,7 @@ app.post(
   "/hooks/swiftydoc",
   express.raw({ type: "application/json" }),
   (req, res) => {
-    // TODO: verify X-SwiftyDoc-Signature before trusting the payload
+    // TODO: verify X-ClientGather-Signature before trusting the payload
     const event = JSON.parse(req.body.toString("utf8"))
     console.log(\`Received \${event.type}\`, event.data)
     res.sendStatus(200)

@@ -1,7 +1,8 @@
 /**
  * Event names and `data` payload fields are hand-copied from swiftydoc-api.
- * Source of truth: src/common/webhooks/webhook-events.ts (names) and the
- * emitEvent() call sites in src/modules (per-event payload fields).
+ * Source of truth: src/common/webhooks/webhook-events.ts (names), the
+ * emitEvent() call sites in src/modules (per-event payload fields), and
+ * WebhookService.enrichEventData (the shared context blocks below).
  */
 import { CodeBlock } from "@/components/docs/code-block";
 import {
@@ -20,8 +21,22 @@ const REQUEST_COMPLETED_EXAMPLE = `{
   "data": {
     "requestId": "req_123",
     "requestCode": "RQ-2041",
+    "requestTitle": "2026 onboarding documents",
+    "requestStatus": "completed",
+    "requestDueAt": "2026-07-05T23:59:59.000Z",
+    "requestUrl": "https://app.example.com/w/ws_123/requests/req_123",
     "status": "completed",
     "workspaceId": "ws_123",
+    "workspaceName": "Client Onboarding",
+    "clientId": "cli_123",
+    "clientName": "Acme Holdings Ltd.",
+    "templateId": "tpl_123",
+    "templateName": "Client onboarding pack",
+    "ownerName": "Ada Lovelace",
+    "ownerEmail": "ada@example.com",
+    "assignees": [
+      { "userId": "usr_123", "name": "Grace Hopper", "email": "grace@example.com" }
+    ],
     "totalSubmissions": 3,
     "completedSubmissions": 3
   }
@@ -35,6 +50,13 @@ const FILE_UPLOADED_EXAMPLE = `{
   "data": {
     "fileId": "file_123",
     "requestId": "req_123",
+    "requestTitle": "2026 onboarding documents",
+    "requestUrl": "https://app.example.com/w/ws_123/requests/req_123",
+    "clientName": "Acme Holdings Ltd.",
+    "recipientName": "John Carter",
+    "recipientEmail": "john.carter@acme.example.com",
+    "fieldLabel": "Passport copy",
+    "sectionTitle": "Identity documents",
     "submissionId": "sub_123",
     "submissionItemId": "item_123",
     "storageKey": "org_123/req_123/passport.pdf",
@@ -42,6 +64,47 @@ const FILE_UPLOADED_EXAMPLE = `{
     "sizeBytes": 482133
   }
 }`;
+
+/**
+ * Resolved server-side on delivery, so they appear on every event carrying the
+ * matching id — no emit site passes them.
+ */
+const CONTEXT_BLOCKS: Array<{
+  fields: string[];
+  present: string;
+  title: string;
+}> = [
+  {
+    title: "Request context",
+    present: "every event with a requestId",
+    fields: [
+      "workspaceId",
+      "workspaceName",
+      "requestTitle",
+      "requestCode",
+      "requestStatus",
+      "requestDueAt",
+      "requestUrl",
+      "clientId",
+      "clientName",
+      "templateId",
+      "templateName",
+      "ownerName",
+      "ownerEmail",
+      "assignees",
+    ],
+  },
+  {
+    title: "Recipient context",
+    present: "every event with a submissionId",
+    fields: ["recipientId", "recipientName", "recipientEmail"],
+  },
+  {
+    title: "Field context",
+    present: "every event with a submissionItemId",
+    fields: ["fieldLabel", "fieldKey", "sectionTitle"],
+  },
+];
 
 const EVENT_CATALOG: Array<{
   event: string;
@@ -160,66 +223,46 @@ const EVENT_CATALOG: Array<{
   },
 ];
 
+/** Event-specific fields, on top of the context blocks above. */
 const EVENT_FIELDS: Array<{ event: string; fields: string[] }> = [
   {
     event: "request.created",
-    fields: [
-      "requestId",
-      "requestCode",
-      "mode",
-      "status",
-      "workspaceId",
-      "clientId",
-    ],
+    fields: ["requestId", "mode", "status"],
   },
   {
     event: "request.sent",
-    fields: ["requestId", "requestCode", "status", "workspaceId"],
+    fields: ["requestId", "status"],
   },
   {
     event: "request.viewed",
-    fields: ["requestId", "submissionId", "recipientId", "portalLinkId"],
+    fields: ["requestId", "submissionId", "portalLinkId"],
   },
   {
     event: "request.reminder_sent",
     fields: [
       "requestId",
-      "requestCode",
-      "workspaceId",
       "status",
       "channel",
       "provider",
+      "recipient",
       "externalMessageId",
     ],
   },
   {
     event: "request.completed",
-    fields: [
-      "requestId",
-      "requestCode",
-      "status",
-      "workspaceId",
-      "totalSubmissions",
-      "completedSubmissions",
-    ],
+    fields: ["requestId", "status", "totalSubmissions", "completedSubmissions"],
   },
   {
     event: "request.overdue",
-    fields: ["requestId", "requestCode", "status", "dueAt"],
+    fields: ["requestId", "status", "dueAt"],
   },
   {
     event: "request.closed",
-    fields: ["requestId", "requestCode", "status", "workspaceId", "closedAt"],
+    fields: ["requestId", "status", "closedAt"],
   },
   {
     event: "request.cancelled",
-    fields: [
-      "requestId",
-      "requestCode",
-      "status",
-      "workspaceId",
-      "cancelledAt",
-    ],
+    fields: ["requestId", "status", "cancelledAt"],
   },
   {
     event: "submission.updated",
@@ -373,6 +416,29 @@ export function WebhooksEvents() {
       </DocParagraph>
       <CodeBlock label="request.completed" code={REQUEST_COMPLETED_EXAMPLE} />
       <CodeBlock label="file.uploaded" code={FILE_UPLOADED_EXAMPLE} />
+
+      <DocSubheading id="event-context">Shared context fields</DocSubheading>
+      <DocParagraph>
+        Events carry the IDs of what changed, and we resolve the names behind
+        those IDs before delivery — so an automation can title a card or name a
+        client without calling the API back. These blocks are added to every
+        matching event, on top of the event-specific fields below.
+      </DocParagraph>
+      <DocsTable
+        head={["Block", "Present on", "Fields"]}
+        rows={CONTEXT_BLOCKS.map((block) => [
+          block.title,
+          block.present,
+          <span
+            key="fields"
+            className="inline-flex flex-wrap gap-x-1.5 gap-y-1"
+          >
+            {block.fields.map((field) => (
+              <InlineCode key={field}>{field}</InlineCode>
+            ))}
+          </span>,
+        ])}
+      />
 
       <DocSubheading id="event-fields">
         <InlineCode className="text-sm">data</InlineCode> fields by event
