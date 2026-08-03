@@ -25,6 +25,8 @@ const COLUMNS = [
       { label: "Documentation", href: "/docs/webhooks" },
       { label: "Status", href: "#" },
       { label: "Security", href: "#" },
+      { label: "Terms & Conditions", href: "/legal/terms" },
+      { label: "Privacy Policy", href: "/legal/privacy" },
     ],
   },
 ];
@@ -68,13 +70,22 @@ export function Footer() {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 py-6 text-[0.65rem] text-muted-foreground sm:flex-row lg:px-8">
           <p>© {new Date().getFullYear()} SwiftyDoc. All rights reserved.</p>
           <div className="flex items-center gap-5">
-            <a href="#" className="transition-colors hover:text-foreground">
+            <a
+              href="/legal/privacy"
+              className="transition-colors hover:text-foreground"
+            >
               Privacy
             </a>
-            <a href="#" className="transition-colors hover:text-foreground">
+            <a
+              href="/legal/terms"
+              className="transition-colors hover:text-foreground"
+            >
               Terms
             </a>
-            <a href="#" className="transition-colors hover:text-foreground">
+            <a
+              href="/legal/privacy#11-cookies"
+              className="transition-colors hover:text-foreground"
+            >
               Cookies
             </a>
           </div>
