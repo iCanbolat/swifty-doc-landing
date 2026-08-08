@@ -54,9 +54,9 @@ export function WebhooksBestPractices() {
 
       <DocSubheading id="faq-plan">Which plan includes webhooks?</DocSubheading>
       <DocParagraph>
-        Webhooks are an Enterprise-plan feature. On other plans, the{" "}
-        <strong className="text-foreground">Organization → Webhooks</strong>{" "}
-        page shows an upgrade prompt.
+        Webhooks are available from the Growth plan up. On lower plans, the{" "}
+        <strong className="text-foreground">Developers</strong> page shows an
+        upgrade prompt.
       </DocParagraph>
 
       <DocSubheading id="faq-test">

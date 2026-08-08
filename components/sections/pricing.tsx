@@ -77,7 +77,7 @@ const PLANS: Plan[] = [
       "10 users",
       "100 GB cloud storage",
       "White-label portal & sender address",
-      "API, webhooks & Zapier",
+      "Webhooks & Zapier",
     ],
   },
   {
@@ -208,11 +208,11 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
         values: { foundation: false, growth: true, enterprise: true },
       },
       {
-        label: "Zapier & OAuth apps",
+        label: "Zapier & connected apps",
         values: { foundation: false, growth: true, enterprise: true },
       },
       {
-        label: "API & webhook access",
+        label: "Webhooks & delivery logs",
         values: { foundation: false, growth: true, enterprise: true },
       },
     ],

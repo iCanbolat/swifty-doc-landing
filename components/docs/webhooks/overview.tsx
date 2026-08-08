@@ -30,12 +30,12 @@ export function WebhooksOverview() {
         <DocParagraph>
           A webhook is an HTTP <InlineCode>POST</InlineCode> request that
           SwiftyDoc sends to a URL you control whenever an event you subscribed
-          to occurs in your organization. Instead of polling the API for
+          to occurs in your organization. Instead of checking SwiftyDoc for
           changes, your integration reacts the moment a request completes, a
           file is uploaded, or a reviewer approves an item.
         </DocParagraph>
         <Callout title="Availability">
-          Webhooks are available on the <strong>Enterprise</strong> plan.
+          Webhooks are available on the <strong>Growth</strong> plan and above.
           Managing endpoints requires the <InlineCode>webhooks.read</InlineCode>{" "}
           / <InlineCode>webhooks.write</InlineCode> permissions in your
           organization.
@@ -45,10 +45,14 @@ export function WebhooksOverview() {
           <li>
             <strong className="text-foreground">In the app</strong> — go to{" "}
             <strong className="text-foreground">
-              Organization&nbsp;→&nbsp;Webhooks
+              Developers&nbsp;→&nbsp;Webhooks
             </strong>{" "}
-            to register endpoints, pick event subscriptions, send test pings,
-            rotate secrets, and inspect deliveries without writing any code.
+            to register endpoints, pick event subscriptions, send test pings and
+            rotate secrets — and{" "}
+            <strong className="text-foreground">
+              Developers&nbsp;→&nbsp;Recent&nbsp;logs
+            </strong>{" "}
+            to inspect deliveries, all without writing any code.
           </li>
         </ul>
       </DocSection>

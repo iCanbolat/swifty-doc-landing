@@ -421,7 +421,7 @@ export function WebhooksEvents() {
       <DocParagraph>
         Events carry the IDs of what changed, and we resolve the names behind
         those IDs before delivery — so an automation can title a card or name a
-        client without calling the API back. These blocks are added to every
+        client without a second lookup. These blocks are added to every
         matching event, on top of the event-specific fields below.
       </DocParagraph>
       <DocsTable

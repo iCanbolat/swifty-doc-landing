@@ -44,7 +44,7 @@ export function WebhooksQuickStart() {
       <DocSubheading>2. Register the endpoint in SwiftyDoc</DocSubheading>
       <DocParagraph>
         Open{" "}
-        <strong className="text-foreground">Organization → Webhooks</strong>,
+        <strong className="text-foreground">Developers → Webhooks</strong>,
         add your destination URL, and choose the event subscriptions your
         receiver needs.
       </DocParagraph>
