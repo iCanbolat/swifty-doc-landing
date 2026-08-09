@@ -19,7 +19,7 @@ type PlanKey = PricingPlanIntent;
 type Plan = {
   key: PlanKey;
   name: string;
-  /** Monthly rate in GBP, excluding VAT. Annual is derived from it. */
+  /** Monthly rate in EUR, excluding VAT. Annual is derived from it. */
   price: number;
   tagline: string;
   cta: string;
@@ -53,13 +53,13 @@ const PLANS: Plan[] = [
   {
     key: "foundation",
     name: "Foundation",
-    price: 35,
+    price: 69,
     tagline:
       "For solo practices and small teams collecting from a steady book of clients",
     cta: "Start 14-day trial",
     highlights: [
       "50 active requests",
-      "3 users",
+      "2 users",
       "25 GB cloud storage",
       "Unlimited emails & reminders",
     ],
@@ -67,14 +67,14 @@ const PLANS: Plan[] = [
   {
     key: "growth",
     name: "Growth",
-    price: 83,
+    price: 149,
     tagline:
       "For growing teams that need branding, integrations and more in flight",
     cta: "Start 14-day trial",
     featured: true,
     highlights: [
       "200 active requests",
-      "10 users",
+      "5 users",
       "100 GB cloud storage",
       "White-label portal & sender address",
       "Webhooks & Zapier",
@@ -83,13 +83,13 @@ const PLANS: Plan[] = [
   {
     key: "enterprise",
     name: "Enterprise",
-    price: 155,
+    price: 319,
     tagline:
       "For scaled operations that need control over where the data lives",
     cta: "Start 14-day trial",
     highlights: [
       "500 active requests",
-      "20 users",
+      "10 users",
       "200 GB cloud storage",
       "Bring your own S3 bucket",
       "Priority support",
@@ -110,9 +110,9 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
         label: "Extra active requests",
         info: "Buy in packs of 50 whenever you need more in flight — during a filing peak, for example — and drop them again afterwards. Reductions are credited to your next invoice.",
         values: {
-          foundation: "+£10/mo per 50",
-          growth: "+£10/mo per 50",
-          enterprise: "+£10/mo per 50",
+          foundation: "+€14/mo per 50",
+          growth: "+€14/mo per 50",
+          enterprise: "+€14/mo per 50",
         },
       },
       {
@@ -125,14 +125,14 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
       },
       {
         label: "Users included",
-        values: { foundation: "3", growth: "10", enterprise: "20" },
+        values: { foundation: "2", growth: "5", enterprise: "10" },
       },
       {
         label: "Extra users",
         values: {
-          foundation: "+£10/mo each",
-          growth: "+£10/mo each",
-          enterprise: "+£10/mo each",
+          foundation: "+€16/mo each",
+          growth: "+€16/mo each",
+          enterprise: "+€16/mo each",
         },
       },
       {
@@ -141,6 +141,15 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
           foundation: "25 GB",
           growth: "100 GB",
           enterprise: "200 GB",
+        },
+      },
+      {
+        label: "Extra storage",
+        info: "Add storage in 25 GB packs instead of moving up a whole plan, and drop them again once you have archived what you no longer need.",
+        values: {
+          foundation: "+€7/mo per 25 GB",
+          growth: "+€7/mo per 25 GB",
+          enterprise: "+€7/mo per 25 GB",
         },
       },
     ],
@@ -362,13 +371,13 @@ export function Pricing() {
                   </p>
                   <div className="mt-2 flex items-baseline gap-1">
                     <span className="text-4xl font-semibold tracking-tight text-foreground">
-                      £{priceFor(plan)}
+                      €{priceFor(plan)}
                     </span>
                     <span className="text-xs text-muted-foreground">/mo</span>
                   </div>
                   <p className="mt-1 text-[0.65rem] text-muted-foreground">
                     {billing === "annual"
-                      ? `£${plan.price * ANNUAL_MONTHS_PAID} billed yearly, ex VAT`
+                      ? `€${plan.price * ANNUAL_MONTHS_PAID} billed yearly, ex VAT`
                       : "per organisation, billed monthly, ex VAT"}
                   </p>
                   <p className="mt-3 text-xs leading-6 text-muted-foreground">
@@ -448,7 +457,7 @@ export function Pricing() {
                       </span>
                       <span className="flex items-baseline gap-1">
                         <span className="text-lg font-semibold tracking-tight text-foreground">
-                          £{priceFor(plan)}
+                          €{priceFor(plan)}
                         </span>
                         <span className="text-[0.6rem] font-normal text-muted-foreground">
                           /mo
@@ -510,10 +519,12 @@ export function Pricing() {
 
         <Reveal className="mt-10 text-center">
           <p className="mx-auto max-w-2xl text-xs leading-6 text-muted-foreground">
-            Prices in GBP, excluding VAT, which is added at checkout. Hit your
+            Prices in EUR, excluding VAT, which is added at checkout. Hit your
             active-request limit in a busy month? Close the requests you have
             already finished to free slots at no cost, or add packs of 50 for
-            £10/month and drop them again when the peak passes.
+            €14/month and drop them again when the peak passes. Storage works the
+            same way: 25 GB packs at €7/month, added and dropped as you need
+            them.
           </p>
           <p className="mt-3 text-xs text-muted-foreground">
             Need something larger, or a procurement review?{" "}
