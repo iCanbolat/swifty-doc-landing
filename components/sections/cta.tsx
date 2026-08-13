@@ -1,10 +1,10 @@
-import { ArrowRight, Sparkles } from "lucide-react"
+import { ArrowRight, Sparkles } from "lucide-react";
 
-import { Reveal } from "@/components/motion/reveal"
-import { ButtonLink } from "@/components/ui/button"
-import { buildBootstrapOwnerUrl, resolveBookDemoUrl } from "@/lib/app-links"
+import { Reveal } from "@/components/motion/reveal";
+import { ButtonLink } from "@/components/ui/button";
+import { buildBootstrapOwnerUrl, resolveBookDemoUrl } from "@/lib/app-links";
 
-const BOOK_DEMO_URL = resolveBookDemoUrl()
+const BOOK_DEMO_URL = resolveBookDemoUrl();
 
 export function CTA() {
   return (
@@ -36,18 +36,10 @@ export function CTA() {
                 Get started free
                 <ArrowRight className="size-4" />
               </ButtonLink>
-              <ButtonLink
-                href={BOOK_DEMO_URL}
-                size="hero"
-                variant="outline"
-                className="rounded-full bg-background/70"
-              >
-                Book a demo
-              </ButtonLink>
             </div>
           </div>
         </div>
       </Reveal>
     </section>
-  )
+  );
 }

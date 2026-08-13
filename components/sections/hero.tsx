@@ -21,7 +21,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="relative overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.16)_0,transparent_30%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.16)_0,transparent_32%),linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)]"
+      className="relative h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.16)_0,transparent_30%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.16)_0,transparent_32%),linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)]"
     >
       {/* Faint grid overlay */}
       <div className="pointer-events-none absolute inset-0 opacity-60 bg-[linear-gradient(rgba(15,23,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.03)_1px,transparent_1px)] bg-size-[48px_48px]" />

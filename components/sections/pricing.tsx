@@ -454,12 +454,12 @@ export function Pricing() {
                   {/* The euro amount is what is actually taken, so it sits with
                       the price rather than in a footnote — it is the figure that
                       lands on the customer's statement. */}
-                  <p className="mt-1 text-[0.65rem] text-muted-foreground">
+                  <p className="mt-1 text-[0.75rem] text-muted-foreground">
                     {billing === "annual"
                       ? `Billed yearly as €${plan.price * ANNUAL_MONTHS_PAID}, ex VAT`
                       : `Billed monthly as €${plan.price}, ex VAT`}
                   </p>
-                  <p className="mt-3 text-xs leading-6 text-muted-foreground">
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
                     {plan.tagline}
                   </p>
                 </CardHeader>
@@ -476,7 +476,7 @@ export function Pricing() {
 
                   <div className="mt-6 border-t border-border/60 pt-6">
                     {plan.inherits ? (
-                      <p className="mb-3 text-[0.7rem] font-medium text-foreground/80">
+                      <p className="mb-3 text-[0.75rem] font-medium text-foreground/80">
                         Everything in {plan.inherits}, plus:
                       </p>
                     ) : null}
@@ -505,22 +505,22 @@ export function Pricing() {
             rather than a limit, and an unexplained pound price reads as a
             promise about what the bank will charge. */}
         <Reveal className="mt-8 space-y-1 text-center">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             The 14-day trial runs the full product with 5 active requests, 2
             users and 1 GB of storage. No card needed to start.
           </p>
-          <p className="text-xs text-muted-foreground">{CONVERSION_NOTICE}</p>
+          <p className="text-sm text-muted-foreground">{CONVERSION_NOTICE}</p>
         </Reveal>
 
         <Reveal className="mt-16">
-          <h3 className="text-center text-sm font-semibold tracking-tight text-foreground">
+          <h3 className="text-center text-md font-semibold tracking-tight text-foreground">
             In every plan
           </h3>
-          <ul className="mx-auto mt-6 grid max-w-4xl gap-x-8 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mx-auto mt-6 grid max-w-4xl gap-x-2 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
             {INCLUDED_EVERYWHERE.map((item) => (
               <li
                 key={item.label}
-                className="flex items-start gap-2.5 text-xs text-foreground/90"
+                className="flex items-start gap-2.5 text-sm text-foreground/90"
               >
                 <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-700">
                   <Check className="size-2.5" />
@@ -648,10 +648,10 @@ export function Pricing() {
         {/* One strip instead of three table rows: the add-ons are priced the
             same on every plan, so columns of the identical figure said nothing. */}
         <Reveal className="mt-12">
-          <h3 className="text-center text-sm font-semibold tracking-tight text-foreground">
+          <h3 className="text-center text-md font-semibold tracking-tight text-foreground">
             Add-ons, on any plan
           </h3>
-          <p className="mx-auto mt-2 max-w-xl text-center text-xs leading-6 text-muted-foreground">
+          <p className="mx-auto mt-2 max-w-xl text-center text-sm leading-6 text-muted-foreground">
             Added and dropped whenever you need them — during a filing peak, for
             example. Reductions are credited to your next invoice.
           </p>
@@ -668,11 +668,11 @@ export function Pricing() {
                 key={addon.term}
                 className="rounded-xl border border-border/60 px-4 py-3 text-center"
               >
-                <dt className="text-xs text-muted-foreground">{addon.term}</dt>
-                <dd className="mt-1 text-sm font-semibold text-foreground">
+                <dt className="text-sm text-muted-foreground">{addon.term}</dt>
+                <dd className="mt-1 text-md font-semibold text-foreground">
                   £{gbp(addon.eur)}
                   <span className="font-normal text-muted-foreground">/mo</span>
-                  <span className="ml-1 text-[0.65rem] font-normal text-muted-foreground">
+                  <span className="ml-1 text-[0.75rem] font-normal text-muted-foreground">
                     (€{addon.eur})
                   </span>
                 </dd>
@@ -682,13 +682,13 @@ export function Pricing() {
         </Reveal>
 
         <Reveal className="mt-16">
-          <h3 className="text-center text-sm font-semibold tracking-tight text-foreground">
+          <h3 className="text-center text-md font-semibold tracking-tight text-foreground">
             Before you buy
           </h3>
           <div className="mx-auto mt-6 max-w-2xl divide-y divide-border/60 border-y border-border/60">
             {FAQ.map((item) => (
               <details key={item.question} className="group py-3">
-                <summary className="cursor-pointer list-none text-xs font-medium text-foreground marker:hidden">
+                <summary className="cursor-pointer list-none text-sm font-medium text-foreground marker:hidden">
                   <span className="inline-flex w-full items-center justify-between gap-4">
                     {item.question}
                     <span
@@ -699,7 +699,7 @@ export function Pricing() {
                     </span>
                   </span>
                 </summary>
-                <p className="mt-2 pr-8 text-xs leading-6 text-muted-foreground">
+                <p className="mt-2 pr-8 text-sm leading-6 text-muted-foreground">
                   {item.answer}
                 </p>
               </details>
@@ -708,7 +708,7 @@ export function Pricing() {
         </Reveal>
 
         <Reveal className="mt-10 text-center">
-          <p className="mx-auto max-w-2xl text-xs leading-6 text-muted-foreground">
+          <p className="mx-auto max-w-2xl text-md leading-6 text-muted-foreground">
             Charged in EUR, excluding VAT, which is added at checkout.{" "}
             {CONVERSION_NOTICE} Hit your active-request limit in a busy month?
             Close the requests you have already finished to free slots at no

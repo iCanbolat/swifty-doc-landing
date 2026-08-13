@@ -11,20 +11,10 @@ const COLUMNS = [
     ],
   },
   {
-    heading: "Company",
-    links: [
-      { label: "About", href: "#" },
-      { label: "Careers", href: "#" },
-      { label: "Blog", href: "#" },
-      { label: "Contact", href: "#" },
-    ],
-  },
-  {
     heading: "Resources",
     links: [
       { label: "Documentation", href: "/docs/webhooks" },
-      { label: "Status", href: "#" },
-      { label: "Security", href: "#" },
+      { label: "Blog", href: "/blog" },
       { label: "Terms & Conditions", href: "/legal/terms" },
       { label: "Privacy Policy", href: "/legal/privacy" },
     ],
@@ -43,7 +33,7 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-8">
           {COLUMNS.map((column) => (
             <div key={column.heading}>
               <p className="text-[0.65rem] tracking-[0.22em] text-foreground uppercase">

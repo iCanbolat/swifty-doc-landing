@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { JetBrains_Mono, Outfit } from "next/font/google"
 
+import { SITE_URL } from "@/lib/site"
+
 import "./globals.css"
 
 // Matches the app shell (client/src/index.css): Outfit for everything, JetBrains
@@ -18,11 +20,12 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "SwiftyDoc — Collect documents without the back-and-forth",
+  metadataBase: new URL(SITE_URL),
+  title: "ClientGather — Collect documents without the back-and-forth",
   description:
-    "Build request templates, share secure portal links, review submissions, and keep every file in one place. SwiftyDoc streamlines document collection end to end.",
-  applicationName: "SwiftyDoc",
-  authors: [{ name: "SwiftyDoc" }],
+    "Build request templates, share secure portal links, review submissions, and keep every file in one place. ClientGather streamlines document collection end to end.",
+  applicationName: "ClientGather",
+  authors: [{ name: "ClientGather" }],
   keywords: [
     "document collection",
     "client portal",
@@ -31,7 +34,7 @@ export const metadata: Metadata = {
     "file storage",
   ],
   openGraph: {
-    title: "SwiftyDoc — Collect documents without the back-and-forth",
+    title: "ClientGather — Collect documents without the back-and-forth",
     description:
       "Build request templates, share secure portal links, review submissions, and keep every file in one place.",
     type: "website",
