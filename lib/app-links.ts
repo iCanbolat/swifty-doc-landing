@@ -1,4 +1,12 @@
-export type PricingPlanIntent = "foundation" | "growth" | "enterprise";
+/**
+ * Mirrors the API's billable tiers. `starter` is marketed as "Solo" — the key
+ * `solo` was already taken by foundation's Creem product.
+ */
+export type PricingPlanIntent =
+  | "starter"
+  | "foundation"
+  | "growth"
+  | "enterprise";
 export type PricingBillingPeriod = "monthly" | "annual";
 
 const DEFAULT_APP_BASE_URL = "http://localhost:5173";

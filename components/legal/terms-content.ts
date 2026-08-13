@@ -7,8 +7,8 @@ import type { LegalDocument } from "./types";
 export const TERMS_DOCUMENT: LegalDocument = {
   slug: "terms",
   title: "Terms & Conditions",
-  version: "2026-08-03",
-  effectiveDate: "3 August 2026",
+  version: "2026-08-09",
+  effectiveDate: "9 August 2026",
   intro:
     "These terms govern your use of SwiftyDoc. Please read them before creating an account — by signing up you enter into a binding agreement with us.",
   sections: [
@@ -54,6 +54,7 @@ export const TERMS_DOCUMENT: LegalDocument = {
       heading: "6. Acceptable use",
       paragraphs: [
         "You must not use SwiftyDoc to break the law, to infringe anyone's rights, or to harm the service or its users.",
+        "We scan uploaded files for malware and will refuse, or later remove, any file that fails that scan. Repeated attempts to upload malicious content are grounds for suspension under section 12.",
       ],
       bullets: [
         "No unlawful, fraudulent, deceptive, defamatory or harassing content, and no phishing or impersonation of any person or organization.",

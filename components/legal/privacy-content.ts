@@ -7,8 +7,8 @@ import type { LegalDocument } from "./types";
 export const PRIVACY_DOCUMENT: LegalDocument = {
   slug: "privacy",
   title: "Privacy Policy",
-  version: "2026-08-03",
-  effectiveDate: "3 August 2026",
+  version: "2026-08-09",
+  effectiveDate: "9 August 2026",
   intro:
     "This policy explains what personal data SwiftyDoc handles, why, for how long, and what rights you have. It covers both our customers and the recipients who complete forms through the portal.",
   sections: [
@@ -29,7 +29,7 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
         "Client and recipient data — the client records you create and the recipient names and email addresses you enter in order to send a request.",
         "Submission content — the answers recipients give and the files they upload, together with comments, review decisions and the change history of each answer.",
         "Portal session data — records of secure links issued, when they were opened, when they expire and when they were revoked.",
-        "Technical and audit data — request logs, security and audit events, error diagnostics, and webhook or integration delivery records.",
+        "Technical and audit data — request logs, security and audit events, the result of the malware scan run on each uploaded file, error diagnostics, and webhook or integration delivery records.",
         "Support data — the messages you send us and our replies.",
       ],
     },
@@ -62,6 +62,7 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
       heading: "6. How we protect it",
       paragraphs: [
         "Data is encrypted in transit. Uploaded files and sensitive submission answers are additionally encrypted at rest under keys we manage and rotate.",
+        "Every file uploaded to SwiftyDoc is scanned for malware before it is stored, using an antivirus engine that runs on our own infrastructure — the file itself is never sent to a third-party scanning service. A file that fails the scan is rejected at upload and never reaches storage; we keep a record that it was blocked, with its name, size and the name of the signature that matched, but not its contents. Scanning detects known malware and is not a guarantee that a file is safe.",
         "Portal sessions are held in cookies that JavaScript cannot read, are bound to a server-side session record, and are invalidated the moment the underlying link is revoked or expires. Download links for stored files are individually signed and short-lived.",
         "Access inside our systems is limited to staff who need it, every organization's data is isolated by tenant on every query, and significant actions are written to an audit log.",
         "No system is perfectly secure. If a breach affects your personal data and is likely to present a risk to you, we will notify the relevant supervisory authority within 72 hours where required, and notify you without undue delay where the risk is high.",

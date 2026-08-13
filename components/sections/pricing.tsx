@@ -19,11 +19,13 @@ type PlanKey = PricingPlanIntent;
 type Plan = {
   key: PlanKey;
   name: string;
-  /** Monthly rate in EUR, excluding VAT. Annual is derived from it. */
+  /** Monthly amount in EUR — the sum actually charged. Pounds are derived. */
   price: number;
   tagline: string;
   cta: string;
   featured?: boolean;
+  /** Named when the plan is a superset of the one before it. */
+  inherits?: string;
   highlights: string[];
 };
 
@@ -40,26 +42,70 @@ type FeatureRow = {
 // the "2 months free" claim literally true instead of an approximate badge.
 const ANNUAL_MONTHS_PAID = 10;
 
+/**
+ * Creem bills in EUR — it has no GBP support — but the market this page is
+ * written for is the UK, where buyers anchor in pounds and read a euro price as
+ * "not for me". So EUR stays the charged amount and the pound figure is derived
+ * from it at a fixed rate. Two hand-entered prices would drift apart and the
+ * page would end up advertising a number nobody is charged, so this is the only
+ * place a conversion happens, and every pound figure on the page is shown next
+ * to the euro one that will actually leave the customer's account.
+ *
+ * The rate is fixed and published rather than tracked live, so a pound price
+ * cannot move under someone mid-decision. That makes stating it mandatory: an
+ * unexplained pound figure reads as a promise about what the bank will charge,
+ * and the bank applies its own rate. Revisit when EUR/GBP has moved far enough
+ * that the shown price misleads.
+ *
+ * EUR amounts are chosen so the derived pound price lands on a round number —
+ * €245 / 1.17 = £209.4, not the other way round.
+ */
+const EUR_PER_GBP = 1.17;
+
+const CONVERSION_NOTICE = `Pound prices are converted at a fixed £1 = €${EUR_PER_GBP}; your bank may apply its own rate.`;
+
 const ACTIVE_REQUEST_INFO =
   "An active request is one that is out with a client — sent or in progress. Drafts don't count, and closing a request you've finished frees its slot again, so the limit is about how much you have in flight at once, not how much you send.";
 
 const BOOK_DEMO_URL = resolveBookDemoUrl();
 
+function gbp(eur: number): number {
+  return Math.round(eur / EUR_PER_GBP);
+}
+
 function annualMonthlyPrice(monthlyPrice: number): number {
   return Math.round((monthlyPrice * ANNUAL_MONTHS_PAID) / 12);
 }
 
+const SEAT_ADDON_EUR = 16;
+const REQUEST_ADDON_EUR = 14;
+const STORAGE_ADDON_EUR = 7;
+
 const PLANS: Plan[] = [
+  {
+    key: "starter",
+    name: "Solo",
+    price: 35,
+    tagline:
+      "For a solo adviser or broker, with an admin working alongside them",
+    cta: "Start 14-day trial",
+    highlights: [
+      "20 active requests",
+      "2 users",
+      "10 GB cloud storage",
+      "Unlimited clients & recipients",
+    ],
+  },
   {
     key: "foundation",
     name: "Foundation",
     price: 69,
-    tagline:
-      "For solo practices and small teams collecting from a steady book of clients",
+    tagline: "For a small practice where more than one person chases documents",
     cta: "Start 14-day trial",
+    inherits: "Solo",
     highlights: [
-      "50 active requests",
-      "2 users",
+      "60 active requests",
+      "4 users",
       "25 GB cloud storage",
       "Unlimited emails & reminders",
     ],
@@ -67,14 +113,15 @@ const PLANS: Plan[] = [
   {
     key: "growth",
     name: "Growth",
-    price: 149,
+    price: 152,
     tagline:
-      "For growing teams that need branding, integrations and more in flight",
+      "For teams that need branding, integrations and more work in flight",
     cta: "Start 14-day trial",
     featured: true,
+    inherits: "Foundation",
     highlights: [
       "200 active requests",
-      "5 users",
+      "10 users",
       "100 GB cloud storage",
       "White-label portal & sender address",
       "Webhooks & Zapier",
@@ -82,19 +129,53 @@ const PLANS: Plan[] = [
   },
   {
     key: "enterprise",
-    name: "Enterprise",
-    price: 319,
-    tagline:
-      "For scaled operations that need control over where the data lives",
+    name: "Scale",
+    price: 245,
+    tagline: "For scaled operations that need control over where the data lives",
     cta: "Start 14-day trial",
+    inherits: "Growth",
     highlights: [
       "500 active requests",
-      "10 users",
+      "20 users",
       "200 GB cloud storage",
       "Bring your own S3 bucket",
       "Priority support",
     ],
   },
+];
+
+/**
+ * Everything here is identical on every plan, so it is a list rather than four
+ * columns of the same tick. The comparison table below carries only the rows
+ * that actually differ — a matrix where most rows match argues that the plans
+ * are interchangeable and the cheapest one will do.
+ */
+const INCLUDED_EVERYWHERE: { label: string; info?: string }[] = [
+  {
+    label: "Template builder",
+    info: "Reusable request templates with sections, conditional detail, repeatable rows and nested field groups.",
+  },
+  { label: "Client portal — no account needed" },
+  { label: "Review queue: approve or request changes" },
+  { label: "Recurring request schedules" },
+  { label: "Archive PDF & bulk export" },
+  { label: "Unlimited clients & recipients" },
+  { label: "Unlimited emails & reminders" },
+  {
+    label: "Team management, roles & permissions",
+    info: "Invite colleagues, assign them to workspaces and requests, and control what each role can see and do.",
+  },
+  { label: "Google Drive integration" },
+  {
+    label: "Data hosted in the UK",
+    info: "Your requests, answers and uploaded files are stored on our own servers in Erith, United Kingdom — not replicated to other regions and not handed to a third-party storage provider.",
+  },
+  { label: "Encryption at rest" },
+  {
+    label: "Malware scanning on uploads",
+    info: "Every uploaded file is scanned before it is stored, on our own infrastructure — files are never sent to an outside scanning service. Anything that fails is refused at upload and never reaches your storage.",
+  },
+  { label: "Audit logs" },
 ];
 
 const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
@@ -104,98 +185,31 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
       {
         label: "Active requests",
         info: ACTIVE_REQUEST_INFO,
-        values: { foundation: "50", growth: "200", enterprise: "500" },
-      },
-      {
-        label: "Extra active requests",
-        info: "Buy in packs of 50 whenever you need more in flight — during a filing peak, for example — and drop them again afterwards. Reductions are credited to your next invoice.",
         values: {
-          foundation: "+€14/mo per 50",
-          growth: "+€14/mo per 50",
-          enterprise: "+€14/mo per 50",
-        },
-      },
-      {
-        label: "Emails & reminders",
-        values: {
-          foundation: "Unlimited",
-          growth: "Unlimited",
-          enterprise: "Unlimited",
+          starter: "20",
+          foundation: "60",
+          growth: "200",
+          enterprise: "500",
         },
       },
       {
         label: "Users included",
-        values: { foundation: "2", growth: "5", enterprise: "10" },
-      },
-      {
-        label: "Extra users",
+        info: "A user is anyone on your team with a login — advisers, case handlers and the admin who does the chasing. Recipients never need an account and are never counted.",
         values: {
-          foundation: "+€16/mo each",
-          growth: "+€16/mo each",
-          enterprise: "+€16/mo each",
+          starter: "2",
+          foundation: "4",
+          growth: "10",
+          enterprise: "20",
         },
       },
       {
         label: "Cloud storage",
         values: {
+          starter: "10 GB",
           foundation: "25 GB",
           growth: "100 GB",
           enterprise: "200 GB",
         },
-      },
-      {
-        label: "Extra storage",
-        info: "Add storage in 25 GB packs instead of moving up a whole plan, and drop them again once you have archived what you no longer need.",
-        values: {
-          foundation: "+€7/mo per 25 GB",
-          growth: "+€7/mo per 25 GB",
-          enterprise: "+€7/mo per 25 GB",
-        },
-      },
-    ],
-  },
-  {
-    title: "Collecting & reviewing",
-    rows: [
-      {
-        label: "Template builder",
-        info: "Reusable request templates with sections, conditional detail, repeatable rows and nested field groups.",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
-      {
-        label: "Client portal (no account needed)",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
-      {
-        label: "Review queue: approve or request changes",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
-      {
-        label: "Recurring request schedules",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
-      {
-        label: "Archive PDF & bulk export",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
-    ],
-  },
-  {
-    title: "Team & collaboration",
-    rows: [
-      {
-        label: "Team management",
-        info: "Invite colleagues, assign them to workspaces and requests, and control what each role can see and do.",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
-      {
-        label: "Roles & permissions",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
-      {
-        label: "Live collaboration: presence & cursors",
-        info: "In collaborative requests, participants see who's online, which field each person is editing, and each other's live cursors in real time.",
-        values: { foundation: false, growth: true, enterprise: true },
       },
     ],
   },
@@ -203,50 +217,110 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
     title: "Branding & integrations",
     rows: [
       {
-        label: "Google Drive integration",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
-      {
         label: "White-labelled client portal",
         info: "Your logo and favicon on the portal, with the SwiftyDoc footer removed — applied automatically, no toggle to find.",
-        values: { foundation: false, growth: true, enterprise: true },
+        values: {
+          starter: false,
+          foundation: false,
+          growth: true,
+          enterprise: true,
+        },
       },
       {
         label: "Send from your own address",
         info: "Pick the address clients see — info@yourfirm.com — and verify its domain once. We generate the DNS records and check them for you, and your existing inbox keeps working.",
-        values: { foundation: false, growth: true, enterprise: true },
+        values: {
+          starter: false,
+          foundation: false,
+          growth: true,
+          enterprise: true,
+        },
       },
       {
         label: "Zapier & connected apps",
-        values: { foundation: false, growth: true, enterprise: true },
+        values: {
+          starter: false,
+          foundation: false,
+          growth: true,
+          enterprise: true,
+        },
       },
       {
         label: "Webhooks & delivery logs",
-        values: { foundation: false, growth: true, enterprise: true },
+        values: {
+          starter: false,
+          foundation: false,
+          growth: true,
+          enterprise: true,
+        },
+      },
+      {
+        label: "Live collaboration: presence & cursors",
+        info: "In collaborative requests, participants see who's online, which field each person is editing, and each other's live cursors in real time.",
+        values: {
+          starter: false,
+          foundation: false,
+          growth: true,
+          enterprise: true,
+        },
       },
     ],
   },
   {
-    title: "Security & data",
+    title: "Data & support",
     rows: [
-      {
-        label: "Encryption at rest",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
-      {
-        label: "Audit logs",
-        values: { foundation: true, growth: true, enterprise: true },
-      },
       {
         label: "Bring your own S3 bucket",
         info: "Point SwiftyDoc at your own S3 bucket: files are written to storage you control and are not counted against the plan's storage limit.",
-        values: { foundation: false, growth: false, enterprise: true },
+        values: {
+          starter: false,
+          foundation: false,
+          growth: false,
+          enterprise: true,
+        },
       },
       {
         label: "Priority support",
-        values: { foundation: false, growth: false, enterprise: true },
+        values: {
+          starter: false,
+          foundation: false,
+          growth: false,
+          enterprise: true,
+        },
       },
     ],
+  },
+];
+
+const FAQ: { question: string; answer: string }[] = [
+  {
+    question: "What does the 14-day trial include?",
+    answer:
+      "The full product, with 5 active requests, 2 users and 1 GB of storage. That is enough to run several real requests end to end; it is not enough to run a practice on, which is the point. No card is needed to start.",
+  },
+  {
+    question: "What happens if I hit the active-request limit?",
+    answer:
+      "You cannot send a new request until a slot frees up. Closing requests you have already finished frees them at no cost, which is the intended way out. If you genuinely need more in flight, add packs of 50 and drop them again when the peak passes.",
+  },
+  {
+    question: "Can I change plan part-way through a billing period?",
+    answer:
+      "Yes. Upgrades take effect immediately and you are charged the prorated difference. Downgrades take effect at the end of the current period, and the unused amount is credited against your next invoice.",
+  },
+  {
+    question: "Why are prices shown in pounds but charged in euros?",
+    answer: `Our payment provider settles in euros, so the euro amount shown beside each price is what will appear on your statement. The pound figure is a fixed conversion at £1 = €${EUR_PER_GBP}, held steady so a price cannot move under you mid-decision. If you pay with a sterling card your bank applies its own rate on the day, so the exact pound amount debited will differ slightly.`,
+  },
+  {
+    question: "Where is our data stored?",
+    answer:
+      "On our own servers in Erith, United Kingdom. Requests, answers and uploaded files stay there — they are not replicated to other regions and not handed to a third-party storage provider. Uploads are scanned for malware on the same infrastructure, so files are never sent to an outside scanning service either.",
+  },
+  {
+    question: "What happens to my data if I cancel?",
+    answer:
+      "Your account stays readable to the end of the period you have paid for, and you can bulk-export every request and file as a ZIP at any point before then. After closure the organization and its files are permanently deleted 30 days later.",
   },
 ];
 
@@ -278,7 +352,8 @@ function FeatureValue({ value }: { value: string | boolean }) {
 export function Pricing() {
   const [billing, setBilling] = useState<BillingPeriod>("annual");
 
-  const priceFor = (plan: Plan) =>
+  /** EUR — the charged amount. Everything shown in pounds derives from this. */
+  const eurFor = (plan: Plan) =>
     billing === "annual" ? annualMonthlyPrice(plan.price) : plan.price;
 
   const ctaHref = (plan: Plan) => buildBootstrapOwnerUrl(plan.key, billing);
@@ -294,10 +369,11 @@ export function Pricing() {
             Start with a 14-day trial, then pay for what you have in flight
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-muted-foreground">
-            Every plan includes the template builder, client portal and review
-            queue, with unlimited emails and reminders. Plans differ by how many
-            requests you can have open at once, how many people work on them,
-            and how much you store.
+            Built for immigration advisers, brokers and practices that collect
+            the same bundle of documents over and over. Every plan includes the
+            template builder, client portal and review queue, with unlimited
+            clients, emails and reminders — plans differ by how much you have
+            open at once and how many people work on it.
           </p>
         </Reveal>
 
@@ -348,7 +424,7 @@ export function Pricing() {
           </div>
         </Reveal>
 
-        <Stagger className="mt-12 grid gap-6 lg:grid-cols-3">
+        <Stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {PLANS.map((plan) => (
             <StaggerItem key={plan.key} className="h-full">
               <Card
@@ -371,14 +447,17 @@ export function Pricing() {
                   </p>
                   <div className="mt-2 flex items-baseline gap-1">
                     <span className="text-4xl font-semibold tracking-tight text-foreground">
-                      €{priceFor(plan)}
+                      £{gbp(eurFor(plan))}
                     </span>
                     <span className="text-xs text-muted-foreground">/mo</span>
                   </div>
+                  {/* The euro amount is what is actually taken, so it sits with
+                      the price rather than in a footnote — it is the figure that
+                      lands on the customer's statement. */}
                   <p className="mt-1 text-[0.65rem] text-muted-foreground">
                     {billing === "annual"
-                      ? `€${plan.price * ANNUAL_MONTHS_PAID} billed yearly, ex VAT`
-                      : "per organisation, billed monthly, ex VAT"}
+                      ? `Billed yearly as €${plan.price * ANNUAL_MONTHS_PAID}, ex VAT`
+                      : `Billed monthly as €${plan.price}, ex VAT`}
                   </p>
                   <p className="mt-3 text-xs leading-6 text-muted-foreground">
                     {plan.tagline}
@@ -395,36 +474,82 @@ export function Pricing() {
                     {plan.cta}
                   </ButtonLink>
 
-                  <ul className="mt-6 space-y-2.5 border-t border-border/60 pt-6">
-                    {plan.highlights.map((highlight) => (
-                      <li
-                        key={highlight}
-                        className="flex items-start gap-2.5 text-xs text-foreground/90"
-                      >
-                        <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-700">
-                          <Check className="size-2.5" />
-                        </span>
-                        <span className="flex-1">{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="mt-6 border-t border-border/60 pt-6">
+                    {plan.inherits ? (
+                      <p className="mb-3 text-[0.7rem] font-medium text-foreground/80">
+                        Everything in {plan.inherits}, plus:
+                      </p>
+                    ) : null}
+                    <ul className="space-y-2.5">
+                      {plan.highlights.map((highlight) => (
+                        <li
+                          key={highlight}
+                          className="flex items-start gap-2.5 text-xs text-foreground/90"
+                        >
+                          <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-700">
+                            <Check className="size-2.5" />
+                          </span>
+                          <span className="flex-1">{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </CardContent>
               </Card>
             </StaggerItem>
           ))}
         </Stagger>
 
+        {/* Both stated here rather than only in the FAQ: finding the trial
+            ceiling by hitting it mid-evaluation reads as a broken product
+            rather than a limit, and an unexplained pound price reads as a
+            promise about what the bank will charge. */}
+        <Reveal className="mt-8 space-y-1 text-center">
+          <p className="text-xs text-muted-foreground">
+            The 14-day trial runs the full product with 5 active requests, 2
+            users and 1 GB of storage. No card needed to start.
+          </p>
+          <p className="text-xs text-muted-foreground">{CONVERSION_NOTICE}</p>
+        </Reveal>
+
+        <Reveal className="mt-16">
+          <h3 className="text-center text-sm font-semibold tracking-tight text-foreground">
+            In every plan
+          </h3>
+          <ul className="mx-auto mt-6 grid max-w-4xl gap-x-8 gap-y-2.5 sm:grid-cols-2 lg:grid-cols-3">
+            {INCLUDED_EVERYWHERE.map((item) => (
+              <li
+                key={item.label}
+                className="flex items-start gap-2.5 text-xs text-foreground/90"
+              >
+                <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-700">
+                  <Check className="size-2.5" />
+                </span>
+                <span className="flex-1">
+                  {item.label}
+                  {item.info ? (
+                    <>
+                      {" "}
+                      <InfoTooltip label={item.info} />
+                    </>
+                  ) : null}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
+
         {/* Full comparison. Hidden on small screens, where the cards above
-            already carry each plan's headline numbers — a four-column matrix at
+            already carry each plan's headline numbers — a five-column matrix at
             that width is unreadable however you scroll it. */}
         <Reveal className="mt-16 hidden md:block">
           <h3 className="text-center text-sm font-semibold tracking-tight text-foreground">
-            Compare plans
+            What changes by plan
           </h3>
 
           <table className="mt-6 w-full border-collapse text-left">
             <caption className="sr-only">
-              Feature comparison across the Foundation, Growth and Enterprise
+              Feature comparison across the Solo, Foundation, Growth and Scale
               plans
             </caption>
             <thead>
@@ -433,7 +558,7 @@ export function Pricing() {
               <tr className="sticky top-16 z-30">
                 <th
                   scope="col"
-                  className="w-[34%] border-b border-border/70 bg-background p-0"
+                  className="w-[28%] border-b border-border/70 bg-background p-0"
                 >
                   <span className="sr-only">Feature</span>
                 </th>
@@ -452,22 +577,25 @@ export function Pricing() {
                         plan.featured && "bg-primary/5",
                       )}
                     >
-                      <span className="text-xs font-semibold text-foreground">
+                      <span className="text-sm font-semibold text-foreground">
                         {plan.name}
                       </span>
                       <span className="flex items-baseline gap-1">
                         <span className="text-lg font-semibold tracking-tight text-foreground">
-                          €{priceFor(plan)}
+                          £{gbp(eurFor(plan))}
                         </span>
-                        <span className="text-[0.6rem] font-normal text-muted-foreground">
+                        <span className="text-sm font-normal text-muted-foreground">
                           /mo
                         </span>
+                      </span>
+                      <span className="text-[0.65rem] text-muted-foreground">
+                        €{eurFor(plan)} charged
                       </span>
                       <ButtonLink
                         href={ctaHref(plan)}
                         size="sm"
                         variant={plan.featured ? "default" : "outline"}
-                        className="mt-1 rounded-full px-3 text-[0.65rem]"
+                        className="mt-1 rounded-full px-3 text-[0.75rem]"
                       >
                         {plan.cta}
                       </ButtonLink>
@@ -483,7 +611,7 @@ export function Pricing() {
                   <th
                     scope="colgroup"
                     colSpan={PLANS.length + 1}
-                    className="pt-8 pb-2 text-[0.6rem] font-semibold tracking-[0.24em] text-muted-foreground uppercase"
+                    className="pt-8 pb-2 text-[0.75rem] font-semibold tracking-[0.24em] text-muted-foreground uppercase"
                   >
                     {group.title}
                   </th>
@@ -492,7 +620,7 @@ export function Pricing() {
                   <tr key={row.label} className="border-t border-border/50">
                     <th
                       scope="row"
-                      className="py-3 pr-4 text-xs font-normal text-foreground/90"
+                      className="py-3 pr-4 text-sm font-normal text-foreground/90"
                     >
                       <span className="inline-flex items-center gap-1.5">
                         {row.label}
@@ -517,14 +645,74 @@ export function Pricing() {
           </table>
         </Reveal>
 
+        {/* One strip instead of three table rows: the add-ons are priced the
+            same on every plan, so columns of the identical figure said nothing. */}
+        <Reveal className="mt-12">
+          <h3 className="text-center text-sm font-semibold tracking-tight text-foreground">
+            Add-ons, on any plan
+          </h3>
+          <p className="mx-auto mt-2 max-w-xl text-center text-xs leading-6 text-muted-foreground">
+            Added and dropped whenever you need them — during a filing peak, for
+            example. Reductions are credited to your next invoice.
+          </p>
+          <dl className="mx-auto mt-6 grid max-w-3xl gap-4 sm:grid-cols-3">
+            {[
+              {
+                term: "50 active requests",
+                eur: REQUEST_ADDON_EUR,
+              },
+              { term: "Extra user seat", eur: SEAT_ADDON_EUR },
+              { term: "25 GB storage", eur: STORAGE_ADDON_EUR },
+            ].map((addon) => (
+              <div
+                key={addon.term}
+                className="rounded-xl border border-border/60 px-4 py-3 text-center"
+              >
+                <dt className="text-xs text-muted-foreground">{addon.term}</dt>
+                <dd className="mt-1 text-sm font-semibold text-foreground">
+                  £{gbp(addon.eur)}
+                  <span className="font-normal text-muted-foreground">/mo</span>
+                  <span className="ml-1 text-[0.65rem] font-normal text-muted-foreground">
+                    (€{addon.eur})
+                  </span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </Reveal>
+
+        <Reveal className="mt-16">
+          <h3 className="text-center text-sm font-semibold tracking-tight text-foreground">
+            Before you buy
+          </h3>
+          <div className="mx-auto mt-6 max-w-2xl divide-y divide-border/60 border-y border-border/60">
+            {FAQ.map((item) => (
+              <details key={item.question} className="group py-3">
+                <summary className="cursor-pointer list-none text-xs font-medium text-foreground marker:hidden">
+                  <span className="inline-flex w-full items-center justify-between gap-4">
+                    {item.question}
+                    <span
+                      aria-hidden
+                      className="text-muted-foreground transition-transform group-open:rotate-45"
+                    >
+                      +
+                    </span>
+                  </span>
+                </summary>
+                <p className="mt-2 pr-8 text-xs leading-6 text-muted-foreground">
+                  {item.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </Reveal>
+
         <Reveal className="mt-10 text-center">
           <p className="mx-auto max-w-2xl text-xs leading-6 text-muted-foreground">
-            Prices in EUR, excluding VAT, which is added at checkout. Hit your
-            active-request limit in a busy month? Close the requests you have
-            already finished to free slots at no cost, or add packs of 50 for
-            €14/month and drop them again when the peak passes. Storage works the
-            same way: 25 GB packs at €7/month, added and dropped as you need
-            them.
+            Charged in EUR, excluding VAT, which is added at checkout.{" "}
+            {CONVERSION_NOTICE} Hit your active-request limit in a busy month?
+            Close the requests you have already finished to free slots at no
+            cost, or add packs and drop them again when the peak passes.
           </p>
           <p className="mt-3 text-xs text-muted-foreground">
             Need something larger, or a procurement review?{" "}

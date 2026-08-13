@@ -25,7 +25,7 @@ export function CTA() {
               starts with a 14-day no-card trial with strict anti-abuse limits.
             </p>
             <p className="mx-auto mt-3 max-w-lg text-[0.68rem] tracking-[0.16em] text-muted-foreground uppercase">
-              Trial includes 2 active requests, 2 users and 1 GB storage.
+              Trial includes 5 active requests, 2 users and 1 GB storage.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <ButtonLink
