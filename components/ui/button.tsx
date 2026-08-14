@@ -1,10 +1,10 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 /**
- * Ported from the SwiftyDoc client `button.tsx` CVA (sharp corners, mono, violet
+ * Ported from the ClientGather client `button.tsx` CVA (sharp corners, mono, violet
  * primary). Base-ui primitive swapped for a plain button/anchor, and a larger
  * `hero` size added for marketing CTAs.
  */
@@ -33,11 +33,11 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
-)
+  },
+);
 
 type ButtonProps = React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants>
+  VariantProps<typeof buttonVariants>;
 
 function Button({ className, variant, size, ...props }: ButtonProps) {
   return (
@@ -46,11 +46,11 @@ function Button({ className, variant, size, ...props }: ButtonProps) {
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-  )
+  );
 }
 
 type ButtonLinkProps = React.ComponentProps<"a"> &
-  VariantProps<typeof buttonVariants>
+  VariantProps<typeof buttonVariants>;
 
 function ButtonLink({ className, variant, size, ...props }: ButtonLinkProps) {
   return (
@@ -59,7 +59,7 @@ function ButtonLink({ className, variant, size, ...props }: ButtonLinkProps) {
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     />
-  )
+  );
 }
 
-export { Button, ButtonLink, buttonVariants }
+export { Button, ButtonLink, buttonVariants };

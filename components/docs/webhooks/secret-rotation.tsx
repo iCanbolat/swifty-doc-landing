@@ -12,7 +12,7 @@ export function WebhooksSecretRotation() {
     <DocSection id="secret-rotation" title="Secret rotation">
       <DocParagraph>
         Rotate an endpoint&apos;s signing secret at any time — on a schedule, or
-        immediately if it may have leaked. SwiftyDoc always generates a new
+        immediately if it may have leaked. ClientGather always generates a new
         high-entropy <InlineCode>whsec_…</InlineCode> secret for each rotate
         action.
       </DocParagraph>
@@ -24,11 +24,11 @@ export function WebhooksSecretRotation() {
       <DocParagraph>
         Rotation is zero-downtime. For a grace window (24 hours by default),
         every delivery is signed twice:{" "}
-        <InlineCode>X-ClientGather-Signature</InlineCode> with the new secret and{" "}
-        <InlineCode>X-ClientGather-Signature-Previous</InlineCode> with the old
-        one. The endpoint&apos;s <InlineCode>hasPreviousSecret</InlineCode> and{" "}
-        <InlineCode>previousSecretExpiresAt</InlineCode> fields tell you whether
-        a window is active.
+        <InlineCode>X-ClientGather-Signature</InlineCode> with the new secret
+        and <InlineCode>X-ClientGather-Signature-Previous</InlineCode> with the
+        old one. The endpoint&apos;s <InlineCode>hasPreviousSecret</InlineCode>{" "}
+        and <InlineCode>previousSecretExpiresAt</InlineCode> fields tell you
+        whether a window is active.
       </DocParagraph>
       <DocParagraph>A safe rotation runbook:</DocParagraph>
       <ol className="list-decimal space-y-2 pl-5 text-sm leading-7 text-muted-foreground">

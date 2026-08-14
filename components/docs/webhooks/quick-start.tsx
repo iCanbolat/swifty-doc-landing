@@ -41,16 +41,15 @@ export function WebhooksQuickStart() {
       </DocParagraph>
       <CodeBlock label="server.mjs" code={RECEIVER_EXAMPLE} />
 
-      <DocSubheading>2. Register the endpoint in SwiftyDoc</DocSubheading>
+      <DocSubheading>2. Register the endpoint in ClientGather</DocSubheading>
       <DocParagraph>
-        Open{" "}
-        <strong className="text-foreground">Developers → Webhooks</strong>,
+        Open <strong className="text-foreground">Developers → Webhooks</strong>,
         add your destination URL, and choose the event subscriptions your
         receiver needs.
       </DocParagraph>
       <DocParagraph>
-        SwiftyDoc generates the signing <InlineCode>secret</InlineCode>, shows
-        it once, and stores only a redacted value for future reads.
+        ClientGather generates the signing <InlineCode>secret</InlineCode>,
+        shows it once, and stores only a redacted value for future reads.
       </DocParagraph>
       <Callout variant="warning" title="Copy the secret immediately">
         Save the plaintext secret in a secure vault right away. If you lose it,

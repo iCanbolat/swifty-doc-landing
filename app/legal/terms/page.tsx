@@ -4,9 +4,9 @@ import { LegalDocumentPage } from "@/components/legal/legal-document";
 import { TERMS_DOCUMENT } from "@/components/legal/terms-content";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions — SwiftyDoc",
+  title: "Terms & Conditions — ClientGather",
   description:
-    "The agreement that governs your use of SwiftyDoc: accounts, plans, your content, acceptable use, billing and termination.",
+    "The agreement that governs your use of ClientGather: accounts, plans, your content, acceptable use, billing and termination.",
 };
 
 export default function TermsPage() {

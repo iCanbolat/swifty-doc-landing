@@ -3,10 +3,10 @@
  * src/infrastructure/webhooks/webhook.service.ts (generateSignature):
  * HMAC-SHA256 hex over `${timestamp}.${rawBody}` keyed by the endpoint secret.
  */
-import { Callout } from "@/components/docs/callout"
-import { CodeBlock } from "@/components/docs/code-block"
-import { DocParagraph, DocSection } from "@/components/docs/doc-section"
-import { InlineCode } from "@/components/docs/docs-table"
+import { Callout } from "@/components/docs/callout";
+import { CodeBlock } from "@/components/docs/code-block";
+import { DocParagraph, DocSection } from "@/components/docs/doc-section";
+import { InlineCode } from "@/components/docs/docs-table";
 
 const NODE_EXAMPLE = `import { createHmac, timingSafeEqual } from "node:crypto"
 import express from "express"
@@ -56,7 +56,7 @@ app.post(
   }
 )
 
-app.listen(3000)`
+app.listen(3000)`;
 
 const PYTHON_EXAMPLE = `import hashlib
 import hmac
@@ -65,13 +65,13 @@ def is_valid_signature(raw_body: bytes, timestamp: str,
                        signature: str, secret: str) -> bool:
     message = f"{timestamp}.".encode() + raw_body
     expected = hmac.new(secret.encode(), message, hashlib.sha256).hexdigest()
-    return hmac.compare_digest(expected, signature)`
+    return hmac.compare_digest(expected, signature)`;
 
 export function WebhooksSignatures() {
   return (
     <DocSection id="verifying-signatures" title="Verifying signatures">
       <DocParagraph>
-        Every delivery is signed so you can prove it came from SwiftyDoc and
+        Every delivery is signed so you can prove it came from ClientGather and
         was not tampered with. The signature is computed as:
       </DocParagraph>
       <CodeBlock
@@ -87,11 +87,11 @@ export function WebhooksSignatures() {
         comparison.
       </DocParagraph>
       <Callout variant="warning" title="Verify against the raw body">
-        Compute the HMAC over the raw request bytes exactly as received.
-        Parsing the JSON and re-serializing it will change whitespace and key
-        ordering and break the signature. In Express, use{" "}
-        <InlineCode>express.raw()</InlineCode> for the webhook route instead
-        of <InlineCode>express.json()</InlineCode>.
+        Compute the HMAC over the raw request bytes exactly as received. Parsing
+        the JSON and re-serializing it will change whitespace and key ordering
+        and break the signature. In Express, use{" "}
+        <InlineCode>express.raw()</InlineCode> for the webhook route instead of{" "}
+        <InlineCode>express.json()</InlineCode>.
       </Callout>
       <CodeBlock label="verify.mjs — Node.js" code={NODE_EXAMPLE} />
       <CodeBlock label="verify.py — Python" code={PYTHON_EXAMPLE} />
@@ -99,8 +99,7 @@ export function WebhooksSignatures() {
         During a secret-rotation grace window, deliveries also carry{" "}
         <InlineCode>X-ClientGather-Signature-Previous</InlineCode>, signed with
         the previous secret. Accepting either header (as in the Node example
-        above) lets you roll out a new secret with zero missed deliveries —
-        see{" "}
+        above) lets you roll out a new secret with zero missed deliveries — see{" "}
         <a
           href="#secret-rotation"
           className="text-primary underline underline-offset-4"
@@ -111,5 +110,5 @@ export function WebhooksSignatures() {
         few minutes.
       </DocParagraph>
     </DocSection>
-  )
+  );
 }

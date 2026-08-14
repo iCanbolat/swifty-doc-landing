@@ -10,7 +10,8 @@ export type PricingPlanIntent =
 export type PricingBillingPeriod = "monthly" | "annual";
 
 const DEFAULT_APP_BASE_URL = "http://localhost:5173";
-const DEFAULT_DEMO_URL = "mailto:sales@swiftydoc.io?subject=SwiftyDoc%20Demo";
+const DEFAULT_DEMO_URL =
+  "mailto:sales@swiftydoc.io?subject=ClientGather%20Demo";
 
 function trimTrailingSlash(value: string): string {
   return value.replace(/\/+$/, "");

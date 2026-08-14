@@ -10,26 +10,26 @@ export const TERMS_DOCUMENT: LegalDocument = {
   version: "2026-08-09",
   effectiveDate: "9 August 2026",
   intro:
-    "These terms govern your use of SwiftyDoc. Please read them before creating an account — by signing up you enter into a binding agreement with us.",
+    "These terms govern your use of ClientGather. Please read them before creating an account — by signing up you enter into a binding agreement with us.",
   sections: [
     {
       heading: "1. Who we are and what these terms cover",
       paragraphs: [
-        "SwiftyDoc (“SwiftyDoc”, “we”, “us”) is operated by [LEGAL ENTITY NAME], registered at [REGISTERED ADDRESS], company number [COMPANY NUMBER].",
-        "These Terms & Conditions, together with our Privacy Policy, form the agreement between you and us for the SwiftyDoc service. If you accept these terms on behalf of an organization, you confirm you are authorised to bind that organization, and “you” means that organization.",
+        "ClientGather (“ClientGather”, “we”, “us”) is operated by [LEGAL ENTITY NAME], registered at [REGISTERED ADDRESS], company number [COMPANY NUMBER].",
+        "These Terms & Conditions, together with our Privacy Policy, form the agreement between you and us for the ClientGather service. If you accept these terms on behalf of an organization, you confirm you are authorised to bind that organization, and “you” means that organization.",
       ],
     },
     {
       heading: "2. The service",
       paragraphs: [
-        "SwiftyDoc is a document and information collection platform. You build request templates, send them to your clients, and collect their answers and files through a secure recipient portal. We also provide review, export, reminder, audit and integration features according to your plan.",
-        "SwiftyDoc is not an electronic signature service and does not certify, witness or notarise any document. We do not verify the identity of recipients beyond delivering a secure link to the email address you supply.",
+        "ClientGather is a document and information collection platform. You build request templates, send them to your clients, and collect their answers and files through a secure recipient portal. We also provide review, export, reminder, audit and integration features according to your plan.",
+        "ClientGather is not an electronic signature service and does not certify, witness or notarise any document. We do not verify the identity of recipients beyond delivering a secure link to the email address you supply.",
       ],
     },
     {
       heading: "3. Accounts, organizations and workspaces",
       paragraphs: [
-        "To use SwiftyDoc you create an account and an organization. One user account may own one organization; you may additionally be invited as a member of other organizations.",
+        "To use ClientGather you create an account and an organization. One user account may own one organization; you may additionally be invited as a member of other organizations.",
         "You are responsible for everything that happens under your account and under your organization, including the actions of the members you invite. Keep your credentials confidential and tell us promptly at [SECURITY CONTACT EMAIL] if you believe an account has been compromised.",
         "Access inside an organization is governed by roles and workspace membership. Assigning a role that grants access to client data is your decision and your responsibility.",
       ],
@@ -37,7 +37,7 @@ export const TERMS_DOCUMENT: LegalDocument = {
     {
       heading: "4. Your content",
       paragraphs: [
-        "Everything you and your recipients put into SwiftyDoc — templates, answers, uploaded files, comments and client records — remains yours. We claim no ownership over it.",
+        "Everything you and your recipients put into ClientGather — templates, answers, uploaded files, comments and client records — remains yours. We claim no ownership over it.",
         "You grant us a limited licence to host, process, transmit, encrypt, back up and display that content strictly to provide the service to you, to keep it secure, and to comply with law.",
         "You are responsible for having the right to collect and share the information you request, and for the lawfulness of what you ask your recipients to provide.",
       ],
@@ -45,7 +45,7 @@ export const TERMS_DOCUMENT: LegalDocument = {
     {
       heading: "5. Recipients and secure links",
       paragraphs: [
-        "Recipients do not need a SwiftyDoc account. They access their form through a secure, unguessable link sent to the email address you provide. Anyone holding that link can open and complete the form until it expires or you revoke it.",
+        "Recipients do not need a ClientGather account. They access their form through a secure, unguessable link sent to the email address you provide. Anyone holding that link can open and complete the form until it expires or you revoke it.",
         "You choose who receives a link. If a link reaches the wrong person — for example because it was forwarded or an address was mistyped — revoke it from the request screen; revocation takes effect immediately across every open session.",
         "Where a request is collaborative, every participant you invite to the same form can see and edit every answer and file in it. Only invite people who are entitled to see each other's information.",
       ],
@@ -53,7 +53,7 @@ export const TERMS_DOCUMENT: LegalDocument = {
     {
       heading: "6. Acceptable use",
       paragraphs: [
-        "You must not use SwiftyDoc to break the law, to infringe anyone's rights, or to harm the service or its users.",
+        "You must not use ClientGather to break the law, to infringe anyone's rights, or to harm the service or its users.",
         "We scan uploaded files for malware and will refuse, or later remove, any file that fails that scan. Repeated attempts to upload malicious content are grounds for suspension under section 12.",
       ],
       bullets: [
@@ -89,14 +89,14 @@ export const TERMS_DOCUMENT: LegalDocument = {
     {
       heading: "10. Third-party services",
       paragraphs: [
-        "SwiftyDoc can connect to third-party services such as cloud storage, automation platforms and your own systems through webhooks and our API. Those connections are made at your instruction and are governed by the third party's own terms.",
-        "We are not responsible for third-party services, and enabling a connection may cause your content to leave SwiftyDoc. Review what you are authorising before you connect.",
+        "ClientGather can connect to third-party services such as cloud storage, automation platforms and your own systems through webhooks and our API. Those connections are made at your instruction and are governed by the third party's own terms.",
+        "We are not responsible for third-party services, and enabling a connection may cause your content to leave ClientGather. Review what you are authorising before you connect.",
       ],
     },
     {
       heading: "11. Availability, changes and support",
       paragraphs: [
-        "We work to keep SwiftyDoc available and secure, but we do not promise uninterrupted service. Maintenance, upgrades and events beyond our reasonable control may cause downtime.",
+        "We work to keep ClientGather available and secure, but we do not promise uninterrupted service. Maintenance, upgrades and events beyond our reasonable control may cause downtime.",
         "We may add, change or withdraw features. Where a change materially reduces core functionality you rely on, we will give reasonable notice.",
         "Support is provided by email at [SUPPORT EMAIL] during business hours, with response targets depending on your plan.",
       ],
@@ -104,7 +104,7 @@ export const TERMS_DOCUMENT: LegalDocument = {
     {
       heading: "12. Suspension and termination",
       paragraphs: [
-        "You may stop using SwiftyDoc and close your organization at any time.",
+        "You may stop using ClientGather and close your organization at any time.",
         "We may suspend or terminate access if you materially breach these terms, if fees remain unpaid after notice, if we must do so by law, or if your use puts the service or other customers at risk. Where circumstances allow, we will warn you first and give you an opportunity to fix the problem.",
       ],
     },
@@ -118,7 +118,7 @@ export const TERMS_DOCUMENT: LegalDocument = {
     {
       heading: "14. Warranties and disclaimers",
       paragraphs: [
-        "SwiftyDoc is provided “as is”. To the fullest extent permitted by law we exclude all implied warranties, including fitness for a particular purpose and non-infringement.",
+        "ClientGather is provided “as is”. To the fullest extent permitted by law we exclude all implied warranties, including fitness for a particular purpose and non-infringement.",
         "We do not warrant that the service will meet any regulatory obligation that applies to you, or that the content you collect will be accurate, complete or legally sufficient for your purposes.",
       ],
     },
@@ -154,4 +154,4 @@ export const TERMS_DOCUMENT: LegalDocument = {
       ],
     },
   ],
-}
+};

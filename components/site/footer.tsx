@@ -58,7 +58,7 @@ export function Footer() {
 
       <div className="border-t border-border/60">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-6 py-6 text-[0.65rem] text-muted-foreground sm:flex-row lg:px-8">
-          <p>© {new Date().getFullYear()} SwiftyDoc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} ClientGather. All rights reserved.</p>
           <div className="flex items-center gap-5">
             <a
               href="/legal/privacy"

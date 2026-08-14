@@ -131,7 +131,8 @@ const PLANS: Plan[] = [
     key: "enterprise",
     name: "Scale",
     price: 245,
-    tagline: "For scaled operations that need control over where the data lives",
+    tagline:
+      "For scaled operations that need control over where the data lives",
     cta: "Start 14-day trial",
     inherits: "Growth",
     highlights: [
@@ -218,7 +219,7 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
     rows: [
       {
         label: "White-labelled client portal",
-        info: "Your logo and favicon on the portal, with the SwiftyDoc footer removed — applied automatically, no toggle to find.",
+        info: "Your logo and favicon on the portal, with the ClientGather footer removed — applied automatically, no toggle to find.",
         values: {
           starter: false,
           foundation: false,
@@ -271,7 +272,7 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
     rows: [
       {
         label: "Bring your own S3 bucket",
-        info: "Point SwiftyDoc at your own S3 bucket: files are written to storage you control and are not counted against the plan's storage limit.",
+        info: "Point ClientGather at your own S3 bucket: files are written to storage you control and are not counted against the plan's storage limit.",
         values: {
           starter: false,
           foundation: false,

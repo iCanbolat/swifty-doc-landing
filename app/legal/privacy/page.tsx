@@ -4,9 +4,9 @@ import { LegalDocumentPage } from "@/components/legal/legal-document";
 import { PRIVACY_DOCUMENT } from "@/components/legal/privacy-content";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — SwiftyDoc",
+  title: "Privacy Policy — ClientGather",
   description:
-    "What personal data SwiftyDoc handles and why: customer accounts, portal recipients, retention periods, subprocessors, security and your rights.",
+    "What personal data ClientGather handles and why: customer accounts, portal recipients, retention periods, subprocessors, security and your rights.",
 };
 
 export default function PrivacyPage() {

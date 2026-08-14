@@ -13,11 +13,11 @@ import { Navbar } from "@/components/site/navbar";
 import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
-  title: "Webhooks — SwiftyDoc Documentation",
+  title: "Webhooks — ClientGather Documentation",
   description:
     "Receive signed, real-time HTTP callbacks when requests complete, files upload, and reviews change. Learn setup, signature verification, retries, and secret rotation.",
   openGraph: {
-    title: "Webhooks — SwiftyDoc Documentation",
+    title: "Webhooks — ClientGather Documentation",
     description:
       "Receive signed, real-time HTTP callbacks when requests complete, files upload, and reviews change.",
     type: "article",
@@ -51,7 +51,7 @@ export default function WebhooksDocsPage() {
             <Badge variant="outline">Enterprise plan</Badge>
           </div>
           <p className="mt-4 text-sm leading-7 text-muted-foreground">
-            Get notified the moment something happens in SwiftyDoc. Webhooks
+            Get notified the moment something happens in ClientGather. Webhooks
             deliver signed, real-time HTTP callbacks to your systems whenever
             requests are sent, files are uploaded, reviews are decided, and more
             — no polling required.

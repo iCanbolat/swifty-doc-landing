@@ -78,14 +78,14 @@ export function WebhooksBestPractices() {
       </DocParagraph>
 
       <DocSubheading id="faq-authenticity">
-        How do I know a request really came from SwiftyDoc?
+        How do I know a request really came from ClientGather?
       </DocSubheading>
       <DocParagraph>
-        Verify the <InlineCode>X-ClientGather-Signature</InlineCode> HMAC against
-        the raw body with your endpoint secret, and reject deliveries whose{" "}
-        <InlineCode>X-ClientGather-Timestamp</InlineCode> is more than a few
-        minutes old. Unsigned or mis-signed requests should be dropped with a{" "}
-        <InlineCode>401</InlineCode>.
+        Verify the <InlineCode>X-ClientGather-Signature</InlineCode> HMAC
+        against the raw body with your endpoint secret, and reject deliveries
+        whose <InlineCode>X-ClientGather-Timestamp</InlineCode> is more than a
+        few minutes old. Unsigned or mis-signed requests should be dropped with
+        a <InlineCode>401</InlineCode>.
       </DocParagraph>
     </DocSection>
   );

@@ -10,19 +10,19 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
   version: "2026-08-09",
   effectiveDate: "9 August 2026",
   intro:
-    "This policy explains what personal data SwiftyDoc handles, why, for how long, and what rights you have. It covers both our customers and the recipients who complete forms through the portal.",
+    "This policy explains what personal data ClientGather handles, why, for how long, and what rights you have. It covers both our customers and the recipients who complete forms through the portal.",
   sections: [
     {
       heading: "1. Who is responsible for your data",
       paragraphs: [
-        "SwiftyDoc is operated by [LEGAL ENTITY NAME], [REGISTERED ADDRESS]. For privacy questions contact [PRIVACY CONTACT EMAIL]. Our data protection contact is [DPO OR RESPONSIBLE PERSON].",
+        "ClientGather is operated by [LEGAL ENTITY NAME], [REGISTERED ADDRESS]. For privacy questions contact [PRIVACY CONTACT EMAIL]. Our data protection contact is [DPO OR RESPONSIBLE PERSON].",
         "We act as controller for the data we need to run the business: your account, your organization, billing, support correspondence and security logs.",
-        "We act as processor for the information our customers collect from their own clients through SwiftyDoc — form answers, uploaded files, recipient names and email addresses. The customer decides what to ask for and why; we process it on their instructions. If you are a recipient and want your information corrected or deleted, contact the organization that sent you the request; we will support them in responding.",
+        "We act as processor for the information our customers collect from their own clients through ClientGather — form answers, uploaded files, recipient names and email addresses. The customer decides what to ask for and why; we process it on their instructions. If you are a recipient and want your information corrected or deleted, contact the organization that sent you the request; we will support them in responding.",
       ],
     },
     {
       heading: "2. What we collect",
-      paragraphs: ["Depending on how you use SwiftyDoc, this can include:"],
+      paragraphs: ["Depending on how you use ClientGather, this can include:"],
       bullets: [
         "Account data — name, email address, password hash or linked Google identity, locale, timezone, profile photo, and the record of your acceptance of our terms.",
         "Organization and billing data — organization and workspace names, legal name, phone, region, plan, subscription and payment status. Card details are handled by our payment provider and never reach our servers.",
@@ -62,7 +62,7 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
       heading: "6. How we protect it",
       paragraphs: [
         "Data is encrypted in transit. Uploaded files and sensitive submission answers are additionally encrypted at rest under keys we manage and rotate.",
-        "Every file uploaded to SwiftyDoc is scanned for malware before it is stored, using an antivirus engine that runs on our own infrastructure — the file itself is never sent to a third-party scanning service. A file that fails the scan is rejected at upload and never reaches storage; we keep a record that it was blocked, with its name, size and the name of the signature that matched, but not its contents. Scanning detects known malware and is not a guarantee that a file is safe.",
+        "Every file uploaded to ClientGather is scanned for malware before it is stored, using an antivirus engine that runs on our own infrastructure — the file itself is never sent to a third-party scanning service. A file that fails the scan is rejected at upload and never reaches storage; we keep a record that it was blocked, with its name, size and the name of the signature that matched, but not its contents. Scanning detects known malware and is not a guarantee that a file is safe.",
         "Portal sessions are held in cookies that JavaScript cannot read, are bound to a server-side session record, and are invalidated the moment the underlying link is revoked or expires. Download links for stored files are individually signed and short-lived.",
         "Access inside our systems is limited to staff who need it, every organization's data is isolated by tenant on every query, and significant actions are written to an audit log.",
         "No system is perfectly secure. If a breach affects your personal data and is likely to present a risk to you, we will notify the relevant supervisory authority within 72 hours where required, and notify you without undue delay where the risk is high.",
@@ -83,7 +83,7 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
       paragraphs: [
         "We do not sell personal data and we do not share it for advertising.",
         "We use a small number of service providers who process data on our behalf under contract, currently covering email delivery, file storage and content delivery, payment processing, and cloud hosting and infrastructure. The current list is published at [SUBPROCESSOR LIST URL] and we give notice before adding a new one.",
-        "If you connect an integration — for example cloud storage, an automation platform, or your own systems via webhooks or our API — data leaves SwiftyDoc at your instruction and is then governed by that provider's terms.",
+        "If you connect an integration — for example cloud storage, an automation platform, or your own systems via webhooks or our API — data leaves ClientGather at your instruction and is then governed by that provider's terms.",
         "We may disclose data where legally required, and we may transfer it as part of a merger, acquisition or asset sale, in which case we will tell you before it becomes subject to a different policy.",
       ],
     },
@@ -115,7 +115,7 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
     {
       heading: "12. Children",
       paragraphs: [
-        "SwiftyDoc is a business tool and is not directed at children. We do not knowingly collect data from anyone under 16 in a personal capacity. If you believe a child's data has reached us, contact [PRIVACY CONTACT EMAIL] and we will remove it.",
+        "ClientGather is a business tool and is not directed at children. We do not knowingly collect data from anyone under 16 in a personal capacity. If you believe a child's data has reached us, contact [PRIVACY CONTACT EMAIL] and we will remove it.",
       ],
     },
     {
@@ -131,4 +131,4 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
       ],
     },
   ],
-}
+};

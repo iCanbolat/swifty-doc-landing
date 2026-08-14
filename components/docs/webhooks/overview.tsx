@@ -29,10 +29,10 @@ export function WebhooksOverview() {
       <DocSection id="overview" title="Overview">
         <DocParagraph>
           A webhook is an HTTP <InlineCode>POST</InlineCode> request that
-          SwiftyDoc sends to a URL you control whenever an event you subscribed
-          to occurs in your organization. Instead of checking SwiftyDoc for
-          changes, your integration reacts the moment a request completes, a
-          file is uploaded, or a reviewer approves an item.
+          ClientGather sends to a URL you control whenever an event you
+          subscribed to occurs in your organization. Instead of checking
+          ClientGather for changes, your integration reacts the moment a request
+          completes, a file is uploaded, or a reviewer approves an item.
         </DocParagraph>
         <Callout title="Availability">
           Webhooks are available on the <strong>Growth</strong> plan and above.
@@ -64,7 +64,7 @@ export function WebhooksOverview() {
             completes a request).
           </li>
           <li>
-            SwiftyDoc queues one delivery per enabled endpoint whose
+            ClientGather queues one delivery per enabled endpoint whose
             subscriptions match the event type (or that subscribed to{" "}
             <InlineCode>*</InlineCode>).
           </li>
@@ -129,7 +129,9 @@ export function WebhooksOverview() {
               "Hex-encoded HMAC-SHA256 signature computed with your endpoint's current secret.",
             ],
             [
-              <InlineCode key="h">X-ClientGather-Signature-Previous</InlineCode>,
+              <InlineCode key="h">
+                X-ClientGather-Signature-Previous
+              </InlineCode>,
               "Only present during a secret-rotation grace window; signed with the previous secret.",
             ],
           ]}

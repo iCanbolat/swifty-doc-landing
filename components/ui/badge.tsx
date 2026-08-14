@@ -1,10 +1,10 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 /**
- * Ported from the SwiftyDoc client `badge.tsx` — includes the semantic
+ * Ported from the ClientGather client `badge.tsx` — includes the semantic
  * success / info / warning / danger accents used across the app.
  */
 const badgeVariants = cva(
@@ -15,8 +15,7 @@ const badgeVariants = cva(
         default: "bg-primary text-primary-foreground",
         secondary: "bg-secondary text-secondary-foreground",
         outline: "border-border text-foreground",
-        success:
-          "border-emerald-500/20 bg-emerald-500/10 text-emerald-700",
+        success: "border-emerald-500/20 bg-emerald-500/10 text-emerald-700",
         info: "border-sky-500/20 bg-sky-500/10 text-sky-700",
         warning: "border-amber-500/20 bg-amber-500/10 text-amber-700",
         danger: "border-rose-500/20 bg-rose-500/10 text-rose-700",
@@ -25,11 +24,11 @@ const badgeVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  }
-)
+  },
+);
 
 type BadgeProps = React.ComponentProps<"span"> &
-  VariantProps<typeof badgeVariants>
+  VariantProps<typeof badgeVariants>;
 
 function Badge({ className, variant, ...props }: BadgeProps) {
   return (
@@ -38,7 +37,7 @@ function Badge({ className, variant, ...props }: BadgeProps) {
       className={cn(badgeVariants({ variant }), className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Badge, badgeVariants }
+export { Badge, badgeVariants };

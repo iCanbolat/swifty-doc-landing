@@ -2,6 +2,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  scroll-behavior: smooth;
+  /* Offsets anchor scrolls so a section's top isn't hidden under the fixed navbar. */
+  scroll-padding-top: 6rem;
+}
+
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {
@@ -9,7 +15,7 @@
   }
 }
 
-/* Design tokens ported verbatim from the SwiftyDoc client (light mode only). */
+/* Design tokens ported verbatim from the ClientGather client (light mode only). */
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-outfit), "Outfit Variable", system-ui, sans-serif;
