@@ -79,7 +79,7 @@ export default function ReviewQueuePage() {
         bullets={[
           "Per-item history retained with the submission",
           "Audit log covering security, data access, webhook, queue, and system events",
-          "Four roles: organization owner, organization admin, workspace manager, workspace reviewer",
+          "Five roles: organization owner, organization admin, workspace manager, workspace reviewer, and a free read-only auditor",
           "Two-factor authentication can be required across the whole organization",
         ]}
         mock={<AuditLogMock />}

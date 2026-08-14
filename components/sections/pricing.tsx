@@ -166,6 +166,10 @@ const INCLUDED_EVERYWHERE: { label: string; info?: string }[] = [
     label: "Team management, roles & permissions",
     info: "Invite colleagues, assign them to workspaces and requests, and control what each role can see and do.",
   },
+  {
+    label: "Free read-only auditor seats",
+    info: "Invite your compliance consultant, external examiner or principal firm as an Auditor. They read requests, files, templates and the full review history, see the audit log for the workspaces you put them in, and can pull an export — and they cannot approve, reject, comment, send or edit anything. Auditor seats are free and are not counted against your plan's users.",
+  },
   { label: "Google Drive integration" },
   {
     label: "Data hosted in the UK",
@@ -195,12 +199,22 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
       },
       {
         label: "Users included",
-        info: "A user is anyone on your team with a login — advisers, case handlers and the admin who does the chasing. Recipients never need an account and are never counted.",
+        info: "A user is anyone on your team with a login — advisers, case handlers and the admin who does the chasing. Recipients never need an account and are never counted, and neither are read-only Auditors, who have their own free allowance below.",
         values: {
           starter: "2",
           foundation: "4",
           growth: "10",
           enterprise: "20",
+        },
+      },
+      {
+        label: "Free auditor seats",
+        info: "Read-only logins for people who check the work but must not change it — a compliance consultant, an external examiner, or the principal firm supervising an appointed representative. They cost nothing and do not use one of the seats above. Capped per plan because an auditor can read every file in the workspaces they are added to.",
+        values: {
+          starter: "2",
+          foundation: "2",
+          growth: "4",
+          enterprise: "8",
         },
       },
       {
@@ -312,6 +326,11 @@ const FAQ: { question: string; answer: string }[] = [
   {
     question: "Why are prices shown in pounds but charged in euros?",
     answer: `Our payment provider settles in euros, so the euro amount shown beside each price is what will appear on your statement. The pound figure is a fixed conversion at £1 = €${EUR_PER_GBP}, held steady so a price cannot move under you mid-decision. If you pay with a sterling card your bank applies its own rate on the day, so the exact pound amount debited will differ slightly.`,
+  },
+  {
+    question: "Can our auditor or compliance consultant have access?",
+    answer:
+      "Yes, and it does not cost a seat. The Auditor role is read-only: it reads requests, files, templates and the whole review history, sees the audit log for the workspaces you add it to, and can download an export — and it cannot approve or reject an item, comment, send a request, or edit a client or template. That separation is the point: whoever checks the file should not be able to change it. Auditor seats are free on every plan and capped by plan (2 on Solo and Foundation, 4 on Growth, 8 on Scale), because an auditor can read every file in the workspaces they are added to.",
   },
   {
     question: "Where is our data stored?",
@@ -654,7 +673,8 @@ export function Pricing() {
           </h3>
           <p className="mx-auto mt-2 max-w-xl text-center text-sm leading-6 text-muted-foreground">
             Added and dropped whenever you need them — during a filing peak, for
-            example. Reductions are credited to your next invoice.
+            example. Reductions are credited to your next invoice. The seat
+            add-on is for people who do the work; read-only Auditors are free.
           </p>
           <dl className="mx-auto mt-6 grid max-w-3xl gap-4 sm:grid-cols-3">
             {[
