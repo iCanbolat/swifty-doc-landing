@@ -37,6 +37,7 @@ export function Features() {
           "Draft → Publish with change summaries and version diffs",
         ]}
         mock={<TemplateBuilderMock />}
+        href="/product/template-builder"
       />
 
       <FeatureSection
@@ -52,6 +53,7 @@ export function Features() {
           "Live presence & cursors in collaborative forms (Growth+)",
         ]}
         mock={<PortalMock />}
+        href="/product/customer-portal"
       />
 
       <FeatureSection
@@ -65,6 +67,7 @@ export function Features() {
           "Filter by status, client, and open questions",
         ]}
         mock={<ReviewMock />}
+        href="/product/review-queue"
       />
 
       <FeatureSection
@@ -72,13 +75,15 @@ export function Features() {
         eyebrow="Storage"
         icon={HardDrive}
         title="Every file, organized automatically"
-        description="Uploads land in a folder per request, grouped by recipient, with names, sizes, and types you can browse or export. Bring your own storage driver as you scale."
+        description="Uploads land in a folder per request, grouped by recipient, with names, sizes, and types you can browse or export. Every file is scanned before it is stored and encrypted at rest."
         bullets={[
           "Auto-organized folders per request",
           "Grouped by recipient with full file metadata",
-          "Local or CDN storage drivers with usage quotas",
+          "ZIP export with an archive PDF per submission",
+          "Bring your own S3 bucket on the Scale plan",
         ]}
         mock={<StorageMock />}
+        href="/product/storage"
       />
     </div>
   )

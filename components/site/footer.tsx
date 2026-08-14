@@ -4,10 +4,10 @@ const COLUMNS = [
   {
     heading: "Product",
     links: [
-      { label: "Template builder", href: "#" },
-      { label: "Customer portal", href: "#" },
-      { label: "Review queue", href: "#" },
-      { label: "Storage", href: "#" },
+      { label: "Template builder", href: "/product/template-builder" },
+      { label: "Customer portal", href: "/product/customer-portal" },
+      { label: "Review queue", href: "/product/review-queue" },
+      { label: "Storage", href: "/product/storage" },
     ],
   },
   {

@@ -1,7 +1,8 @@
 import type { LucideIcon } from "lucide-react"
-import { Check } from "lucide-react"
+import { ArrowRight, Check } from "lucide-react"
 
 import { Reveal } from "@/components/motion/reveal"
+import { ButtonLink } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 export type FeatureSectionProps = {
@@ -14,6 +15,9 @@ export type FeatureSectionProps = {
   mock: React.ReactNode
   /** Place the mock on the left (desktop) for an alternating rhythm. */
   reverse?: boolean
+  /** When set, renders a CTA under the bullets pointing at the detail page. */
+  href?: string
+  linkLabel?: string
 }
 
 export function FeatureSection({
@@ -25,6 +29,8 @@ export function FeatureSection({
   bullets,
   mock,
   reverse = false,
+  href,
+  linkLabel = "Learn more",
 }: FeatureSectionProps) {
   return (
     <section id={id} className="scroll-mt-24 py-16 lg:py-24">
@@ -53,6 +59,17 @@ export function FeatureSection({
               </li>
             ))}
           </ul>
+          {href ? (
+            <ButtonLink
+              href={href}
+              variant="outline"
+              size="lg"
+              className="mt-7 rounded-full"
+            >
+              {linkLabel}
+              <ArrowRight className="size-4" />
+            </ButtonLink>
+          ) : null}
         </Reveal>
 
         <Reveal delay={0.1} className={cn(reverse && "lg:order-1")}>

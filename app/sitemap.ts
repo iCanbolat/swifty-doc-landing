@@ -6,6 +6,10 @@ import { SITE_URL } from "@/lib/site"
 const STATIC_PATHS = [
   "/",
   "/blog",
+  "/product/template-builder",
+  "/product/customer-portal",
+  "/product/review-queue",
+  "/product/storage",
   "/docs/webhooks",
   "/legal/terms",
   "/legal/privacy",
