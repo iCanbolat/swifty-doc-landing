@@ -35,7 +35,7 @@ export function Callout({
             variant === "warning" ? "text-amber-600" : "text-primary"
           )}
         />
-        <div className="text-xs leading-6 text-muted-foreground">
+        <div className="text-sm leading-6 text-muted-foreground">
           {title ? (
             <p className="mb-1 font-semibold text-foreground">{title}</p>
           ) : null}

@@ -11,7 +11,7 @@ import { InlineCode } from "@/components/docs/docs-table";
 const NODE_EXAMPLE = `import { createHmac, timingSafeEqual } from "node:crypto"
 import express from "express"
 
-const SECRET = process.env.SWIFTYDOC_WEBHOOK_SECRET
+const SECRET = process.env.CLIENTGATHER_WEBHOOK_SECRET
 
 function matchesSignature(rawBody, timestamp, signatureHeader, secret) {
   if (!signatureHeader) return false
@@ -26,7 +26,7 @@ function matchesSignature(rawBody, timestamp, signatureHeader, secret) {
 const app = express()
 
 app.post(
-  "/hooks/swiftydoc",
+  "/hooks/clientgather",
   express.raw({ type: "application/json" }),
   (req, res) => {
     const rawBody = req.body.toString("utf8")
@@ -60,12 +60,37 @@ app.listen(3000)`;
 
 const PYTHON_EXAMPLE = `import hashlib
 import hmac
+from datetime import datetime, timedelta, timezone
 
-def is_valid_signature(raw_body: bytes, timestamp: str,
-                       signature: str, secret: str) -> bool:
+MAX_AGE = timedelta(minutes=5)
+
+def matches_signature(raw_body: bytes, timestamp: str,
+                      signature: str | None, secret: str) -> bool:
+    if not signature:
+        return False
     message = f"{timestamp}.".encode() + raw_body
     expected = hmac.new(secret.encode(), message, hashlib.sha256).hexdigest()
-    return hmac.compare_digest(expected, signature)`;
+    return hmac.compare_digest(expected, signature)
+
+def is_valid_delivery(raw_body: bytes, headers, secret: str) -> bool:
+    timestamp = headers.get("X-ClientGather-Timestamp", "")
+
+    # Reject stale deliveries to guard against replay attacks.
+    try:
+        sent_at = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    if datetime.now(timezone.utc) - sent_at > MAX_AGE:
+        return False
+
+    # Accept the current signature, or - during a secret-rotation
+    # grace window - the previous one.
+    return matches_signature(
+        raw_body, timestamp, headers.get("X-ClientGather-Signature"), secret
+    ) or matches_signature(
+        raw_body, timestamp,
+        headers.get("X-ClientGather-Signature-Previous"), secret
+    )`;
 
 export function WebhooksSignatures() {
   return (

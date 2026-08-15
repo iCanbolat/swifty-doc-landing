@@ -51,5 +51,5 @@ export function DocSubheading({
 }
 
 export function DocParagraph({ children }: { children: React.ReactNode }) {
-  return <p className="text-sm leading-7 text-muted-foreground">{children}</p>
+  return <p className="text-md leading-7 text-muted-foreground">{children}</p>
 }

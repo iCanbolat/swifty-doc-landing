@@ -12,17 +12,33 @@ import {
 } from "@/components/docs/doc-section";
 import { InlineCode } from "@/components/docs/docs-table";
 
-const RECEIVER_EXAMPLE = `import express from "express"
+const RECEIVER_EXAMPLE = `import { createHmac, timingSafeEqual } from "node:crypto"
+import express from "express"
+
+const SECRET = process.env.CLIENTGATHER_WEBHOOK_SECRET
 
 const app = express()
 
 // Keep the raw body — you need it for signature verification.
 app.post(
-  "/hooks/swiftydoc",
+  "/hooks/clientgather",
   express.raw({ type: "application/json" }),
   (req, res) => {
-    // TODO: verify X-ClientGather-Signature before trusting the payload
-    const event = JSON.parse(req.body.toString("utf8"))
+    const rawBody = req.body.toString("utf8")
+    const timestamp = req.header("X-ClientGather-Timestamp") ?? ""
+    const expected = createHmac("sha256", SECRET)
+      .update(\`\${timestamp}.\${rawBody}\`)
+      .digest("hex")
+    const received = Buffer.from(
+      req.header("X-ClientGather-Signature") ?? "", "hex"
+    )
+    const a = Buffer.from(expected, "hex")
+
+    if (a.length !== received.length || !timingSafeEqual(a, received)) {
+      return res.sendStatus(401)
+    }
+
+    const event = JSON.parse(rawBody)
     console.log(\`Received \${event.type}\`, event.data)
     res.sendStatus(200)
   }
@@ -37,7 +53,9 @@ export function WebhooksQuickStart() {
       <DocParagraph>
         Your endpoint must be a publicly reachable HTTPS URL that accepts{" "}
         <InlineCode>POST</InlineCode> requests and responds with a{" "}
-        <InlineCode>2xx</InlineCode> status quickly. A minimal Express receiver:
+        <InlineCode>2xx</InlineCode> status quickly. A minimal Express receiver
+        — verifying the signature, because an endpoint that skips that step
+        will act on anything anyone posts to it:
       </DocParagraph>
       <CodeBlock label="server.mjs" code={RECEIVER_EXAMPLE} />
 
@@ -48,8 +66,10 @@ export function WebhooksQuickStart() {
         receiver needs.
       </DocParagraph>
       <DocParagraph>
-        ClientGather generates the signing <InlineCode>secret</InlineCode>,
-        shows it once, and stores only a redacted value for future reads.
+        ClientGather generates the signing <InlineCode>secret</InlineCode> and
+        shows it once. It is stored encrypted at rest, and every later read of
+        the endpoint returns <InlineCode>&quot;[redacted]&quot;</InlineCode> —
+        there is no way to retrieve it again afterwards.
       </DocParagraph>
       <Callout variant="warning" title="Copy the secret immediately">
         Save the plaintext secret in a secure vault right away. If you lose it,

@@ -72,7 +72,9 @@ export function WebhooksDelivery() {
         If your endpoint was down past the retry window, hit{" "}
         <strong className="text-foreground">Replay</strong> on any failed
         delivery: the original event payload is re-sent as a fresh delivery,
-        signed with your current secret.
+        signed with your current secret. Records are retained for 30 days —
+        long enough to debug an integration, short enough that the payloads
+        they hold are not a second copy of your data.
       </DocParagraph>
     </DocSection>
   )

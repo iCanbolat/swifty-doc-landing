@@ -21,11 +21,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "ClientGather — Collect documents without the back-and-forth",
+  title: "Client Gather — Collect documents without the back-and-forth",
   description:
     "Build request templates, share secure portal links, review submissions, and keep every file in one place. ClientGather streamlines document collection end to end.",
-  applicationName: "ClientGather",
-  authors: [{ name: "ClientGather" }],
+  applicationName: "Client Gather",
+  authors: [{ name: "Client Gather" }],
   keywords: [
     "document collection",
     "client portal",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     "file storage",
   ],
   openGraph: {
-    title: "ClientGather — Collect documents without the back-and-forth",
+    title: "Client Gather — Collect documents without the back-and-forth",
     description:
       "Build request templates, share secure portal links, review submissions, and keep every file in one place.",
     type: "website",

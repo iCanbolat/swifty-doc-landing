@@ -1,21 +1,25 @@
 import type { LegalDocument } from "./types";
 
 /**
- * DRAFT — requires review by qualified counsel before launch. Placeholders in
- * square brackets must be filled with the operating entity's real details.
+ * DRAFT — requires review by qualified counsel before launch.
+ *
+ * The operator name and address here must stay identical to the business
+ * details registered with Creem: a mismatch is a documented review rejection.
+ * Update both sides in the same change, and bump `version` with the API's
+ * CURRENT_LEGAL_VERSIONS when the wording changes materially.
  */
 export const TERMS_DOCUMENT: LegalDocument = {
   slug: "terms",
   title: "Terms & Conditions",
-  version: "2026-08-09",
-  effectiveDate: "9 August 2026",
+  version: "2026-08-14",
+  effectiveDate: "14 August 2026",
   intro:
     "These terms govern your use of ClientGather. Please read them before creating an account — by signing up you enter into a binding agreement with us.",
   sections: [
     {
       heading: "1. Who we are and what these terms cover",
       paragraphs: [
-        "ClientGather (“ClientGather”, “we”, “us”) is operated by [LEGAL ENTITY NAME], registered at [REGISTERED ADDRESS], company number [COMPANY NUMBER].",
+        "ClientGather (“ClientGather”, “we”, “us”) runs on servers in the United Kingdom and is operated by Fatih M. Canbolat, a sole trader based in Türkiye, at Soğanlık Yeni Mah., Kartal, İstanbul, Türkiye. You can reach us at contact@clientgather.com.",
         "These Terms & Conditions, together with our Privacy Policy, form the agreement between you and us for the ClientGather service. If you accept these terms on behalf of an organization, you confirm you are authorised to bind that organization, and “you” means that organization.",
       ],
     },
@@ -30,7 +34,7 @@ export const TERMS_DOCUMENT: LegalDocument = {
       heading: "3. Accounts, organizations and workspaces",
       paragraphs: [
         "To use ClientGather you create an account and an organization. One user account may own one organization; you may additionally be invited as a member of other organizations.",
-        "You are responsible for everything that happens under your account and under your organization, including the actions of the members you invite. Keep your credentials confidential and tell us promptly at [SECURITY CONTACT EMAIL] if you believe an account has been compromised.",
+        "You are responsible for everything that happens under your account and under your organization, including the actions of the members you invite. Keep your credentials confidential and tell us promptly at contact@clientgather.com if you believe an account has been compromised.",
         "Access inside an organization is governed by roles and workspace membership. Assigning a role that grants access to client data is your decision and your responsibility.",
       ],
     },
@@ -81,9 +85,11 @@ export const TERMS_DOCUMENT: LegalDocument = {
     {
       heading: "9. Fees, billing and refunds",
       paragraphs: [
-        "Subscription fees are charged in advance for the billing period you select and, unless stated otherwise, are exclusive of VAT and other applicable taxes. Payments are processed by our payment provider; we do not store your full card details.",
-        "Subscriptions renew automatically until cancelled. You may cancel at any time and will retain access until the end of the paid period.",
-        "Except where required by law, fees already paid are non-refundable. Nothing here affects statutory rights that cannot be excluded.",
+        "Payments are processed by Creem (Armitage Labs OÜ, Telliskivi 57b/1, 10412 Tallinn, Estonia), which acts as merchant of record and is therefore the seller of record for your subscription. Creem issues your invoice, collects and remits VAT and other applicable taxes, and is what appears on your card statement. We never receive or store your card details.",
+        "Prices are displayed in pounds sterling for reference and charged in euros at the rate shown at checkout. If your card is not denominated in euros, your bank or card issuer may apply its own conversion rate and fees, which are outside our control.",
+        "Subscription fees are charged in advance for the billing period you select. Subscriptions renew automatically until cancelled. You may cancel at any time from your billing settings and will retain access until the end of the paid period.",
+        "The trial described in section 8 is free, requires no card and runs the full product, so you can decide whether ClientGather works for you before paying anything. For that reason fees already paid are non-refundable.",
+        "The exception is a renewal you did not intend: if a subscription renews and you no longer want it, email support@clientgather.com within 14 days of that charge and we will cancel the subscription and refund the renewal in full. Refunds are issued by Creem to the original payment method and normally arrive within 5–10 business days. Nothing here affects statutory rights that cannot be excluded.",
       ],
     },
     {
@@ -98,7 +104,7 @@ export const TERMS_DOCUMENT: LegalDocument = {
       paragraphs: [
         "We work to keep ClientGather available and secure, but we do not promise uninterrupted service. Maintenance, upgrades and events beyond our reasonable control may cause downtime.",
         "We may add, change or withdraw features. Where a change materially reduces core functionality you rely on, we will give reasonable notice.",
-        "Support is provided by email at [SUPPORT EMAIL] during business hours, with response targets depending on your plan.",
+        "Support is provided by email at support@clientgather.com during business hours, with response targets depending on your plan.",
       ],
     },
     {
@@ -144,13 +150,14 @@ export const TERMS_DOCUMENT: LegalDocument = {
     {
       heading: "18. Governing law and disputes",
       paragraphs: [
-        "This agreement is governed by the laws of [GOVERNING LAW JURISDICTION], and the courts of [COURTS / VENUE] have exclusive jurisdiction, without prejudice to any mandatory consumer protections available to you where you live.",
+        "This agreement is governed by the laws of the Republic of Türkiye, and the courts and enforcement offices of İstanbul (Çağlayan) have jurisdiction over disputes arising from it.",
+        "This does not deprive you of the protection of any mandatory rule of the country where you live. If you use ClientGather as a consumer in the United Kingdom or the EEA, you keep the consumer rights your local law gives you, including the right to bring proceedings in your local courts. Data protection matters are dealt with in our Privacy Policy and are governed by the law that applies to you there.",
       ],
     },
     {
       heading: "19. Contact",
       paragraphs: [
-        "Questions about these terms: [LEGAL CONTACT EMAIL]. Postal address: [REGISTERED ADDRESS].",
+        "Support, billing and refunds: support@clientgather.com. Questions about these terms, privacy and security reports: contact@clientgather.com. Postal address: Fatih M. Canbolat, Soğanlık Yeni Mah., Kartal, İstanbul, Türkiye.",
       ],
     },
   ],

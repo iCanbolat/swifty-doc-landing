@@ -31,6 +31,12 @@ export function Footer() {
             Collect documents without the back-and-forth. Templates, portals,
             review, and storage in one workflow.
           </p>
+          <a
+            href="mailto:support@clientgather.com"
+            className="mt-4 inline-block text-xs text-muted-foreground transition-colors hover:text-foreground"
+          >
+            support@clientgather.com
+          </a>
         </div>
 
         <div className="grid grid-cols-2 gap-8">
@@ -73,7 +79,7 @@ export function Footer() {
               Terms
             </a>
             <a
-              href="/legal/privacy#11-cookies"
+              href="/legal/privacy#12-cookies"
               className="transition-colors hover:text-foreground"
             >
               Cookies

@@ -97,6 +97,23 @@ export function WebhooksOverview() {
           for each shape.
         </DocParagraph>
         <CodeBlock label="Event envelope" code={ENVELOPE_EXAMPLE} />
+        <Callout title="What leaves ClientGather in a payload">
+          <p>
+            Events are enriched so your automation can act without calling us
+            back. Any event carrying a request also carries its title and
+            reference, the workspace and template names, the client name, and
+            the email addresses of the request owner and anyone assigned to it;
+            events about a submission also carry the recipient&apos;s name and
+            email address, and item-level events carry the field label.
+          </p>
+          <p className="mt-2">
+            That is personal data crossing into a system you control, so treat
+            the receiver as in scope for your own data protection obligations:
+            terminate TLS properly, restrict who can read the logs it writes,
+            and subscribe only to the events you use. Recipient portal links
+            are never included — the token in them is a bearer credential.
+          </p>
+        </Callout>
         <DocParagraph>Each request carries the following headers:</DocParagraph>
         <DocsTable
           head={["Header", "Description"]}

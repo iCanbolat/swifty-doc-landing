@@ -64,7 +64,7 @@ export function DocsToc({ items }: { items: TocItem[] }) {
             <a
               href={`#${item.id}`}
               className={cn(
-                "block border-l py-1 pl-3 text-xs transition-colors",
+                "block border-l py-1 pl-3 text-sm transition-colors",
                 activeId === item.id
                   ? "border-l-primary font-medium text-foreground"
                   : "border-l-transparent text-muted-foreground hover:text-foreground"

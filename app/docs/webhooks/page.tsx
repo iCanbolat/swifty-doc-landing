@@ -48,9 +48,9 @@ export default function WebhooksDocsPage() {
             <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
               Webhooks
             </h1>
-            <Badge variant="outline">Enterprise plan</Badge>
+            <Badge variant="outline">Growth plan and above</Badge>
           </div>
-          <p className="mt-4 text-sm leading-7 text-muted-foreground">
+          <p className="mt-4 text-md leading-7 text-muted-foreground">
             Get notified the moment something happens in ClientGather. Webhooks
             deliver signed, real-time HTTP callbacks to your systems whenever
             requests are sent, files are uploaded, reviews are decided, and more

@@ -47,8 +47,10 @@ export function WebhooksBestPractices() {
         </li>
         <li>
           <strong className="text-foreground">Subscribe narrowly.</strong>{" "}
-          Prefer explicit event subscriptions over <InlineCode>*</InlineCode> so
-          your receiver only handles what it actually uses.
+          Prefer explicit event subscriptions over <InlineCode>*</InlineCode>.
+          Payloads carry client names and the email addresses of owners,
+          assignees and recipients, so every event you subscribe to is personal
+          data you have taken on responsibility for.
         </li>
       </ul>
 
@@ -75,6 +77,8 @@ export function WebhooksBestPractices() {
         Deliveries are retried automatically (5 attempts by default). If the
         outage outlasted the retry window, list the failed deliveries and replay
         them — the original payloads are stored and re-sent as fresh deliveries.
+        Delivery records are kept for 30 days, so replay what you need inside
+        that window.
       </DocParagraph>
 
       <DocSubheading id="faq-authenticity">
