@@ -1,4 +1,5 @@
 import { Logo } from "@/components/brand/logo";
+import { NICHES } from "@/components/for/niches";
 
 const COLUMNS = [
   {
@@ -11,10 +12,19 @@ const COLUMNS = [
     ],
   },
   {
+    heading: "Solutions",
+    links: NICHES.map((niche) => ({
+      label: niche.label,
+      href: `/for/${niche.slug}`,
+    })),
+  },
+  {
     heading: "Resources",
     links: [
       { label: "Documentation", href: "/docs/webhooks" },
       { label: "Blog", href: "/blog" },
+      { label: "vs Content Snare", href: "/compare/content-snare" },
+      { label: "vs FileInvite", href: "/compare/fileinvite" },
       { label: "Terms & Conditions", href: "/legal/terms" },
       { label: "Privacy Policy", href: "/legal/privacy" },
     ],
@@ -39,7 +49,7 @@ export function Footer() {
           </a>
         </div>
 
-        <div className="grid grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
           {COLUMNS.map((column) => (
             <div key={column.heading}>
               <p className="text-[0.65rem] tracking-[0.22em] text-foreground uppercase">

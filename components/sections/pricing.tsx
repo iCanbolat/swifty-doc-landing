@@ -7,29 +7,19 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { InfoTooltip } from "@/components/ui/tooltip";
+import { buildBootstrapOwnerUrl, resolveBookDemoUrl } from "@/lib/app-links";
 import {
-  buildBootstrapOwnerUrl,
-  resolveBookDemoUrl,
-  type PricingPlanIntent,
-} from "@/lib/app-links";
+  ANNUAL_MONTHS_PAID,
+  annualMonthlyPrice,
+  CONVERSION_NOTICE,
+  EUR_PER_GBP,
+  gbp,
+  PLANS,
+  type BillingPeriod,
+  type Plan,
+  type PlanKey,
+} from "@/lib/pricing";
 import { cn } from "@/lib/utils";
-
-type PlanKey = PricingPlanIntent;
-
-type Plan = {
-  key: PlanKey;
-  name: string;
-  /** Monthly amount in EUR — the sum actually charged. Pounds are derived. */
-  price: number;
-  tagline: string;
-  cta: string;
-  featured?: boolean;
-  /** Named when the plan is a superset of the one before it. */
-  inherits?: string;
-  highlights: string[];
-};
-
-type BillingPeriod = "annual" | "monthly";
 
 type FeatureRow = {
   label: string;
@@ -37,113 +27,14 @@ type FeatureRow = {
   values: Record<PlanKey, string | boolean>;
 };
 
-// Prices are the monthly rate; annual is billed as 10 months (2 months free)
-// and displayed as its monthly equivalent. Deriving one from the other keeps
-// the "2 months free" claim literally true instead of an approximate badge.
-const ANNUAL_MONTHS_PAID = 10;
-
-/**
- * Creem bills in EUR — it has no GBP support — but the market this page is
- * written for is the UK, where buyers anchor in pounds and read a euro price as
- * "not for me". So EUR stays the charged amount and the pound figure is derived
- * from it at a fixed rate. Two hand-entered prices would drift apart and the
- * page would end up advertising a number nobody is charged, so this is the only
- * place a conversion happens, and every pound figure on the page is shown next
- * to the euro one that will actually leave the customer's account.
- *
- * The rate is fixed and published rather than tracked live, so a pound price
- * cannot move under someone mid-decision. That makes stating it mandatory: an
- * unexplained pound figure reads as a promise about what the bank will charge,
- * and the bank applies its own rate. Revisit when EUR/GBP has moved far enough
- * that the shown price misleads.
- *
- * EUR amounts are chosen so the derived pound price lands on a round number —
- * €245 / 1.17 = £209.4, not the other way round.
- */
-const EUR_PER_GBP = 1.17;
-
-const CONVERSION_NOTICE = `Pound prices are converted at a fixed £1 = €${EUR_PER_GBP}; your bank may apply its own rate.`;
-
 const ACTIVE_REQUEST_INFO =
   "An active request is one that is out with a client — sent or in progress. Drafts don't count, and closing a request you've finished frees its slot again, so the limit is about how much you have in flight at once, not how much you send.";
 
 const BOOK_DEMO_URL = resolveBookDemoUrl();
 
-function gbp(eur: number): number {
-  return Math.round(eur / EUR_PER_GBP);
-}
-
-function annualMonthlyPrice(monthlyPrice: number): number {
-  return Math.round((monthlyPrice * ANNUAL_MONTHS_PAID) / 12);
-}
-
 const SEAT_ADDON_EUR = 16;
 const REQUEST_ADDON_EUR = 14;
 const STORAGE_ADDON_EUR = 7;
-
-const PLANS: Plan[] = [
-  {
-    key: "starter",
-    name: "Solo",
-    price: 35,
-    tagline:
-      "For a solo adviser or broker, with an admin working alongside them",
-    cta: "Start 14-day trial",
-    highlights: [
-      "20 active requests",
-      "2 users",
-      "10 GB cloud storage",
-      "Unlimited clients & recipients",
-    ],
-  },
-  {
-    key: "foundation",
-    name: "Foundation",
-    price: 69,
-    tagline: "For a small practice where more than one person chases documents",
-    cta: "Start 14-day trial",
-    inherits: "Solo",
-    highlights: [
-      "60 active requests",
-      "4 users",
-      "25 GB cloud storage",
-      "Unlimited emails & reminders",
-    ],
-  },
-  {
-    key: "growth",
-    name: "Growth",
-    price: 152,
-    tagline:
-      "For teams that need branding, integrations and more work in flight",
-    cta: "Start 14-day trial",
-    featured: true,
-    inherits: "Foundation",
-    highlights: [
-      "200 active requests",
-      "10 users",
-      "100 GB cloud storage",
-      "White-label portal & sender address",
-      "Webhooks & Zapier",
-    ],
-  },
-  {
-    key: "enterprise",
-    name: "Scale",
-    price: 245,
-    tagline:
-      "For scaled operations that need control over where the data lives",
-    cta: "Start 14-day trial",
-    inherits: "Growth",
-    highlights: [
-      "500 active requests",
-      "20 users",
-      "200 GB cloud storage",
-      "Bring your own S3 bucket",
-      "Priority support",
-    ],
-  },
-];
 
 /**
  * Everything here is identical on every plan, so it is a list rather than four

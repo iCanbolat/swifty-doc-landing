@@ -2,11 +2,20 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 import { Reveal } from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
-import { buildBootstrapOwnerUrl, resolveBookDemoUrl } from "@/lib/app-links";
+import {
+  buildBootstrapOwnerUrl,
+  resolveBookDemoUrl,
+  type PricingPlanIntent,
+} from "@/lib/app-links";
 
 const BOOK_DEMO_URL = resolveBookDemoUrl();
 
-export function CTA() {
+/**
+ * `plan` is the intent the closing button carries. The /for pages set it to the
+ * plan they spend the whole page recommending — otherwise the last button on a
+ * Solo page would drop the reader into Foundation.
+ */
+export function CTA({ plan = "foundation" }: { plan?: PricingPlanIntent } = {}) {
   return (
     <section id="cta" className="scroll-mt-24 px-6 py-20 lg:px-8 lg:py-28">
       <Reveal className="mx-auto max-w-5xl">
@@ -29,7 +38,7 @@ export function CTA() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <ButtonLink
-                href={buildBootstrapOwnerUrl("foundation")}
+                href={buildBootstrapOwnerUrl(plan)}
                 size="hero"
                 className="rounded-full"
               >

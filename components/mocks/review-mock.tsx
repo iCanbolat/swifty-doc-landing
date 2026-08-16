@@ -16,15 +16,42 @@ type Item = {
   field: string
   answer: string
   state: "approved" | "rejected" | "pending"
+  /** Shown as the reviewer's comment under a rejected item. */
+  note?: string
 }
 
-const ITEMS: Item[] = [
+export type ReviewMockProps = {
+  reference?: string
+  subtitle?: string
+  /** The whole request's tally — the rows below are only the ones on screen. */
+  counts?: { approved: number; rejected: number; pending: number }
+  items?: Item[]
+  /** The row that flips to approved while you watch. */
+  pending?: { field: string; answer: string }
+}
+
+const DEFAULT_ITEMS: Item[] = [
   { field: "Legal entity name", answer: "Acme Holdings Ltd.", state: "approved" },
   { field: "Incorporation date", answer: "12 Mar 2019", state: "approved" },
-  { field: "Bank statement", answer: "statement-q1.pdf", state: "rejected" },
+  {
+    field: "Bank statement",
+    answer: "statement-q1.pdf",
+    state: "rejected",
+    note: "Reviewer: statement is older than 3 months — please re-upload.",
+  },
 ]
 
-export function ReviewMock() {
+/**
+ * Defaults to the generic request the home page shows. The /for pages pass
+ * their own items so each niche sees its own documents in the queue.
+ */
+export function ReviewMock({
+  reference = "DOC-2024-014",
+  subtitle = "Client onboarding · nadia@acme.co",
+  counts = { approved: 3, rejected: 1, pending: 1 },
+  items = DEFAULT_ITEMS,
+  pending = { field: "Proof of address", answer: "utility-bill.pdf" },
+}: ReviewMockProps = {}) {
   const { ref, inView } = useInViewOnce<HTMLDivElement>()
   const [lastApproved, setLastApproved] = React.useState(false)
 
@@ -39,23 +66,26 @@ export function ReviewMock() {
       ref={ref}
       className="overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10"
     >
-      {/* Header with counts */}
-      <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-background/70 px-5 py-4">
-        <div>
-          <p className="text-xs font-semibold text-foreground">DOC-2024-014</p>
-          <p className="text-[0.65rem] text-muted-foreground">
-            Client onboarding · nadia@acme.co
+      {/* Header with counts. Wraps and truncates so a long reference or address
+          cannot widen the mock's min-content and blow out the page grid. */}
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border/60 bg-background/70 px-5 py-4">
+        <div className="min-w-0">
+          <p className="truncate text-xs font-semibold text-foreground">
+            {reference}
+          </p>
+          <p className="truncate text-[0.65rem] text-muted-foreground">
+            {subtitle}
           </p>
         </div>
         <div className="flex items-center gap-1.5">
-          <Badge variant="success">3 approved</Badge>
-          <Badge variant="danger">1 rejected</Badge>
-          <Badge variant="warning">1 pending</Badge>
+          <Badge variant="success">{counts.approved} approved</Badge>
+          <Badge variant="danger">{counts.rejected} rejected</Badge>
+          <Badge variant="warning">{counts.pending} pending</Badge>
         </div>
       </div>
 
       <div className="space-y-2.5 p-5">
-        {ITEMS.map((item, index) => (
+        {items.map((item, index) => (
           <div
             key={item.field}
             className="reveal-item border border-border/60 bg-background/60 p-3"
@@ -75,11 +105,11 @@ export function ReviewMock() {
               <StateBadge state={item.state} />
             </div>
 
-            {item.state === "rejected" ? (
+            {item.note ? (
               <div className="mt-2.5 flex items-start gap-2 border-l-2 border-rose-400/50 bg-rose-500/5 px-2.5 py-1.5">
                 <MessageSquare className="mt-0.5 size-3 text-rose-600" />
                 <p className="text-[0.65rem] text-muted-foreground">
-                  Reviewer: statement is older than 3 months — please re-upload.
+                  {item.note}
                 </p>
               </div>
             ) : null}
@@ -91,10 +121,10 @@ export function ReviewMock() {
           <div className="flex items-start justify-between gap-3">
             <div>
               <p className="text-[0.7rem] text-muted-foreground">
-                Proof of address
+                {pending.field}
               </p>
               <p className="text-xs font-medium text-foreground">
-                utility-bill.pdf
+                {pending.answer}
               </p>
             </div>
             {lastApproved ? (

@@ -2,10 +2,16 @@ import { Braces, GripVertical, Plus, RotateCcw, Rocket } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 
-type Field = { label: string; type: string }
-type Section = { title: string; meta: string; fields: Field[] }
+export type BuilderField = { label: string; type: string }
+export type BuilderSection = {
+  title: string
+  meta: string
+  fields: BuilderField[]
+}
 
-const SECTIONS: Section[] = [
+const DEFAULT_TITLE = "Client onboarding pack"
+
+const DEFAULT_SECTIONS: BuilderSection[] = [
   {
     title: "Company details",
     meta: "3 fields",
@@ -30,9 +36,20 @@ const TYPE_STYLES: Record<string, string> = {
   Date: "text-amber-700 border-amber-500/20 bg-amber-500/10",
   File: "text-emerald-700 border-emerald-500/20 bg-emerald-500/10",
   Select: "text-primary border-primary/20 bg-primary/10",
+  Number: "text-slate-700 border-slate-500/20 bg-slate-500/10",
 }
 
-export function TemplateBuilderMock() {
+/**
+ * Defaults to the generic pack the home page shows. The /for pages pass their
+ * own sections so each niche sees its own field names in the builder.
+ */
+export function TemplateBuilderMock({
+  title = DEFAULT_TITLE,
+  sections = DEFAULT_SECTIONS,
+}: {
+  title?: string
+  sections?: BuilderSection[]
+} = {}) {
   return (
     <div className="overflow-hidden border border-border/70 bg-card/90 shadow-[0_30px_100px_-50px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10">
       <div className="flex items-center justify-between gap-3 border-b border-border/60 bg-background/70 px-5 py-4">
@@ -54,13 +71,11 @@ export function TemplateBuilderMock() {
 
       <div className="space-y-3 p-5">
         <div className="flex items-center justify-between">
-          <p className="text-sm font-semibold text-foreground">
-            Client onboarding pack
-          </p>
+          <p className="text-sm font-semibold text-foreground">{title}</p>
           <Badge variant="warning">Draft · v3</Badge>
         </div>
 
-        {SECTIONS.map((section, sectionIndex) => (
+        {sections.map((section, sectionIndex) => (
           <div
             key={section.title}
             className="reveal-item border border-border/60 bg-background/60 p-3 [--reveal-from:translateY(16px)]"
