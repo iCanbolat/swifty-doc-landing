@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: "Webhooks — ClientGather Documentation",
   description:
     "Receive signed, real-time HTTP callbacks when requests complete, files upload, and reviews change. Learn setup, signature verification, retries, and secret rotation.",
+  alternates: { canonical: "/docs/webhooks" },
   openGraph: {
     title: "Webhooks — ClientGather Documentation",
     description:

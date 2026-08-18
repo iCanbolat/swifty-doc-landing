@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { JetBrains_Mono, Outfit } from "next/font/google"
 
-import { SITE_URL } from "@/lib/site"
+import { SITE_NAME, SITE_URL } from "@/lib/site"
 
 import "./globals.css"
 
@@ -33,12 +33,29 @@ export const metadata: Metadata = {
     "form requests",
     "file storage",
   ],
+  // Every route inherits these, so a page that sets its own `openGraph.title`
+  // still gets the card image, the site name, and the locale for free.
   openGraph: {
     title: "Client Gather — Collect documents without the back-and-forth",
     description:
       "Build request templates, share secure portal links, review submissions, and keep every file in one place.",
     type: "website",
+    siteName: SITE_NAME,
+    locale: "en_GB",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: SITE_NAME }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Client Gather — Collect documents without the back-and-forth",
+    description:
+      "Build request templates, share secure portal links, review submissions, and keep every file in one place.",
+    images: ["/og.png"],
+  },
+  // Search Console can be verified by DNS instead, in which case this stays
+  // unset and nothing is rendered.
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
 }
 
 export default function RootLayout({

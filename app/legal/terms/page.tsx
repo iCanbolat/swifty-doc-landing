@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Terms & Conditions — ClientGather",
   description:
     "The agreement that governs your use of ClientGather: accounts, plans, your content, acceptable use, billing and termination.",
+  alternates: { canonical: "/legal/terms" },
 };
 
 export default function TermsPage() {

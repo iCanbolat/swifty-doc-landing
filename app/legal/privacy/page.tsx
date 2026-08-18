@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "Privacy Policy — ClientGather",
   description:
     "What personal data ClientGather handles and why: customer accounts, portal recipients, retention periods, subprocessors, security and your rights.",
+  alternates: { canonical: "/legal/privacy" },
 };
 
 export default function PrivacyPage() {
