@@ -14,6 +14,7 @@ import {
 
 import { Logo } from "@/components/brand/logo";
 import { ButtonLink } from "@/components/ui/button";
+import { buildBootstrapOwnerUrl, buildSignInUrl } from "@/lib/app-links";
 import { cn } from "@/lib/utils";
 
 type ProductLink = {
@@ -61,6 +62,9 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/blog", label: "Blog" },
   { href: "/docs/webhooks", label: "Docs" },
 ];
+
+const SIGN_IN_URL = buildSignInUrl();
+const GET_STARTED_URL = buildBootstrapOwnerUrl();
 
 /** Grace period so a diagonal pointer move from trigger to panel doesn't close it. */
 const CLOSE_DELAY_MS = 120;
@@ -193,14 +197,14 @@ export function Navbar() {
 
         <div className="hidden items-center gap-2 md:flex">
           <ButtonLink
-            href="#"
+            href={SIGN_IN_URL}
             variant="ghost"
             size="lg"
             className="rounded-full"
           >
             Sign in
           </ButtonLink>
-          <ButtonLink href="/#cta" size="lg" className="rounded-full px-4">
+          <ButtonLink href={GET_STARTED_URL} size="lg" className="rounded-full px-4">
             Get started
           </ButtonLink>
         </div>
@@ -250,14 +254,14 @@ export function Navbar() {
           )}
           <div className="mt-1 grid grid-cols-2 gap-2 px-1">
             <ButtonLink
-              href="#"
+              href={SIGN_IN_URL}
               variant="outline"
               size="lg"
               className="rounded-full"
             >
               Sign in
             </ButtonLink>
-            <ButtonLink href="/#cta" size="lg" className="rounded-full">
+            <ButtonLink href={GET_STARTED_URL} size="lg" className="rounded-full">
               Get started
             </ButtonLink>
           </div>

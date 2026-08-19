@@ -41,6 +41,12 @@ export function buildBootstrapOwnerUrl(
   return `${base}/auth/bootstrap-owner?${search.toString()}`;
 }
 
+export function buildSignInUrl(): string {
+  const base = resolveAppBaseUrl();
+
+  return `${base}/auth/sign-in`;
+}
+
 export function resolveBookDemoUrl(): string {
   const configured = process.env.NEXT_PUBLIC_BOOK_DEMO_URL?.trim();
 
