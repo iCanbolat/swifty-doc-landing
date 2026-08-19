@@ -64,7 +64,7 @@ const INCLUDED_EVERYWHERE: { label: string; info?: string }[] = [
   { label: "Google Drive integration" },
   {
     label: "Data hosted in the UK",
-    info: "Your requests, answers and uploaded files are stored on our own servers in Erith, United Kingdom — not replicated to other regions and not handed to a third-party storage provider.",
+    info: "Your requests, answers and uploaded files are stored in the United Kingdom — account data on our own servers in Erith, uploaded files in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK.",
   },
   { label: "Encryption at rest" },
   {
@@ -226,7 +226,7 @@ const FAQ: { question: string; answer: string }[] = [
   {
     question: "Where is our data stored?",
     answer:
-      "On our own servers in Erith, United Kingdom. Requests, answers and uploaded files stay there — they are not replicated to other regions and not handed to a third-party storage provider. Uploads are scanned for malware on the same infrastructure, so files are never sent to an outside scanning service either.",
+      "In the United Kingdom. Your requests, answers and audit logs live on our own servers in Erith; uploaded files are stored in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK. Uploads are scanned for malware on our own infrastructure before they are stored, so files are never sent to an outside scanning service.",
   },
   {
     question: "What happens to my data if I cancel?",

@@ -143,7 +143,7 @@ export const rdTaxCreditSpecialistsPost: BlogPost = {
     {
       question: "Where is claim data stored?",
       answer:
-        "On our own servers in Erith, United Kingdom. Requests, answers and uploaded files stay there — not replicated to other regions and not handed to a third-party storage provider. Uploads are scanned for malware on the same infrastructure.",
+        "In the United Kingdom — requests and answers on our own servers in Erith, uploaded files in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK. Uploads are scanned for malware on our own infrastructure before they are stored.",
     },
   ],
 }

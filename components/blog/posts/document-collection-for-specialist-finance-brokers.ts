@@ -72,7 +72,7 @@ export const specialistFinanceBrokersPost: BlogPost = {
           heading: "Handling identity and financial evidence",
           paragraphs: [
             "Identity documents and bank statements are the most sensitive things a broker holds. Uploaded files and sensitive answers are encrypted at rest, and every upload is scanned for malware on our own infrastructure before it is stored — files are never sent to an outside scanning service, and anything that fails is refused at upload.",
-            "Your requests, answers and uploaded files are stored on our own servers in Erith, United Kingdom — not replicated to other regions and not handed to a third-party storage provider.",
+            "Your requests, answers and uploaded files are stored in the United Kingdom — account data on our own servers in Erith, uploaded files in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK.",
             "Internally, four roles control who can see and decide what, two-factor authentication can be required across the organisation, and the audit log records access and changes.",
           ],
         },
@@ -144,7 +144,7 @@ export const specialistFinanceBrokersPost: BlogPost = {
     {
       question: "Where is the data held?",
       answer:
-        "On our own servers in Erith, United Kingdom. Requests, answers and uploaded files stay there — not replicated to other regions and not handed to a third-party storage provider. On the Scale plan you can point ClientGather at your own S3 bucket instead.",
+        "In the United Kingdom — requests and answers on our own servers in Erith, uploaded files in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK. On the Scale plan you can point ClientGather at your own S3 bucket instead.",
     },
     {
       question: "Does ClientGather handle signing the facility documents?",

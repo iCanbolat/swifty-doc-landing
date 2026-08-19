@@ -146,7 +146,7 @@ function ProductMenu({ items }: { items: ProductLink[] }) {
                 <span className="block text-sm font-medium text-foreground">
                   {item.label}
                 </span>
-                <span className="mt-0.5 block text-xs leading-5 text-muted-foreground">
+                <span className="mt-0.5 block text-sm leading-5 text-muted-foreground">
                   {item.description}
                 </span>
               </span>

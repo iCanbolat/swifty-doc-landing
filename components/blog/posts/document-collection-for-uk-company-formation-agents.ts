@@ -76,7 +76,7 @@ export const companyFormationAgentsPost: BlogPost = {
           heading: "Identity documents, handled properly",
           paragraphs: [
             "Formation work means holding identity evidence for a large number of people. Uploaded files and sensitive answers are encrypted at rest, and every upload is scanned for malware on our own infrastructure before it is stored — files are never sent to an outside scanning service, and anything that fails is refused at upload.",
-            "Your requests, answers and uploaded files are stored on our own servers in Erith, United Kingdom — not replicated to other regions and not handed to a third-party storage provider.",
+            "Your requests, answers and uploaded files are stored in the United Kingdom — account data on our own servers in Erith, uploaded files in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK.",
             "Internally, four roles control access, two-factor authentication can be required organisation-wide, and the audit log records access and changes. A consent statement can be attached to the template so the customer's acceptance is captured with the submission itself.",
           ],
         },
@@ -152,7 +152,7 @@ export const companyFormationAgentsPost: BlogPost = {
     {
       question: "Where is customer identity evidence stored?",
       answer:
-        "On our own servers in Erith, United Kingdom. Requests, answers and uploaded files stay there — not replicated to other regions and not handed to a third-party storage provider. Every upload is scanned for malware on the same infrastructure before it is stored.",
+        "In the United Kingdom — requests and answers on our own servers in Erith, uploaded files in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK. Every upload is scanned for malware on our own infrastructure before it is stored.",
     },
   ],
 }

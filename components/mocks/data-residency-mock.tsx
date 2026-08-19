@@ -29,7 +29,7 @@ export function DataResidencyMock() {
               Erith, United Kingdom
             </p>
             <p className="text-[0.65rem] leading-5 text-muted-foreground">
-              Our own servers — not replicated to other regions
+              Our servers — files in Bunny.net's London zone
             </p>
           </div>
         </div>

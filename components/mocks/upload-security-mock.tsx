@@ -17,7 +17,7 @@ const STAGES: Stage[] = [
   },
   {
     label: "Stored",
-    detail: "Our own servers in Erith, United Kingdom",
+    detail: "Bunny.net's London zone, encrypted with our key",
     icon: HardDrive,
   },
 ]

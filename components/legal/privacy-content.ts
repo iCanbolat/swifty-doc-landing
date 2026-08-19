@@ -11,8 +11,8 @@ import type { LegalDocument } from "./types";
 export const PRIVACY_DOCUMENT: LegalDocument = {
   slug: "privacy",
   title: "Privacy Policy",
-  version: "2026-08-14",
-  effectiveDate: "14 August 2026",
+  version: "2026-08-20",
+  effectiveDate: "20 August 2026",
   intro:
     "This policy explains what personal data ClientGather handles, why, for how long, and what rights you have. It covers both our customers and the recipients who complete forms through the portal.",
   sections: [
@@ -99,7 +99,7 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
       ],
       bullets: [
         "OVHcloud — the servers and database that run ClientGather, hosted in the United Kingdom (Erith, London). Your account data, client records, submissions and audit logs live here.",
-        "Bunny.net (BunnyWay d.o.o., Slovenia) — object storage and content delivery for uploaded files.",
+        "Bunny.net (BunnyWay d.o.o., Slovenia) — object storage and content delivery for uploaded files. Files are held in Bunny.net's London, United Kingdom storage region, and we encrypt each one with our own key before it leaves our servers.",
         "Resend (United States) — delivery of transactional email, including the secure links sent to recipients. Receives recipient names, email addresses and message content.",
         "Creem (Armitage Labs OÜ, Telliskivi 57b/1, 10412 Tallinn, Estonia) — payment processing and merchant of record. Receives your name, email address, billing country and subscription details, and is an independent controller for the payment data it holds under its own privacy policy.",
       ],
@@ -109,7 +109,7 @@ export const PRIVACY_DOCUMENT: LegalDocument = {
       paragraphs: [
         "Data is stored in the United Kingdom, but ClientGather is operated from Türkiye and two of our providers are outside the UK, so some transfers do take place. We set them out plainly rather than in general terms.",
         "Access from Türkiye: as the operator, we access the systems above from Türkiye in order to run and support the service. Türkiye is not covered by a UK or EU adequacy decision.",
-        "Providers outside the UK: Bunny.net processes data in the EEA, which the UK recognises as adequate. Resend processes data in the United States.",
+        "Providers outside the UK: Bunny.net stores uploaded files in its London, United Kingdom region, but as a Slovenian company it may access them from the EEA, which the UK recognises as adequate. Resend processes data in the United States.",
         "Where a transfer is not covered by an adequacy decision we rely on the UK International Data Transfer Addendum or the EU standard contractual clauses, together with supplementary measures — encryption in transit, encryption at rest for uploaded files and sensitive answers, access limited to the owner, and audit logging. Copies of the clauses we rely on are available on request at contact@clientgather.com.",
       ],
     },

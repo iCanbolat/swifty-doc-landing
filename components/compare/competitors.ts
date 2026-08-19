@@ -46,7 +46,7 @@ export type Competitor = {
 }
 
 const OUR_STORAGE =
-  "Our own servers in Erith, United Kingdom. Not replicated to other regions and not handed to a third-party storage provider."
+  "Our own servers in Erith, United Kingdom; uploaded files in Bunny.net's London storage region, encrypted with our own key. Nothing is replicated outside the UK."
 
 const OUR_SCANNING =
   "Every upload is scanned on our own infrastructure before it is stored. Anything that fails is refused at upload and never reaches your storage."
@@ -64,7 +64,7 @@ const contentSnare: Competitor = {
   description:
     "A like-for-like look at document collection for UK regulated practices: where files are stored, who can review them, and what the entry plan costs.",
   answer:
-    "Both tools replace the email thread with a client portal, reusable request templates and automatic reminders. ClientGather is the UK-hosted option: files sit on our own servers in Erith, uploads are scanned before storage, and read-only Auditor logins are free — which matters if a compliance consultant or regulator reads your files.",
+    "Both tools replace the email thread with a client portal, reusable request templates and automatic reminders. ClientGather is the UK-hosted option: requests and answers sit on our own servers in Erith and uploaded files in Bunny.net's London storage region, uploads are scanned before storage, and read-only Auditor logins are free — which matters if a compliance consultant or regulator reads your files.",
   checkedOn: "2026-08-16",
   intro: [
     "Content Snare is a well-established document collection tool with a broad customer base across accounting, legal and agency work. If you are comparing it with ClientGather, you are almost certainly weighing the same two or three things: where your clients' documents physically live, who in your practice — and outside it — is allowed to read them, and what the whole thing costs at the size you actually are.",
@@ -126,7 +126,7 @@ const contentSnare: Competitor = {
       heading: "Where the documents actually sit",
       paragraphs: [
         "For most software this is a detail. For a practice collecting passports, bank statements and proof of address it is the question the client asks, the question a compliance consultant asks, and the one you have to be able to answer in a sentence.",
-        "ClientGather runs on our own servers in Erith, United Kingdom. Your requests, answers and uploaded files stay there. They are not replicated to other regions, and they are not handed to a third-party storage provider — which also means the malware scan that runs on every upload happens on the same infrastructure, so files are never sent to an outside scanning service either.",
+        "ClientGather runs on our own servers in Erith, United Kingdom — your requests, answers and audit logs live there. Uploaded files are stored in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK. The malware scan on every upload runs on our own infrastructure before the file is stored, so files are never sent to an outside scanning service either.",
       ],
       bullets: [
         "One answer to “where is my passport scan stored”, and it names a town.",
@@ -180,7 +180,7 @@ const fileInvite: Competitor = {
   description:
     "FileInvite is priced and built for lending operations. A look at what changes when the practice collecting the documents has two to twenty people.",
   answer:
-    "FileInvite is aimed at lenders, with a Standard plan starting at US$9,900 a year. ClientGather is built for UK practices of two to twenty people — immigration advisers, brokers, formation agents and accountants — starting at £25 a month, with files stored on our own servers in Erith and free read-only seats for whoever reviews the work.",
+    "FileInvite is aimed at lenders, with a Standard plan starting at US$9,900 a year. ClientGather is built for UK practices of two to twenty people — immigration advisers, brokers, formation agents and accountants — starting at £25 a month, with data stored in the UK — our own servers in Erith, uploaded files in Bunny.net's London zone — and free read-only seats for whoever reviews the work.",
   checkedOn: "2026-08-16",
   intro: [
     "FileInvite and ClientGather solve the same surface problem — clients send documents late, in the wrong format, across too many emails — but they are pointed at different buyers. FileInvite's published Standard plan is sized for lenders processing up to a hundred commercial loans a year. If that is you, it is a serious tool and this page will not talk you out of it.",
@@ -262,7 +262,7 @@ const fileInvite: Competitor = {
       ],
       bullets: [
         "Free read-only Auditor logins for the person who checks the work.",
-        "Files on our own UK servers, scanned before they are stored.",
+        "Files stored in the UK, scanned before they are stored.",
         "Eleven UK starter packs, so the first request is an edit rather than a blank page.",
       ],
     },

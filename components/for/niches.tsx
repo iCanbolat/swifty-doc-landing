@@ -177,7 +177,7 @@ const immigrationAdvisers: Niche = {
     {
       question: "Where are passports and biometric documents stored?",
       answer:
-        "On our own servers in Erith, United Kingdom. Files are encrypted at rest, scanned for malware on the same infrastructure before they are stored, and are not replicated to other regions or handed to a third-party storage provider. Nothing sits in an inbox attachment.",
+        "In the United Kingdom — requests and answers on our own servers in Erith, uploaded files in Bunny.net's London storage region. Files are encrypted with our own key before they leave our servers, scanned for malware on our own infrastructure first, and never replicated outside the UK. Nothing sits in an inbox attachment.",
     },
     {
       question: "Can my supervising body or compliance consultant see the file?",
@@ -462,7 +462,7 @@ const companyFormationAgents: Niche = {
     {
       question: "What happens to the paperwork after filing?",
       answer:
-        "Every request can be exported as a ZIP with files foldered by recipient, and an archive PDF captures the answers as submitted. Data is stored on our own UK servers, encrypted at rest, with an audit log of who did what.",
+        "Every request can be exported as a ZIP with files foldered by recipient, and an archive PDF captures the answers as submitted. Data is stored in the UK — our own servers in Erith, uploaded files in Bunny.net's London zone — encrypted at rest, with an audit log of who did what.",
     },
   ],
   blogSlug: "document-collection-for-uk-company-formation-agents",

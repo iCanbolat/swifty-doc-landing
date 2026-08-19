@@ -70,7 +70,7 @@ export const immigrationAdvisersPost: BlogPost = {
           heading: "Handling personal documents properly",
           paragraphs: [
             "Immigration files are about as sensitive as client data gets. Uploaded files and sensitive answers are encrypted at rest. Every uploaded file is scanned for malware before it is stored, on our own infrastructure — files are never sent to an outside scanning service, and anything that fails is refused at upload.",
-            "Your requests, answers and uploaded files are stored on our own servers in Erith, United Kingdom — not replicated to other regions and not handed to a third-party storage provider.",
+            "Your requests, answers and uploaded files are stored in the United Kingdom — account data on our own servers in Erith, uploaded files in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK.",
             "Access inside your own practice is governed by four roles, and the audit log records who opened, changed and approved what. Two-factor authentication can be required across the whole organisation rather than left to each user.",
           ],
         },
@@ -126,7 +126,7 @@ export const immigrationAdvisersPost: BlogPost = {
     {
       question: "Where is applicant data stored?",
       answer:
-        "On our own servers in Erith, United Kingdom. Requests, answers and uploaded files stay there — they are not replicated to other regions and not handed to a third-party storage provider. Uploads are scanned for malware on the same infrastructure.",
+        "In the United Kingdom — requests and answers on our own servers in Erith, uploaded files in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK. Uploads are scanned for malware on our own infrastructure before they are stored.",
     },
     {
       question: "What file types and sizes can applicants upload?",

@@ -11,13 +11,13 @@ type DocsTableProps = {
 export function DocsTable({ head, rows, className }: DocsTableProps) {
   return (
     <div className={cn("overflow-x-auto border border-border/70", className)}>
-      <table className="w-full text-left text-xs">
+      <table className="w-full text-left text-sm">
         <thead className="border-b border-border/70 bg-muted/40">
           <tr>
             {head.map((heading) => (
               <th
                 key={heading}
-                className="px-4 py-2.5 text-[0.65rem] font-medium tracking-[0.18em] text-muted-foreground uppercase"
+                className="px-4 py-2.5 text-[0.75rem] font-medium tracking-[0.18em] text-muted-foreground uppercase"
               >
                 {heading}
               </th>

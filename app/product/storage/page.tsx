@@ -76,7 +76,7 @@ export default function StoragePage() {
         eyebrow="Where it lives"
         icon={Lock}
         title="Hosted in the UK, or in your own bucket"
-        description="Your requests, answers and uploaded files are stored on our own servers in Erith, United Kingdom — not replicated to other regions and not handed to a third-party storage provider."
+        description="Your requests, answers and uploaded files are stored in the United Kingdom — account data on our own servers in Erith, uploaded files in Bunny.net's London storage region, encrypted with our own key before they leave our servers. Nothing is replicated outside the UK."
         bullets={[
           "UK hosting on every plan",
           "Bring your own S3 bucket on the Scale plan",
