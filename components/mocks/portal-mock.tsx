@@ -19,7 +19,8 @@ export function PortalMock() {
       {/* Floating collaborator cursor (live presence) */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-[58%] left-[62%] z-20 animate-cursor-drift will-change-transform motion-reduce:animate-none"
+        data-pause-offscreen
+        className="pointer-events-none absolute top-[58%] left-[62%] z-20 animate-cursor-drift motion-reduce:animate-none"
       >
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
           <path

@@ -137,6 +137,7 @@ export function ReviewMock({
           <div className="mt-3 flex items-center gap-2">
             <button
               type="button"
+              data-pause-offscreen
               className={cn(
                 "inline-flex flex-1 items-center justify-center gap-1.5 border border-emerald-500/20 bg-emerald-500/10 py-1.5 text-[0.7rem] font-medium text-emerald-700",
                 !lastApproved &&

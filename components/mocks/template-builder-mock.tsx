@@ -62,7 +62,10 @@ export function TemplateBuilderMock({
             <RotateCcw className="size-3" />
             Cancel draft
           </span>
-          <span className="inline-flex animate-pulse-ring items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[0.65rem] font-medium text-primary-foreground [--pulse-color:rgba(70,50,229,0.12)] motion-reduce:animate-none">
+          <span
+            data-pause-offscreen
+            className="inline-flex animate-pulse-ring items-center gap-1.5 rounded-full bg-primary px-3 py-1 text-[0.65rem] font-medium text-primary-foreground [--pulse-color:rgba(70,50,229,0.12)] motion-reduce:animate-none"
+          >
             <Rocket className="size-3" />
             Publish version
           </span>
@@ -87,6 +90,7 @@ export function TemplateBuilderMock({
           >
             <div className="flex items-center gap-2.5">
               <span
+                data-pause-offscreen
                 className={`flex size-6 items-center justify-center border border-border/60 bg-card text-muted-foreground ${
                   sectionIndex === 0
                     ? "animate-grab-wiggle motion-reduce:animate-none"

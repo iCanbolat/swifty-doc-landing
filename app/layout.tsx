@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { JetBrains_Mono, Outfit } from "next/font/google"
 
+import { PauseOffscreenAnimations } from "@/components/motion/pause-offscreen"
+import { SmoothScroll } from "@/components/motion/smooth-scroll"
 import { SITE_NAME, SITE_URL } from "@/lib/site"
 
 import "./globals.css"
@@ -13,9 +15,13 @@ const outfit = Outfit({
   variable: "--font-outfit",
 })
 
+// Only a handful of code/identifier surfaces use it, none of them above the
+// fold, so it is not preloaded — a `<link rel=preload>` on every route would
+// have it competing with Outfit for bandwidth on pages that never show it.
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
+  preload: false,
   variable: "--font-jetbrains-mono",
 })
 
@@ -63,7 +69,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${outfit.variable} ${jetbrainsMono.variable}`}>
-      <body className="min-h-svh antialiased">{children}</body>
+      <body className="min-h-svh antialiased">
+        {children}
+        <SmoothScroll />
+        <PauseOffscreenAnimations />
+      </body>
     </html>
   )
 }

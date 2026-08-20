@@ -29,11 +29,13 @@ export function Hero() {
       {/* Animated soft blobs */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 -left-24 size-104 animate-blob-a rounded-full bg-primary/15 blur-3xl will-change-transform motion-reduce:animate-none"
+        data-pause-offscreen
+        className="pointer-events-none absolute -top-24 -left-24 size-104 animate-blob-a rounded-full bg-primary/15 blur-3xl motion-reduce:animate-none"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-24 top-32 size-88 animate-blob-b rounded-full bg-sky-400/15 blur-3xl will-change-transform motion-reduce:animate-none"
+        data-pause-offscreen
+        className="pointer-events-none absolute -right-24 top-32 size-88 animate-blob-b rounded-full bg-sky-400/15 blur-3xl motion-reduce:animate-none"
       />
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 pt-36 pb-20 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pt-40 lg:pb-28">
@@ -46,7 +48,7 @@ export function Hero() {
             </div>
           </div>
 
-          <h1 className="mt-6 animate-rise text-4xl leading-[1.08] font-semibold tracking-tight text-foreground [animation-delay:80ms] sm:text-5xl lg:text-6xl">
+          <h1 className="mt-6 animate-lift text-4xl leading-[1.08] font-semibold tracking-tight text-foreground [animation-delay:80ms] sm:text-5xl lg:text-6xl">
             Collect documents
             <br />
             without the{" "}
@@ -100,7 +102,10 @@ export function Hero() {
 function HeroPreview() {
   return (
     <div className="relative animate-hero-card">
-      <div className="animate-float overflow-hidden border border-border/70 bg-card/90 shadow-[0_40px_120px_-40px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10 will-change-transform motion-reduce:animate-none">
+      <div
+        data-pause-offscreen
+        className="animate-float overflow-hidden border border-border/70 bg-card/90 shadow-[0_40px_120px_-40px_rgba(15,23,42,0.55)] ring-1 ring-foreground/10 motion-reduce:animate-none"
+      >
         {/* window chrome */}
         <div className="flex items-center gap-2 border-b border-border/60 bg-background/70 px-4 py-3">
           <span className="size-2.5 rounded-full bg-rose-400/70" />

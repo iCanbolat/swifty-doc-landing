@@ -162,20 +162,43 @@ export function Navbar() {
   const [scrolled, setScrolled] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
 
+  // Scroll fires on every frame of a smooth scroll, so the read is coalesced
+  // into one rAF and only dispatched when the threshold is actually crossed —
+  // otherwise every frame pays for a React dispatch to render the same thing.
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
-    onScroll();
+    let frame = 0;
+    let current = window.scrollY > 12;
+    setScrolled(current);
+
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const next = window.scrollY > 12;
+        if (next === current) return;
+        current = next;
+        setScrolled(next);
+      });
+    };
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 animate-fade-down">
       <div
         className={cn(
-          "mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 transition-all duration-300 lg:px-8",
+          // Not `transition-all`: that includes `backdrop-filter`, so crossing
+          // the threshold animated a full-width backdrop blur from 0 to 8px
+          // over 300ms — the most expensive frames on the page, at the moment
+          // the user has just started scrolling.
+          "mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 transition-[margin,padding,background-color,border-color,border-radius,box-shadow] duration-300 lg:px-8",
           scrolled
-            ? "my-2 rounded-full border border-border/70 bg-background/80 py-2 shadow-[0_10px_60px_-30px_rgba(15,23,42,0.5)] backdrop-blur-md"
+            ? "my-2 rounded-full border border-border/70 bg-background/85 py-2 shadow-[0_10px_60px_-30px_rgba(15,23,42,0.5)] backdrop-blur-sm"
             : "my-3 border border-transparent py-3",
         )}
       >
