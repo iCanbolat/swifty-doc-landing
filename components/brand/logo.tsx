@@ -12,7 +12,7 @@ export function Logo({ className, withWordmark = true }: LogoProps) {
     // SVG lands — `h-8 w-auto` alone leaves the width unknown until then.
     <img
       src="/logo.svg"
-      alt="Client Gather"
+      alt="ClientGather"
       width={1280}
       height={260}
       decoding="async"
@@ -21,7 +21,7 @@ export function Logo({ className, withWordmark = true }: LogoProps) {
   ) : (
     <img
       src="/favicon.ico"
-      alt="Client Gather"
+      alt="ClientGather"
       width={32}
       height={32}
       decoding="async"

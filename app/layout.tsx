@@ -27,11 +27,11 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Client Gather — Collect documents without the back-and-forth",
+  title: "ClientGather — Collect documents without the back-and-forth",
   description:
     "Build request templates, share secure portal links, review submissions, and keep every file in one place. ClientGather streamlines document collection end to end.",
-  applicationName: "Client Gather",
-  authors: [{ name: "Client Gather" }],
+  applicationName: "ClientGather",
+  authors: [{ name: "ClientGather" }],
   keywords: [
     "document collection",
     "client portal",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   // Every route inherits these, so a page that sets its own `openGraph.title`
   // still gets the card image, the site name, and the locale for free.
   openGraph: {
-    title: "Client Gather — Collect documents without the back-and-forth",
+    title: "ClientGather — Collect documents without the back-and-forth",
     description:
       "Build request templates, share secure portal links, review submissions, and keep every file in one place.",
     type: "website",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Client Gather — Collect documents without the back-and-forth",
+    title: "ClientGather — Collect documents without the back-and-forth",
     description:
       "Build request templates, share secure portal links, review submissions, and keep every file in one place.",
     images: ["/og.png"],

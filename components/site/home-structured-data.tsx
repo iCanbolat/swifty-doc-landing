@@ -22,6 +22,11 @@ export function HomeStructuredData() {
       "@type": "Organization",
       "@id": organizationId,
       name: SITE_NAME,
+      // The domain and the wordmark are one word, so that is the canonical
+      // name — but the spaced spelling is what people type and what Google
+      // offers as a "did you mean". Declaring it here ties both spellings to
+      // the same entity instead of letting them accrue signals separately.
+      alternateName: "Client Gather",
       url: SITE_URL,
       logo: `${SITE_URL}/logo.svg`,
       description:
@@ -32,6 +37,10 @@ export function HomeStructuredData() {
       "@type": "WebSite",
       "@id": websiteId,
       name: SITE_NAME,
+      // Google reads WebSite.name/alternateName for the site name shown above
+      // the result, so the pair is repeated here rather than inherited from
+      // the Organization node.
+      alternateName: "Client Gather",
       url: SITE_URL,
       inLanguage: "en-GB",
       publisher: { "@id": organizationId },
