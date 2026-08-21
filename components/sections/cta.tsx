@@ -5,10 +5,12 @@ import { ButtonLink } from "@/components/ui/button";
 import {
   buildBootstrapOwnerUrl,
   resolveBookDemoUrl,
+  resolveLiveDemoUrl,
   type PricingPlanIntent,
 } from "@/lib/app-links";
 
 const BOOK_DEMO_URL = resolveBookDemoUrl();
+const LIVE_DEMO_URL = resolveLiveDemoUrl();
 
 /**
  * `plan` is the intent the closing button carries. The /for pages set it to the
@@ -44,6 +46,15 @@ export function CTA({ plan = "foundation" }: { plan?: PricingPlanIntent } = {}) 
               >
                 Get started free
                 <ArrowRight className="size-4" />
+              </ButtonLink>
+              {/* For the reader who wants to see it before giving an email. */}
+              <ButtonLink
+                href={LIVE_DEMO_URL}
+                size="hero"
+                variant="outline"
+                className="rounded-full"
+              >
+                Try the live demo
               </ButtonLink>
             </div>
           </div>

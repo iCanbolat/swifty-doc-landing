@@ -10,6 +10,7 @@ export type PricingPlanIntent =
 export type PricingBillingPeriod = "monthly" | "annual";
 
 const DEFAULT_APP_BASE_URL = "http://localhost:5173";
+const DEFAULT_LIVE_DEMO_URL = "https://demo.clientgather.com";
 const DEFAULT_DEMO_URL =
   "mailto:contact@clientgather.com?subject=ClientGather%20Demo";
 
@@ -45,6 +46,21 @@ export function buildSignInUrl(): string {
   const base = resolveAppBaseUrl();
 
   return `${base}/auth/sign-in`;
+}
+
+/**
+ * The self-serve demo: the real dashboard, filled with sample data, no sign-up.
+ * A different thing from `resolveBookDemoUrl` — that one books a call with a
+ * human, this one opens the product. Both belong on the page.
+ */
+export function resolveLiveDemoUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_DEMO_URL?.trim();
+
+  if (configured && configured.length > 0) {
+    return trimTrailingSlash(configured);
+  }
+
+  return DEFAULT_LIVE_DEMO_URL;
 }
 
 export function resolveBookDemoUrl(): string {

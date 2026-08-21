@@ -7,7 +7,11 @@ import { Reveal, Stagger, StaggerItem } from "@/components/motion/reveal";
 import { ButtonLink } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { InfoTooltip } from "@/components/ui/tooltip";
-import { buildBootstrapOwnerUrl, resolveBookDemoUrl } from "@/lib/app-links";
+import {
+  buildBootstrapOwnerUrl,
+  resolveBookDemoUrl,
+  resolveLiveDemoUrl,
+} from "@/lib/app-links";
 import {
   ANNUAL_MONTHS_PAID,
   annualMonthlyPrice,
@@ -31,6 +35,7 @@ const ACTIVE_REQUEST_INFO =
   "An active request is one that is out with a client — sent or in progress. Drafts don't count, and closing a request you've finished frees its slot again, so the limit is about how much you have in flight at once, not how much you send.";
 
 const BOOK_DEMO_URL = resolveBookDemoUrl();
+const LIVE_DEMO_URL = resolveLiveDemoUrl();
 
 const SEAT_ADDON_EUR = 16;
 const REQUEST_ADDON_EUR = 14;
@@ -633,6 +638,13 @@ export function Pricing() {
               className="font-medium text-primary underline-offset-4 hover:underline"
             >
               Talk to us
+            </a>
+            . Want to see it running first?{" "}
+            <a
+              href={LIVE_DEMO_URL}
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              Try the live demo
             </a>
             .
           </p>
