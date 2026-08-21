@@ -117,7 +117,7 @@ export function SmoothScroll() {
       if (disposed) return
 
       lenis = new LenisClass({
-        lerp: 0.1,
+        lerp: 0.18,
         // Wheel only. Touch keeps the platform's own scrolling and inertia.
         smoothWheel: true,
         syncTouch: false,
