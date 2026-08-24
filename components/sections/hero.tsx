@@ -9,13 +9,15 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
-import { buildBootstrapOwnerUrl } from "@/lib/app-links";
+import { buildBootstrapOwnerUrl, resolveLiveDemoUrl } from "@/lib/app-links";
 
 const TRUST = [
   "No login for recipients",
   "Autosave built in",
   "Version-controlled templates",
 ];
+
+const LIVE_DEMO_URL = resolveLiveDemoUrl();
 
 export function Hero() {
   return (
@@ -73,12 +75,12 @@ export function Hero() {
               <ArrowRight className="size-4" />
             </ButtonLink>
             <ButtonLink
-              href="#features"
+              href={LIVE_DEMO_URL}
               size="hero"
               variant="outline"
               className="rounded-full"
             >
-              See how it works
+              Try the live demo
             </ButtonLink>
           </div>
 
