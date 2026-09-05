@@ -138,13 +138,16 @@ const FEATURE_GROUPS: { title: string; rows: FeatureRow[] }[] = [
         },
       },
       {
+        // Sending from your own verified domain is built but not yet live in
+        // production — see swiftydoc-client communications-page.tsx. Change
+        // "Soon" to `true` once it ships.
         label: "Send from your own address",
         info: "Pick the address clients see — info@yourfirm.com — and verify its domain once. We generate the DNS records and check them for you, and your existing inbox keeps working.",
         values: {
           starter: false,
           foundation: false,
-          growth: true,
-          enterprise: true,
+          growth: "Soon",
+          enterprise: "Soon",
         },
       },
       {

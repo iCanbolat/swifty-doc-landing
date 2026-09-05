@@ -99,7 +99,11 @@ export const PLANS: Plan[] = [
       "200 active requests",
       "10 users",
       "100 GB cloud storage",
-      "White-label portal & sender address",
+      "White-label portal",
+      // Sending from your own verified domain is built but not yet live in
+      // production — see swiftydoc-client communications-page.tsx. Drop the
+      // "(coming soon)" qualifier once it ships.
+      "Custom sender domain (coming soon)",
       "Webhooks & Zapier",
     ],
   },
