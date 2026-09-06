@@ -5,6 +5,8 @@
 html {
   /* Offsets anchor scrolls so a section's top isn't hidden under the fixed navbar. */
   scroll-padding-top: 6rem;
+  /* Prevent browser auto-dark transforms; the landing is intentionally light-only. */
+  color-scheme: only light;
 }
 
 /* Native smooth scrolling is the fallback for everywhere Lenis doesn't run —

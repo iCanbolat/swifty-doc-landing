@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { JetBrains_Mono, Outfit } from "next/font/google"
 
 import { PauseOffscreenAnimations } from "@/components/motion/pause-offscreen"
@@ -62,6 +62,11 @@ export const metadata: Metadata = {
   verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
     ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
     : undefined,
+}
+
+export const viewport: Viewport = {
+  colorScheme: "light",
+  themeColor: "#ffffff",
 }
 
 export default function RootLayout({
